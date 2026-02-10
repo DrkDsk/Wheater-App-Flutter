@@ -1,5 +1,12 @@
+import 'dart:io';
+
 import 'package:clima_app/core/helpers/network_helper.dart';
+import 'package:flutter/services.dart';
 import 'package:location/location.dart';
+
+class LocationPlatform {
+  static const MethodChannel platform = MethodChannel('device/location');
+}
 
 class LocationDataSourceImpl {
   final NetworkHelper _networkHelper;
@@ -11,6 +18,16 @@ class LocationDataSourceImpl {
     await _networkHelper.checkConnection();
 
     final location = Location();
+
+    try {
+      final bool isMock =
+          await LocationPlatform.platform.invokeMethod('isMockLocation');
+
+      print("isMock: $isMock");
+    } catch (e) {
+      print("error: ${e.toString()}");
+    }
+
     bool serviceEnabled;
     PermissionStatus permissionGranted;
 
