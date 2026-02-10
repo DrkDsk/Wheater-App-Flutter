@@ -26,6 +26,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Usamos tu ubicación incluso en segundo plano para mantener los datos actualizados.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
