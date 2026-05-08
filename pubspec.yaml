@@ -59,6 +59,8 @@ dependencies:
   firebase_messaging: ^15.1.0
   firebase_analytics: ^11.3.0
   shared_preferences: ^2.5.3
+  bloc_concurrency: ^0.3.0
+  stream_transform: ^2.1.1
 
 
 dev_dependencies:
