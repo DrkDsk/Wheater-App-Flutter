@@ -5,14 +5,20 @@ import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dar
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
 
-  EventTransformer<T> debounce<T>(Duration duration) {
-    return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
+  EventTransformer<Event> debounceRestartable<Event>(
+      Duration duration,
+      ) {
+    return (events, mapper) {
+      return restartable<Event>()
+          .call(events.debounce(duration), mapper);
+    };
   }
 
   CityWeatherBloc(
@@ -24,9 +30,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     on<FetchWeatherEvent>(_getCurrentWeather);
     on<CitySearchEvent>(
       _searchWeatherEvent,
-      transformer: debounce(
-        const Duration(milliseconds: 500),
-      ),
+      transformer: debounceRestartable(const Duration(milliseconds: 500)),
     );
   }
 
