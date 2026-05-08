@@ -12,9 +12,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
 
-  EventTransformer<Event> debounceRestartable<Event>(
-      Duration duration,
-      ) {
+  EventTransformer<Event> debounceRestartable<Event>(Duration duration) {
     return (events, mapper) {
       return restartable<Event>()
           .call(events.debounce(duration), mapper);
