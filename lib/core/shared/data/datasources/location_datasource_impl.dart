@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:clima_app/core/helpers/network_helper.dart';
 import 'package:flutter/services.dart';
@@ -18,15 +17,6 @@ class LocationDataSourceImpl {
     await _networkHelper.checkConnection();
 
     final location = Location();
-
-    try {
-      final bool isMock =
-          await LocationPlatform.platform.invokeMethod('isMockLocation');
-
-      print("isMock: $isMock");
-    } catch (e) {
-      print("error: ${e.toString()}");
-    }
 
     bool serviceEnabled;
     PermissionStatus permissionGranted;

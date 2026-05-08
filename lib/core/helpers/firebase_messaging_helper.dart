@@ -37,8 +37,7 @@ class FirebaseMessagingHelper {
   }
 
   static Future registerFirebaseToken() async {
-    String token = await FirebaseMessaging.instance.getToken() ?? "";
-    print("token: $token");
+    String _ = await FirebaseMessaging.instance.getToken() ?? "";
   }
 
   static Future checkForInitialMessage() async {
@@ -91,7 +90,6 @@ class FirebaseMessagingHelper {
         pop: pop,
       );
 
-      print(suggestion);
     });
   }
 
