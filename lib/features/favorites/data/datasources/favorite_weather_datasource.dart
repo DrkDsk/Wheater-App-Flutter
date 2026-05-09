@@ -1,3 +1,4 @@
+import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:clima_app/features/favorites/data/models/location_cache_hive_model.dart';
 
@@ -14,5 +15,5 @@ abstract interface class FavoriteWeatherDataSource {
 
   Future<LocationCacheHiveModel?> getStoredLocationCache();
 
-  Future<void> storeLocationCache({required LocationCacheHiveModel location});
+  Future<void> storeLocationCache({required CityLocation location});
 }

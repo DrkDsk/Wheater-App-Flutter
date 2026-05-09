@@ -8,4 +8,9 @@ abstract class LocationRepository {
     required double latitude,
     required double longitude,
   });
+
+  Future<Coordinate> ensureCoordinates({
+    double? latitude,
+    double? longitude,
+  });
 }

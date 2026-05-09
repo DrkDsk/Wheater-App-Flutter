@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:clima_app/core/error/exceptions/network_exception.dart';
 import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
 import 'package:clima_app/core/error/failures/failure.dart';
+import 'package:clima_app/core/extensions/location/location_data_extension.dart';
+import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
@@ -12,13 +14,14 @@ import 'package:dartz/dartz.dart';
 
 class FavoriteRepositoryImpl implements FavoriteRepository {
   final FavoriteWeatherDataSource _favoriteWeatherDataSource;
-  final FavoriteService _favoriteService;
+  final LocationDataSourceImpl _locationDataSourceImpl;
 
   const FavoriteRepositoryImpl({
     required FavoriteWeatherDataSource favoriteWeatherDataSource,
-    required FavoriteService favoriteService,
+    required LocationMapper favoriteService,
+    required LocationDataSourceImpl locationDataSource,
   })  : _favoriteWeatherDataSource = favoriteWeatherDataSource,
-        _favoriteService = favoriteService;
+        _locationDataSourceImpl = locationDataSource;
 
   @override
   Future<Either<Failure, bool>> store(
@@ -53,24 +56,29 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<Failure, List<CityLocation>>> getAll() async {
+  Future<Either<Failure, List<CityLocation>>> index() async {
     try {
-      final (favorites, locationCache) = await (
+      final (favoritesCitiesModels, cachedLocationModel) = await (
         _favoriteWeatherDataSource.getAll(),
-        _favoriteService.getLocationCache(),
+        _favoriteWeatherDataSource.getStoredLocationCache(),
       ).wait;
 
-      final storedCities = favorites.map((city) => city.toEntity()).toList();
-      final cityLocation = locationCache.toEntity();
-      final cityLocationKey = cityLocation.cityName;
+      final cachedLocation = cachedLocationModel?.toEntity();
 
-      unawaited(
-        _favoriteWeatherDataSource.storeLocationCache(location: locationCache),
-      );
+      final locationData = cachedLocation ??
+          (await _locationDataSourceImpl.getCurrentLocation()).toCityLocation();
+
+      final cityLocationKey = locationData.cityName;
+      final storedCities =
+          favoritesCitiesModels.map((city) => city.toEntity()).toList();
 
       storedCities
         ..removeWhere((element) => element.cityName == cityLocationKey)
-        ..insert(0, cityLocation);
+        ..insert(0, locationData);
+
+      /*unawaited(
+        _favoriteWeatherDataSource.storeLocationCache(location: locationData),
+      );*/
 
       return Right(storedCities);
     } on UnknownException catch (e) {

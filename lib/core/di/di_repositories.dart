@@ -39,7 +39,8 @@ Future registerRepositories() async {
   getIt.registerLazySingleton<FavoriteRepository>(
     () => FavoriteRepositoryImpl(
       favoriteWeatherDataSource: getIt<FavoriteWeatherDataSource>(),
-      favoriteService: getIt<FavoriteService>(),
+      favoriteService: getIt<LocationMapper>(),
+      locationDataSource: getIt<LocationDataSourceImpl>(),
     ),
   );
 

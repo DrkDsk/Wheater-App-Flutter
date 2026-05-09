@@ -5,7 +5,7 @@ import 'package:dartz/dartz.dart';
 abstract interface class FavoriteRepository {
   Future<Either<Failure, bool>> store({required CityLocation cityLocation});
 
-  Future<Either<Failure, List<CityLocation>>> getAll();
+  Future<Either<Failure, List<CityLocation>>> index();
 
   Future<Either<Failure, bool>> delete({required CityLocation cityLocation});
 

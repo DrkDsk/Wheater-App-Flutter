@@ -3,7 +3,7 @@ import 'package:clima_app/features/home/domain/entities/forecast.dart';
 import 'package:dartz/dartz.dart';
 
 abstract interface class SearchWeatherRepository {
-  Future<Either<Failure, Forecast>> fetchSearchDataByLocation({
+  Future<Either<Failure, Forecast>> getWeatherByLocation({
     required double lat,
     required double lon,
   });

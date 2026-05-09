@@ -16,7 +16,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   Future<void> getFavoriteCities() async {
     emit(state.copyWith(status: FavoriteStatus.loading));
 
-    final favoritesResult = await _repository.getAll();
+    final favoritesResult = await _repository.index();
 
     final newState = favoritesResult.fold((error) {
       return state.copyWith(
@@ -79,7 +79,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   Future<void> compareFavorites() async {
     final currentCitiesInState = state.cities;
 
-    final storedCitiesResult = await _repository.getAll();
+    final storedCitiesResult = await _repository.index();
 
     storedCitiesResult.fold((left) {}, (result) {
       final citiesStateSet =

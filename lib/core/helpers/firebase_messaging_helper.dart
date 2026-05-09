@@ -37,8 +37,7 @@ class FirebaseMessagingHelper {
   }
 
   static Future registerFirebaseToken() async {
-    String token = await FirebaseMessaging.instance.getToken() ?? "";
-    print("token: $token");
+    String _ = await FirebaseMessaging.instance.getToken() ?? "";
   }
 
   static Future checkForInitialMessage() async {
@@ -82,7 +81,7 @@ class FirebaseMessagingHelper {
         return;
       }
 
-      final suggestion = WeatherHelper.generateWeatherRecommendation(
+      final _ = WeatherHelper.generateWeatherRecommendation(
         temp: temp,
         feelsLike: feelsLike,
         pressure: pressure,
@@ -90,8 +89,6 @@ class FirebaseMessagingHelper {
         weatherDescription: weatherDescription,
         pop: pop,
       );
-
-      print(suggestion);
     });
   }
 
