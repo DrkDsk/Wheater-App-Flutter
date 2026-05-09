@@ -80,8 +80,8 @@ void main() {
             lat: lat, lon: lon))
         .thenAnswer((_) async => testModel);
 
-    final result = await searchRepositoryImpl.fetchSearchDataByLocation(
-        lat: lat, lon: lon);
+    final result =
+        await searchRepositoryImpl.getWeatherByLocation(lat: lat, lon: lon);
 
     expect(result, Right(testModel));
     verify(mockSearchWeatherDataSource.fetchSearchDataByLocation(

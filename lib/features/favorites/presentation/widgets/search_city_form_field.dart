@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:clima_app/core/extensions/color_extension.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,18 +46,18 @@ class _SearchCityFormFieldState extends State<SearchCityFormField> {
         padding: const EdgeInsets.only(left: 8),
         child: Icon(
           CupertinoIcons.search,
-          color: CupertinoColors.systemGrey.withOpacity(0.5),
+          color: CupertinoColors.systemGrey.customOpacity(0.5),
         ),
       ),
       suffix: Padding(
         padding: const EdgeInsets.only(right: 8),
         child: Icon(
           CupertinoIcons.mic,
-          color: CupertinoColors.systemGrey.withOpacity(0.5),
+          color: CupertinoColors.systemGrey.customOpacity(0.5),
         ),
       ),
       decoration: BoxDecoration(
-        color: CupertinoColors.systemGrey.withOpacity(0.5),
+        color: CupertinoColors.systemGrey.customOpacity(0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

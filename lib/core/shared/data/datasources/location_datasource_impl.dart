@@ -1,4 +1,3 @@
-
 import 'package:clima_app/core/helpers/network_helper.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
@@ -13,7 +12,7 @@ class LocationDataSourceImpl {
   const LocationDataSourceImpl({required NetworkHelper networkHelper})
       : _networkHelper = networkHelper;
 
-  Future<LocationData?> getCurrentLocation() async {
+  Future<LocationData> getCurrentLocation() async {
     await _networkHelper.checkConnection();
 
     final location = Location();
@@ -24,13 +23,15 @@ class LocationDataSourceImpl {
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
-      if (!serviceEnabled) return null;
+      if (!serviceEnabled) throw Exception("No se puede obtener la ubicación");
     }
 
     permissionGranted = await location.hasPermission();
     if (permissionGranted == PermissionStatus.denied) {
       permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) return null;
+      if (permissionGranted != PermissionStatus.granted) {
+        throw Exception("No se puede obtener la ubicación");
+      }
     }
 
     LocationData position = await location.getLocation();

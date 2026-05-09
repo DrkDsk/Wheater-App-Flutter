@@ -12,7 +12,7 @@ class SearchWeatherRepositoryImpl implements SearchWeatherRepository {
   SearchWeatherRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<Failure, Forecast>> fetchSearchDataByLocation({
+  Future<Either<Failure, Forecast>> getWeatherByLocation({
     required double lat,
     required double lon,
   }) async {

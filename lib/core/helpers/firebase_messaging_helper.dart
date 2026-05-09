@@ -81,7 +81,7 @@ class FirebaseMessagingHelper {
         return;
       }
 
-      final suggestion = WeatherHelper.generateWeatherRecommendation(
+      final _ = WeatherHelper.generateWeatherRecommendation(
         temp: temp,
         feelsLike: feelsLike,
         pressure: pressure,
@@ -89,7 +89,6 @@ class FirebaseMessagingHelper {
         weatherDescription: weatherDescription,
         pop: pop,
       );
-
     });
   }
 
