@@ -1,56 +1,58 @@
 import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/features/home/domain/entities/city_weather_data.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
+import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/search_weather_repository.dart';
-import 'package:clima_app/features/home/domain/services/location_service.dart';
 import 'package:clima_app/features/home/presentation/dto/weather_mapper.dart';
 import 'package:dartz/dartz.dart';
 
 class GetWeatherUseCase {
-  final SearchWeatherRepository repository;
-  final LocationService locationService;
+  final SearchWeatherRepository _searchWeatherRepository;
+  final LocationRepository _locationRepository;
+
   final WeatherMapper mapper;
 
   GetWeatherUseCase({
-    required this.locationService,
-    required this.repository,
+    required SearchWeatherRepository searchWeatherRepository,
+    required LocationRepository locationRepository,
     required this.mapper,
-  });
+  })  : _searchWeatherRepository = searchWeatherRepository,
+        _locationRepository = locationRepository;
 
   Future<Either<Failure, CityWeatherData>> call(
       {double? latitude, double? longitude}) async {
     final locationEntity = (latitude != null && longitude != null)
         ? Coordinate(latitude: latitude, longitude: longitude)
-        : await locationService.getCurrentLocation();
+        : await _locationRepository.getCurrentLocation();
 
     if (locationEntity == null) {
-      throw UnexpectedFailure();
+      return Left(UnexpectedFailure());
     }
 
-    final forecastEither = await repository.fetchSearchDataByLocation(
+    final forecastEither = await _searchWeatherRepository.getWeatherByLocation(
       lat: locationEntity.latitude,
       lon: locationEntity.longitude,
     );
 
-    if (forecastEither.isLeft()) {
-      return Left(forecastEither.swap().getOrElse(() => UnexpectedFailure()));
-    }
+    return forecastEither.fold(
+      Left.new,
+      (forecastData) async {
+        final limitedForecast = forecastData.copyWith(
+          hourly: forecastData.hourly.take(12).toList(),
+          daily: forecastData.daily.take(12).toList(),
+        );
 
-    final forecastData =
-        forecastEither.getOrElse(() => throw UnexpectedFailure(""));
+        final weatherCondition = forecastData.current.weather.first.toEntity();
 
-    final forecast = forecastData.copyWith(
-        hourly: forecastData.hourly.take(12).toList(),
-        daily: forecastData.daily.take(12).toList());
+        final translatedWeather = await mapper.map(weatherCondition);
 
-    final weatherCondition = forecastData.current.weather.first.toEntity();
-    final translatedWeather = await mapper.map(weatherCondition);
-
-    final cityWeatherData = CityWeatherData(
-      forecast: forecast,
-      translatedWeather: translatedWeather,
+        return Right(
+          CityWeatherData(
+            forecast: limitedForecast,
+            translatedWeather: translatedWeather,
+          ),
+        );
+      },
     );
-
-    return Right(cityWeatherData);
   }
 }
