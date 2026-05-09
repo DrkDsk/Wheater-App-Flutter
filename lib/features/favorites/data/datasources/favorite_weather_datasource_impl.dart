@@ -1,5 +1,6 @@
 import 'package:clima_app/core/constants/hive_constants.dart';
 import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
+import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:clima_app/features/favorites/data/models/location_cache_hive_model.dart';
@@ -48,10 +49,10 @@ class FavoriteWeatherDataSourceImpl implements FavoriteWeatherDataSource {
   }
 
   @override
-  Future<void> storeLocationCache(
-      {required LocationCacheHiveModel location}) async {
+  Future<void> storeLocationCache({required CityLocation location}) async {
     try {
-      return locationCacheBox.put(locationCacheKey, location);
+      final locationHiveModel = LocationCacheHiveModel.fromEntity(location);
+      return locationCacheBox.put(locationCacheKey, locationHiveModel);
     } catch (e) {
       return;
     }
