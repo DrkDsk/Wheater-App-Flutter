@@ -15,11 +15,11 @@ class IACubit extends Cubit<IAState> {
     required CityWeatherData cityWeatherData,
   }) async {
     final weather = cityWeatherData.forecast.current;
-    final temperatureInCelsius = weather.tempCelsiusText;
-    final feelsLike = weather.feelsLikeCelsiusText;
-    final humidity = "${weather.humidity}%";
-    final windSpeedAndGust = weather.windDirectionText;
-    final condition = cityWeatherData.translatedWeather.translatedDescription;
+    weather.tempCelsiusText;
+    weather.feelsLikeCelsiusText;
+    "${weather.humidity}%";
+    weather.windDirectionText;
+    cityWeatherData.translatedWeather.translatedDescription;
 
     emit(state.copyWith(status: IAClientStatus.loading));
 
