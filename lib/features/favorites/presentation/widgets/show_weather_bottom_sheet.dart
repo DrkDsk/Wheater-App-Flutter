@@ -1,5 +1,5 @@
 import 'package:clima_app/core/router/app_router.dart';
-import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/header_weather_sheet.dart';

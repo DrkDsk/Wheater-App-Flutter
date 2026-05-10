@@ -1,4 +1,4 @@
-import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:hive/hive.dart';
 
 part 'location_cache_hive_model.g.dart';

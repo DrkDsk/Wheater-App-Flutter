@@ -1,18 +1,22 @@
 import 'package:clima_app/core/extensions/weather/city_weather_data_extension.dart';
-import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
+import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
 
-  EventTransformer<T> debounce<T>(Duration duration) {
-    return (events, mapper) => events.debounceTime(duration).flatMap(mapper);
+  EventTransformer<Event> debounceRestartable<Event>(Duration duration) {
+    return (events, mapper) {
+      return restartable<Event>().call(events.debounce(duration), mapper);
+    };
   }
 
   CityWeatherBloc(
@@ -24,9 +28,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     on<FetchWeatherEvent>(_getCurrentWeather);
     on<CitySearchEvent>(
       _searchWeatherEvent,
-      transformer: debounce(
-        const Duration(milliseconds: 500),
-      ),
+      transformer: debounceRestartable(const Duration(milliseconds: 500)),
     );
   }
 
@@ -38,11 +40,12 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     final latitude = event.latitude;
     final longitude = event.longitude;
+    final coordinate = (latitude != null && longitude != null)
+        ? Coordinate(latitude: latitude, longitude: longitude)
+        : null;
 
-    final cityWeatherDataResult = await _getWeatherUseCase(
-      latitude: latitude,
-      longitude: longitude,
-    );
+    final cityWeatherDataResult =
+        await _getWeatherUseCase(coordinate: coordinate);
 
     final newState = cityWeatherDataResult.fold((error) {
       return state.copyWith(
