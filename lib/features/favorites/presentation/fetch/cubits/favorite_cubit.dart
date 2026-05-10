@@ -63,7 +63,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   Future<void> delete({required CityLocation cityLocation}) async {
     emit(state.copyWith(status: FavoriteStatus.loading));
 
-    /*final deleteEither = await _repository.delete(cityLocation: cityLocation);
+    final deleteEither = await _repository.delete(cityLocation: cityLocation);
 
     final newState = deleteEither.fold((left) {
       return state.copyWith(
@@ -80,7 +80,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       );
     });
 
-    emit(newState);*/
+    emit(newState);
   }
 
   Future<void> compareFavorites() async {
