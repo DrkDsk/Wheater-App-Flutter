@@ -24,6 +24,7 @@ class LocationDataSourceImpl implements LocationLocalDatasource {
       longitude: location.longitude,
       latitude: location.latitude,
       cityName: location.name,
+      timestamp: location.timestamp,
     );
 
     await _cityLocationCacheBox.put(locationCacheKey, locationHiveModel);
