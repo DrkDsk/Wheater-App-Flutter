@@ -41,7 +41,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
     final userLocation = cityLocation.toUserLocation();
 
-    final storeResult = await _repository.store(
+    /*final storeResult = await _repository.store(
       cityLocation: userLocation,
     );
 
@@ -56,15 +56,15 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       }
 
       return state.copyWith(status: FavoriteStatus.success);
-    });
+    });*/
 
-    emit(newState);
+    //emit(newState);
   }
 
-  Future<void> delete({required UserLocation cityLocation}) async {
+  Future<void> delete({required CityLocation cityLocation}) async {
     emit(state.copyWith(status: FavoriteStatus.loading));
 
-    final deleteEither = await _repository.delete(cityLocation: cityLocation);
+    /*final deleteEither = await _repository.delete(cityLocation: cityLocation);
 
     final newState = deleteEither.fold((left) {
       return state.copyWith(
@@ -81,7 +81,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       );
     });
 
-    emit(newState);
+    emit(newState);*/
   }
 
   Future<void> compareFavorites() async {
@@ -89,7 +89,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
     final storedCitiesResult = await _repository.index();
 
-    storedCitiesResult.fold((left) {}, (result) {
+    /*storedCitiesResult.fold((left) {}, (result) {
       final citiesStateSet =
           currentCitiesInState.map((element) => element.timestamp).toSet();
       final resultSet = result.map((element) => element.timestamp).toSet();
@@ -109,7 +109,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       final newState = state.copyWith(cities: result);
 
       emit(newState);
-    });
+    });*/
   }
 
   Future<void> getCityIsAvailableToSave(
