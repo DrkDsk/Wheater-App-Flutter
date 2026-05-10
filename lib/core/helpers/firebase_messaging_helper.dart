@@ -1,7 +1,6 @@
 import 'package:clima_app/core/di/di.dart';
 import 'package:clima_app/core/helpers/app_preferences.dart';
 import 'package:clima_app/core/helpers/timezone_config.dart';
-import 'package:clima_app/core/helpers/weather_helper.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/firebase_options.dart';
@@ -50,17 +49,15 @@ class FirebaseMessagingHelper {
   }
 
   static Future handleRecommendation() async {
-    final cityWeatherDataResult = getIt<GetWeatherUseCase>();
+    getIt<GetWeatherUseCase>();
     final locationCacheService = getIt<FavoriteWeatherDataSource>();
 
-    final location = await locationCacheService.getStoredLocationCache();
-    final lat = location?.latitude;
-    final lon = location?.longitude;
+    final location = await locationCacheService.getCoordinateCache();
+    location?.latitude;
+    location?.longitude;
 
-    final result = await cityWeatherDataResult.call(
-      latitude: lat,
-      longitude: lon,
-    );
+    /*final result = await cityWeatherDataResult.call(
+        coordinate: Coordinate(latitude: lat, longitude: lon));
 
     result.fold((left) {}, (result) {
       final hourly = result.forecast.hourly.take(7).last;
@@ -89,7 +86,7 @@ class FirebaseMessagingHelper {
         weatherDescription: weatherDescription,
         pop: pop,
       );
-    });
+    });*/
   }
 
   static Future firebaseMessageHandler(RemoteMessage remoteMessage) async {
