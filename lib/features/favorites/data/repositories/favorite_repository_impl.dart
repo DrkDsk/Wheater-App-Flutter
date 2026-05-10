@@ -5,7 +5,6 @@ import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
 import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
@@ -71,11 +70,16 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> delete(
-      {required UserLocation cityLocation}) async {
+  Future<Either<Failure, bool>> delete({
+    required CityLocation cityLocation,
+  }) async {
     try {
-      final cityLocationModel = await _favoriteWeatherDataSource.findById(
+      /*final cityLocationModel = await _favoriteWeatherDataSource.findById(
         id: cityLocation.timestamp.toIso8601String(),
+      );*/
+
+      final cityLocationModel = await _favoriteWeatherDataSource.findById(
+        id: cityLocation.name,
       );
 
       if (cityLocationModel == null) {
@@ -93,14 +97,16 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> isAvailableToStore(
-      {required UserLocation cityLocation}) async {
+  Future<Either<Failure, bool>> isAvailableToStore({
+    required CityLocation cityLocation,
+  }) async {
     try {
-      final cityLocationKey = cityLocation.timestamp.toIso8601String();
+      /*final cityLocationKey = cityLocation.timestamp.toIso8601String();*/
+      final cityLocationKey = cityLocation.name;
 
       final (cacheLocationCity, storedCity) = await (
         _locationLocalDatasource.getCachedLocation(),
-        _favoriteWeatherDataSource.findByKey(key: cityLocationKey),
+        _favoriteWeatherDataSource.findByKey(key: cityLocationKey ?? ""),
       ).wait;
 
       /*final exists = cacheLocationCity?.timestamp == cityLocationKey ||
