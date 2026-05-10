@@ -20,18 +20,15 @@ class GetWeatherUseCase {
         _locationRepository = locationRepository;
 
   Future<Either<Failure, CityWeatherData>> call(
-      {double? latitude, double? longitude}) async {
-    final locationEntity = (latitude != null && longitude != null)
-        ? Coordinate(latitude: latitude, longitude: longitude)
-        : await _locationRepository.getCurrentLocation();
-
-    if (locationEntity == null) {
-      return Left(UnexpectedFailure());
+      {Coordinate? coordinate}) async {
+    if (coordinate == null) {
+      final currentLocation = await _locationRepository.getCurrentLocation();
+      coordinate = currentLocation.toCoordinate();
     }
 
     final forecastEither = await _searchWeatherRepository.getWeatherByLocation(
-      lat: locationEntity.latitude,
-      lon: locationEntity.longitude,
+      lat: coordinate.latitude,
+      lon: coordinate.longitude,
     );
 
     return forecastEither.fold(
