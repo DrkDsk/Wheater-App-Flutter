@@ -1,12 +1,12 @@
 import 'package:clima_app/features/city/domain/entities/user_location.dart';
 
 class CityLocation {
-  final String name;
+  final String? name;
   final double latitude;
   final double longitude;
 
   const CityLocation({
-    required this.name,
+    this.name,
     required this.latitude,
     required this.longitude,
   });
