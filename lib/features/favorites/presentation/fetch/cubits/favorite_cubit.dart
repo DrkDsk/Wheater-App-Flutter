@@ -40,7 +40,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
     final userLocation = cityLocation;
 
-    /*final storeResult = await _repository.store(
+    final storeResult = await _repository.store(
       cityLocation: userLocation,
     );
 
@@ -55,9 +55,9 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       }
 
       return state.copyWith(status: FavoriteStatus.success);
-    });*/
+    });
 
-    //emit(newState);
+    emit(newState);
   }
 
   Future<void> delete({required CityLocation cityLocation}) async {
