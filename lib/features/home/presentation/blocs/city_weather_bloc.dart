@@ -84,7 +84,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
       );
     }, (right) {
       final filteredCitySearchResult = right.data.where((element) {
-        return element.state.isNotEmpty;
+        return element.name.isNotEmpty;
       }).toList();
 
       return state.copyWith(
