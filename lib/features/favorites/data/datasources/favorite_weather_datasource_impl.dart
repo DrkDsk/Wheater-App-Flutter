@@ -1,6 +1,6 @@
 import 'package:clima_app/core/constants/hive_constants.dart';
 import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:clima_app/features/favorites/data/models/location_cache_hive_model.dart';
@@ -18,7 +18,7 @@ class FavoriteWeatherDataSourceImpl implements FavoriteWeatherDataSource {
   @override
   Future<void> store({required CityLocationHiveModel city}) async {
     try {
-      await favoriteCityBox.put(city.id, city);
+      await favoriteCityBox.put(city.timestamp, city);
     } catch (e) {
       throw UnknownException();
     }
@@ -42,14 +42,7 @@ class FavoriteWeatherDataSourceImpl implements FavoriteWeatherDataSource {
   }
 
   @override
-  Future<LocationCacheHiveModel?> getCoordinateCache() async {
-    final storedDefaultLocation = locationCacheBox.get(locationCacheKey);
-
-    return storedDefaultLocation;
-  }
-
-  @override
-  Future<void> storeLocationCache({required CityLocation location}) async {
+  Future<void> storeLocationCache({required UserLocation location}) async {
     try {
       final locationHiveModel = LocationCacheHiveModel.fromEntity(location);
       return locationCacheBox.put(locationCacheKey, locationHiveModel);
@@ -61,7 +54,7 @@ class FavoriteWeatherDataSourceImpl implements FavoriteWeatherDataSource {
   @override
   Future<CityLocationHiveModel?> findByKey({required String key}) async {
     final result = favoriteCityBox.values
-        .where((element) => element.cityName == key)
+        .where((element) => element.timestamp == key)
         .firstOrNull;
 
     return result;
