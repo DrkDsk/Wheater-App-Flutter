@@ -1,32 +1,42 @@
+import 'dart:async';
+
+import 'package:clima_app/core/constants/hive_constants.dart';
+import 'package:clima_app/core/shared/data/datasources/location_datasource.dart';
+import 'package:clima_app/features/city/domain/entities/user_location.dart';
+import 'package:clima_app/features/favorites/data/models/location_cache_hive_model.dart';
 import 'package:flutter/services.dart';
-import 'package:location/location.dart';
+import 'package:hive/hive.dart';
 
 class LocationPlatform {
   static const MethodChannel platform = MethodChannel('device/location');
 }
 
-class LocationDataSourceImpl {
-  const LocationDataSourceImpl();
+class LocationDataSourceImpl implements LocationLocalDatasource {
+  final Box<LocationCacheHiveModel> _locationCacheBox;
 
-  Future<LocationData> getCurrentLocation() async {
-    final location = Location();
-    
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) throw Exception("No se puede obtener la ubicación");
-    }
+  const LocationDataSourceImpl(
+      {required Box<LocationCacheHiveModel> boxLocation})
+      : _locationCacheBox = boxLocation;
 
-    PermissionStatus permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        throw Exception("No se puede obtener la ubicación");
-      }
-    }
+  @override
+  Future<void> cacheLocation(UserLocation location) async {
+    final locationHiveModel = LocationCacheHiveModel(
+      timestamp: location.timestamp.toIso8601String(),
+      longitude: location.longitude,
+      latitude: location.latitude,
+    );
 
-    LocationData position = await location.getLocation();
+    await _locationCacheBox.put(locationCacheKey, locationHiveModel);
+  }
 
-    return position;
+  @override
+  Future<LocationCacheHiveModel?> getCachedLocation() async {
+    final data = _locationCacheBox.get(locationCacheKey);
+
+    print("data: $data");
+
+    if (data == null) return null;
+
+    return data;
   }
 }
