@@ -44,7 +44,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
 
     Future.microtask(() {
       _favoriteCubit.getCityIsAvailableToSave(
-        cityLocation: widget.cityLocation.toUserLocation(),
+        cityLocation: widget.cityLocation,
       );
     });
   }
