@@ -15,8 +15,7 @@ class FavoriteDataSourceImpl implements FavoriteDataSource {
   @override
   Future<void> store({required CityLocationHiveModel city}) async {
     try {
-      /* await favoriteCityBox.put(city.timestamp, city);*/
-      await favoriteCityBox.put(city.cityName, city);
+      await favoriteCityBox.put(city.timestamp, city);
     } catch (e) {
       throw UnknownException();
     }
@@ -51,12 +50,8 @@ class FavoriteDataSourceImpl implements FavoriteDataSource {
 
   @override
   Future<CityLocationHiveModel?> findByKey({required String key}) async {
-    /*final result = favoriteCityBox.values
-        .where((element) => element.timestamp == key)
-        .firstOrNull;*/
-
     final result = favoriteCityBox.values
-        .where((element) => element.cityName == key)
+        .where((element) => element.timestamp == key)
         .firstOrNull;
 
     return result;
