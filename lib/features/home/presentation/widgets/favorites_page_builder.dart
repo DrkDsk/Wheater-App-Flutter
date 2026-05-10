@@ -1,6 +1,6 @@
 import 'package:clima_app/core/shared/domain/background_weather.dart';
 import 'package:clima_app/core/shared/ui/widgets/lottie_viewer.dart';
-import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
