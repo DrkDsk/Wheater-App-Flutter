@@ -1,8 +1,8 @@
-import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
+import 'package:clima_app/features/favorites/data/datasources/favorite_datasource.dart';
 
 class LocationMapper {
   const LocationMapper({
-    required FavoriteWeatherDataSource favoriteDataSource,
+    required FavoriteDataSource favoriteDataSource,
   });
 
   static double roundCoordinate(double value) =>
