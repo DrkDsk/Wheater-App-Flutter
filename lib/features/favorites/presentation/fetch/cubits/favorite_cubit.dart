@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
 import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
@@ -39,7 +38,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   Future<void> store({required CityLocation cityLocation}) async {
     emit(state.copyWith(status: FavoriteStatus.loading));
 
-    final userLocation = cityLocation.toUserLocation();
+    final userLocation = cityLocation;
 
     /*final storeResult = await _repository.store(
       cityLocation: userLocation,
@@ -112,8 +111,9 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     });*/
   }
 
-  Future<void> getCityIsAvailableToSave(
-      {required UserLocation cityLocation}) async {
+  Future<void> getCityIsAvailableToSave({
+    required CityLocation cityLocation,
+  }) async {
     final resultEither = await _repository.isAvailableToStore(
       cityLocation: cityLocation,
     );
