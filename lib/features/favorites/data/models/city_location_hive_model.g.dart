@@ -17,34 +17,22 @@ class CityLocationHiveModelAdapter extends TypeAdapter<CityLocationHiveModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return CityLocationHiveModel(
-      id: fields[0] as String,
-      city: fields[1] as String,
-      latitude: fields[2] as double,
-      longitude: fields[3] as double,
-      state: fields[4] as String,
-      country: fields[5] as String,
-      cityName: fields[6] as String,
+      latitude: fields[0] as double,
+      longitude: fields[1] as double,
+      timestamp: fields[2] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, CityLocationHiveModel obj) {
     writer
-      ..writeByte(7)
-      ..writeByte(0)
-      ..write(obj.id)
-      ..writeByte(1)
-      ..write(obj.city)
-      ..writeByte(2)
-      ..write(obj.latitude)
       ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.latitude)
+      ..writeByte(1)
       ..write(obj.longitude)
-      ..writeByte(4)
-      ..write(obj.state)
-      ..writeByte(5)
-      ..write(obj.country)
-      ..writeByte(6)
-      ..write(obj.cityName);
+      ..writeByte(2)
+      ..write(obj.timestamp);
   }
 
   @override
