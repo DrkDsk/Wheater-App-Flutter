@@ -1,3 +1,4 @@
+import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/core/shared/data/datasources/weather_description_local_datasource.dart';
 import 'package:clima_app/features/city/data/datasources/city_datasource.dart';
@@ -38,6 +39,7 @@ Future registerRepositories() async {
   getIt.registerLazySingleton<FavoriteRepository>(
     () => FavoriteRepositoryImpl(
       favoriteWeatherDataSource: getIt<FavoriteWeatherDataSource>(),
+      locationLocalDataSource: getIt<LocationDataSourceImpl>(),
     ),
   );
 
@@ -50,7 +52,7 @@ Future registerRepositories() async {
   getIt.registerLazySingleton<LocationRepository>(
     () => LocationRepositoryImpl(
       locationDataSource: getIt<LocationDataSourceImpl>(),
-      favoriteWeatherDataSource: getIt<FavoriteWeatherDataSource>(),
+      geoLocatorDataSource: getIt<GeoLocatorDataSource>(),
     ),
   );
 }
