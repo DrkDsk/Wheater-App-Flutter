@@ -23,7 +23,10 @@ class GetWeatherUseCase {
       {Coordinate? coordinate}) async {
     if (coordinate == null) {
       final currentLocation = await _locationRepository.getCurrentLocation();
-      coordinate = currentLocation.toCoordinate();
+      coordinate = Coordinate(
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+      );
     }
 
     final forecastEither = await _searchWeatherRepository.getWeatherByLocation(
