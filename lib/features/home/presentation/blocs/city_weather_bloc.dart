@@ -1,6 +1,7 @@
 import 'package:clima_app/core/extensions/weather/city_weather_data_extension.dart';
-import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
+import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
@@ -14,8 +15,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
   EventTransformer<Event> debounceRestartable<Event>(Duration duration) {
     return (events, mapper) {
-      return restartable<Event>()
-          .call(events.debounce(duration), mapper);
+      return restartable<Event>().call(events.debounce(duration), mapper);
     };
   }
 
@@ -40,11 +40,12 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     final latitude = event.latitude;
     final longitude = event.longitude;
+    final coordinate = (latitude != null && longitude != null)
+        ? Coordinate(latitude: latitude, longitude: longitude)
+        : null;
 
-    final cityWeatherDataResult = await _getWeatherUseCase(
-      latitude: latitude,
-      longitude: longitude,
-    );
+    final cityWeatherDataResult =
+        await _getWeatherUseCase(coordinate: coordinate);
 
     final newState = cityWeatherDataResult.fold((error) {
       return state.copyWith(
