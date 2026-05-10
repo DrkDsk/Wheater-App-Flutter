@@ -8,7 +8,6 @@ import 'package:dartz/dartz.dart';
 
 class GetWeatherUseCase {
   final SearchWeatherRepository _searchWeatherRepository;
-  final LocationRepository _locationRepository;
 
   final WeatherMapper mapper;
 
@@ -16,19 +15,11 @@ class GetWeatherUseCase {
     required SearchWeatherRepository searchWeatherRepository,
     required LocationRepository locationRepository,
     required this.mapper,
-  })  : _searchWeatherRepository = searchWeatherRepository,
-        _locationRepository = locationRepository;
+  }) : _searchWeatherRepository = searchWeatherRepository;
 
-  Future<Either<Failure, CityWeatherData>> call(
-      {Coordinate? coordinate}) async {
-    if (coordinate == null) {
-      final currentLocation = await _locationRepository.getCurrentLocation();
-      coordinate = Coordinate(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
-      );
-    }
-
+  Future<Either<Failure, CityWeatherData>> call({
+    required Coordinate coordinate,
+  }) async {
     final forecastEither = await _searchWeatherRepository.getWeatherByLocation(
       lat: coordinate.latitude,
       lon: coordinate.longitude,
