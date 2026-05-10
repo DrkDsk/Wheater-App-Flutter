@@ -1,57 +1,27 @@
-import 'package:clima_app/features/home/domain/entities/coordinate.dart';
-import 'package:equatable/equatable.dart';
-
-class CityLocation with EquatableMixin {
-  final String? id;
-  final String city;
+class CityLocation {
+  final String? name;
   final double latitude;
   final double longitude;
-  final String country;
-  final String state;
-  final String cityName;
+  final String timestamp;
 
-  CityLocation({
-    this.id,
-    required this.city,
+  const CityLocation({
+    this.name,
     required this.latitude,
     required this.longitude,
-    required this.country,
-    required this.state,
-    required this.cityName,
+    required this.timestamp,
   });
 
   CityLocation copyWith({
-    String? id,
-    String? city,
+    String? name,
     double? latitude,
     double? longitude,
-    String? country,
-    String? state,
-    String? cityName,
+    String? timestamp,
   }) {
     return CityLocation(
-      id: id ?? this.id,
-      city: city ?? this.city,
+      name: name ?? this.name,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
-      country: country ?? this.country,
-      state: state ?? this.state,
-      cityName: cityName ?? this.cityName,
+      timestamp: timestamp ?? this.timestamp,
     );
   }
-
-  Coordinate toCoordinate() {
-    return Coordinate(latitude: latitude, longitude: longitude);
-  }
-
-  @override
-  List<Object?> get props => [
-        id,
-        city,
-        latitude,
-        longitude,
-        country,
-        state,
-        cityName,
-      ];
 }

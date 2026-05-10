@@ -1,5 +1,4 @@
-import 'package:clima_app/core/shared/domain/background_weather.dart';
-import 'package:clima_app/core/shared/ui/widgets/lottie_viewer.dart';
+import 'package:clima_app/core/shared/ui/widgets/lottie_loading.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
@@ -19,14 +18,12 @@ class FavoritesPageBuilder extends StatefulWidget {
 
 class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
   late final HomePageNavigationCubit homePageNavigationCubit;
-  late final BackgroundWeather _emptyBackgroundWeather;
 
   @override
   @override
   void initState() {
     super.initState();
     homePageNavigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
-    _emptyBackgroundWeather = BackgroundWeather.initial();
   }
 
   @override
@@ -35,10 +32,7 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
       selector: (state) => state.cities,
       builder: (context, cities) {
         if (cities.isEmpty) {
-          return LottieViewer(
-            path: _emptyBackgroundWeather.lottiePath,
-            backgroundColor: _emptyBackgroundWeather.color,
-          );
+          return const LottieLoading();
         }
 
         return PageView.builder(
@@ -49,7 +43,7 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
             final city = cities[index];
 
             return CityWeatherView(
-              cityName: city.cityName,
+              cityName: city.name ?? "",
               latitude: city.latitude,
               longitude: city.longitude,
             );

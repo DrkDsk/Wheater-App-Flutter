@@ -19,10 +19,10 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     };
   }
 
-  CityWeatherBloc(
-      {required GetWeatherUseCase getWeatherUseCase,
-      required CityRepository cityRepository})
-      : _getWeatherUseCase = getWeatherUseCase,
+  CityWeatherBloc({
+    required GetWeatherUseCase getWeatherUseCase,
+    required CityRepository cityRepository,
+  })  : _getWeatherUseCase = getWeatherUseCase,
         _cityRepository = cityRepository,
         super(CityWeatherState.initial()) {
     on<FetchWeatherEvent>(_getCurrentWeather);
@@ -40,9 +40,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     final latitude = event.latitude;
     final longitude = event.longitude;
-    final coordinate = (latitude != null && longitude != null)
-        ? Coordinate(latitude: latitude, longitude: longitude)
-        : null;
+    final coordinate = Coordinate(latitude: latitude, longitude: longitude);
 
     final cityWeatherDataResult =
         await _getWeatherUseCase(coordinate: coordinate);
@@ -84,7 +82,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
       );
     }, (right) {
       final filteredCitySearchResult = right.data.where((element) {
-        return element.state.isNotEmpty;
+        return element.name?.isNotEmpty ?? false;
       }).toList();
 
       return state.copyWith(

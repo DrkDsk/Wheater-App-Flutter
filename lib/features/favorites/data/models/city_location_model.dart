@@ -1,56 +1,37 @@
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 
 class CityLocationModel {
+  final double latitude;
+  final double longitude;
   final String name;
-  final double lat;
-  final double lon;
-  final String country;
-  final String? state;
-  final String? cityName;
+  final DateTime timestamp;
 
   const CityLocationModel({
+    required this.latitude,
+    required this.longitude,
     required this.name,
-    required this.lat,
-    required this.lon,
-    required this.country,
-    required this.state,
-    required this.cityName,
+    required this.timestamp,
   });
 
-  CityLocation toEntity() {
-    return CityLocation(
-      city: name,
-      latitude: lat,
-      longitude: lon,
-      country: country,
-      state: state ?? "",
-      cityName: cityName ?? "",
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'lat': lat,
-      'lon': lon,
-      'country': country,
-      'state': state,
-      'cityName': cityName
-    };
-  }
-
-  factory CityLocationModel.fromJson(Map<String, dynamic> map) {
+  factory CityLocationModel.fromMap(Map<String, dynamic> map) {
     final String city = map['name'] as String;
     final String state = map['state'] as String;
     final String cityName = "$city, $state";
 
     return CityLocationModel(
-      name: city,
-      lat: map['lat'] as double,
-      lon: map['lon'] as double,
-      country: map['country'] as String,
-      state: state,
-      cityName: cityName,
+      name: cityName,
+      latitude: 0,
+      longitude: 0,
+      timestamp: DateTime.now(),
+    );
+  }
+
+  CityLocation toEntity() {
+    return CityLocation(
+      name: name,
+      latitude: latitude,
+      longitude: longitude,
+      timestamp: timestamp.toIso8601String(),
     );
   }
 }

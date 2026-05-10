@@ -8,10 +8,10 @@ class GetFavoritesAndCurrentLocationUseCase {
   final LocationRepository _locationRepository;
   final FavoriteRepository _favoriteRepository;
 
-  const GetFavoritesAndCurrentLocationUseCase(
-      {required LocationRepository locationRepository,
-      required FavoriteRepository favoriteRepository})
-      : _locationRepository = locationRepository,
+  const GetFavoritesAndCurrentLocationUseCase({
+    required LocationRepository locationRepository,
+    required FavoriteRepository favoriteRepository,
+  })  : _locationRepository = locationRepository,
         _favoriteRepository = favoriteRepository;
 
   Future<Either<Failure, List<CityLocation>>> call() async {

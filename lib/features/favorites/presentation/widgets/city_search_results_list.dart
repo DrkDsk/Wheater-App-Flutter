@@ -40,18 +40,14 @@ class CitySearchResultsList extends StatelessWidget {
       itemCount: cities.length,
       separatorBuilder: (context, index) {
         final cityLocation = cities[index];
-        final cityName = cityLocation.city;
-        final state = cityLocation.state;
-        final country = cityLocation.country;
-
-        final query = "$cityName, $state, $country";
+        final cityName = cityLocation.name ?? "";
 
         return GestureDetector(
           onTap: () => getWeatherSelected(
             cityLocation: cityLocation,
             context: context,
           ),
-          child: CityResultItemCard(query: query),
+          child: CityResultItemCard(query: cityName),
         );
       },
     );

@@ -16,7 +16,7 @@ class SearchCityLocationResponseModel {
   factory SearchCityLocationResponseModel.fromJson(List<dynamic> jsonList) {
     try {
       return SearchCityLocationResponseModel(
-        data: jsonList.map((json) => CityLocationModel.fromJson(json)).toList(),
+        data: jsonList.map((json) => CityLocationModel.fromMap(json)).toList(),
       );
     } catch (e) {
       throw UnknownException(message: e.toString());

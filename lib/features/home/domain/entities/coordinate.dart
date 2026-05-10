@@ -6,16 +6,6 @@ class Coordinate with EquatableMixin {
 
   Coordinate({required this.latitude, required this.longitude});
 
-  Coordinate copyWith({
-    double? longitude,
-    double? latitude,
-  }) {
-    return Coordinate(
-      longitude: longitude ?? this.longitude,
-      latitude: latitude ?? this.latitude,
-    );
-  }
-
   @override
   List<Object?> get props => [latitude, longitude];
 }

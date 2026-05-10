@@ -1,32 +1,41 @@
+import 'dart:async';
+
+import 'package:clima_app/core/constants/hive_constants.dart';
+import 'package:clima_app/core/shared/data/datasources/location_datasource.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:flutter/services.dart';
-import 'package:location/location.dart';
+import 'package:hive/hive.dart';
 
 class LocationPlatform {
   static const MethodChannel platform = MethodChannel('device/location');
 }
 
-class LocationDataSourceImpl {
-  const LocationDataSourceImpl();
+class LocationDataSourceImpl implements LocationLocalDatasource {
+  final Box<CityLocationHiveModel> _cityLocationCacheBox;
 
-  Future<LocationData> getCurrentLocation() async {
-    final location = Location();
-    
-    bool serviceEnabled = await location.serviceEnabled();
-    if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) throw Exception("No se puede obtener la ubicación");
-    }
+  const LocationDataSourceImpl({
+    required Box<CityLocationHiveModel> boxLocation,
+  }) : _cityLocationCacheBox = boxLocation;
 
-    PermissionStatus permissionGranted = await location.hasPermission();
-    if (permissionGranted == PermissionStatus.denied) {
-      permissionGranted = await location.requestPermission();
-      if (permissionGranted != PermissionStatus.granted) {
-        throw Exception("No se puede obtener la ubicación");
-      }
-    }
+  @override
+  Future<void> cacheLocation(CityLocation location) async {
+    final locationHiveModel = CityLocationHiveModel(
+      longitude: location.longitude,
+      latitude: location.latitude,
+      name: location.name,
+      timestamp: location.timestamp,
+    );
 
-    LocationData position = await location.getLocation();
+    await _cityLocationCacheBox.put(locationCacheKey, locationHiveModel);
+  }
 
-    return position;
+  @override
+  Future<CityLocationHiveModel?> getCachedLocation() async {
+    final data = _cityLocationCacheBox.get(locationCacheKey);
+
+    if (data == null) return null;
+
+    return data;
   }
 }
