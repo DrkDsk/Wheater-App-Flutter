@@ -40,9 +40,9 @@ class CitySearchResultsList extends StatelessWidget {
       itemCount: cities.length,
       separatorBuilder: (context, index) {
         final cityLocation = cities[index];
-        final cityName = cityLocation.city;
-        final state = cityLocation.state;
-        final country = cityLocation.country;
+        final cityName = cityLocation.name;
+        final state = "cityLocation.state";
+        final country = "cityLocation.country";
 
         final query = "$cityName, $state, $country";
 

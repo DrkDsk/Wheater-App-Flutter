@@ -1,11 +1,11 @@
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:equatable/equatable.dart';
 
 enum FavoriteStatus { initial, loading, success, failure }
 
 class FavoriteState with EquatableMixin {
   final FavoriteStatus status;
-  final List<CityLocation> cities;
+  final List<UserLocation> cities;
   final String message;
   final bool isAvailableToStore;
 
@@ -18,7 +18,7 @@ class FavoriteState with EquatableMixin {
 
   FavoriteState copyWith({
     FavoriteStatus? status,
-    List<CityLocation>? cities,
+    List<UserLocation>? cities,
     String? message,
     bool? isAvailableToStore,
   }) {
