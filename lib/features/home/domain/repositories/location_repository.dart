@@ -1,11 +1,15 @@
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:geocoding/geocoding.dart';
 
 abstract class LocationRepository {
-  Future<CityLocation> getCurrentLocation();
+  Stream<UserLocation> watchLocation();
+
+  Future<UserLocation> getCurrentLocation();
 
   Future<Placemark?> getLocationInformation({
     required double latitude,
     required double longitude,
   });
+
+  Future<void> stopTracking();
 }
