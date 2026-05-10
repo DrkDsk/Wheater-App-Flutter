@@ -1,5 +1,3 @@
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
-
 class CityLocation {
   final String? name;
   final double latitude;
@@ -10,14 +8,6 @@ class CityLocation {
     required this.latitude,
     required this.longitude,
   });
-
-  UserLocation toUserLocation() {
-    return UserLocation(
-      latitude: latitude,
-      longitude: longitude,
-      timestamp: DateTime.now(),
-    );
-  }
 
   CityLocation copyWith({
     String? name,
