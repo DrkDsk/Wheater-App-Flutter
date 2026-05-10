@@ -40,9 +40,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     final latitude = event.latitude;
     final longitude = event.longitude;
-    final coordinate = (latitude != null && longitude != null)
-        ? Coordinate(latitude: latitude, longitude: longitude)
-        : null;
+    final coordinate = Coordinate(latitude: latitude, longitude: longitude);
 
     final cityWeatherDataResult =
         await _getWeatherUseCase(coordinate: coordinate);
