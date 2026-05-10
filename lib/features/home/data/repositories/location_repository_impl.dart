@@ -22,10 +22,19 @@ class LocationRepositoryImpl implements LocationRepository {
 
     if (cityLocation == null) {
       final currentLocation = await _geoLocatorDataSource.getCurrentLocation();
+      final locationInfo = await getLocationInformation(
+        latitude: currentLocation.latitude,
+        longitude: currentLocation.longitude,
+      );
+
+      final cityInfo =
+          "${locationInfo?.name} ${locationInfo?.administrativeArea}";
+
       return CityLocation(
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
         timestamp: currentLocation.timestamp.toIso8601String(),
+        name: cityInfo,
       );
     }
 
