@@ -21,8 +21,7 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
   final CityLocation cityLocation;
 
   Future<void> deleteFavoriteWeather(BuildContext context) async {
-    /*final currentCityId = cityLocation.timestamp.toIso8601String();*/
-    final currentCityId = cityLocation.name ?? "";
+    final currentCityId = cityLocation.timestamp;
 
     if (currentCityId.isEmpty) {
       return;
@@ -75,7 +74,7 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cityName = "cityLocation.cityName";
+    final cityName = cityLocation.name ?? "";
 
     return Slidable(
       direction: Axis.horizontal,
