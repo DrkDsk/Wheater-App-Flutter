@@ -1,22 +1,26 @@
 import 'package:bloc/bloc.dart';
-import 'package:clima_app/features/city/domain/entities/city_location_entity.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
+import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
 import 'package:uuid/uuid.dart';
 
 import './favorite_fetch_state.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
   final FavoriteRepository _repository;
+  final GetFavoritesAndCurrentLocationUseCase _favoritesCitiesUseCase;
 
   FavoriteCubit({
     required FavoriteRepository repository,
+    required GetFavoritesAndCurrentLocationUseCase favoritesUseCase,
   })  : _repository = repository,
+        _favoritesCitiesUseCase = favoritesUseCase,
         super(const FavoriteState());
 
   Future<void> getFavoriteCities() async {
     emit(state.copyWith(status: FavoriteStatus.loading));
 
-    final favoritesResult = await _repository.index();
+    final favoritesResult = await _favoritesCitiesUseCase();
 
     final newState = favoritesResult.fold((error) {
       return state.copyWith(
