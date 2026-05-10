@@ -2,7 +2,6 @@ import 'package:clima_app/core/extensions/location/location_data_extension.dart'
 import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
-import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -40,25 +39,5 @@ class LocationRepositoryImpl implements LocationRepository {
     );
 
     return placemarks.isEmpty ? null : placemarks.first;
-  }
-
-  @override
-  Future<Coordinate> ensureCoordinates({
-    double? latitude,
-    double? longitude,
-  }) async {
-    if (latitude != null && longitude != null) {
-      return Coordinate(
-        latitude: latitude,
-        longitude: longitude,
-      );
-    }
-
-    final coordinate = await getCurrentLocation();
-
-    return Coordinate(
-      latitude: coordinate.latitude,
-      longitude: coordinate.longitude,
-    );
   }
 }

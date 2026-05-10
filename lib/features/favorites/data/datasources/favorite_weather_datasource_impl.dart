@@ -25,7 +25,7 @@ class FavoriteWeatherDataSourceImpl implements FavoriteWeatherDataSource {
   }
 
   @override
-  Future<List<CityLocationHiveModel>> getAll() async {
+  Future<List<CityLocationHiveModel>> index() async {
     return favoriteCityBox.values.toList();
   }
 

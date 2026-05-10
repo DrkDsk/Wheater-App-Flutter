@@ -9,7 +9,7 @@ abstract interface class FavoriteWeatherDataSource {
 
   Future<void> store({required CityLocationHiveModel city});
 
-  Future<List<CityLocationHiveModel>> getAll();
+  Future<List<CityLocationHiveModel>> index();
 
   Future<bool> delete({required CityLocationHiveModel model});
 

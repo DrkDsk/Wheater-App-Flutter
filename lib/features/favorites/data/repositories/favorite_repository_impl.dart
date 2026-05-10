@@ -51,7 +51,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   @override
   Future<Either<Failure, List<CityLocation>>> index() async {
     try {
-      final citiesModels = await _favoriteWeatherDataSource.getAll();
+      final citiesModels = await _favoriteWeatherDataSource.index();
 
       final storedCities = citiesModels.map((city) => city.toEntity()).toList();
 

@@ -1,7 +1,6 @@
 import 'package:clima_app/core/dio_client.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/core/shared/data/datasources/weather_description_local_datasource.dart';
-import 'package:clima_app/core/helpers/network_helper.dart';
 import 'package:clima_app/features/city/data/datasources/city_datasource.dart';
 import 'package:clima_app/features/city/data/datasources/city_datasource_impl.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
@@ -34,7 +33,7 @@ Future registerDataSources() async {
   );
 
   getIt.registerLazySingleton<LocationDataSourceImpl>(
-    () => LocationDataSourceImpl(networkHelper: getIt<NetworkHelper>()),
+    () => const LocationDataSourceImpl(),
   );
 
   getIt.registerLazySingleton<WeatherDescriptionLocalDataSourceImpl>(
