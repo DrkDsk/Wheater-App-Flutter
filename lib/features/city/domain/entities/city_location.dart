@@ -2,29 +2,32 @@ import 'package:clima_app/features/city/domain/entities/user_location.dart';
 
 class CityLocation {
   final String name;
-  final double lat;
-  final double long;
+  final double latitude;
+  final double longitude;
 
-  const CityLocation(
-      {required this.name, required this.lat, required this.long});
-
-  CityLocation copyWith({
-    String? name,
-    double? lat,
-    double? long,
-  }) {
-    return CityLocation(
-      name: name ?? this.name,
-      lat: lat ?? this.lat,
-      long: long ?? this.long,
-    );
-  }
+  const CityLocation({
+    required this.name,
+    required this.latitude,
+    required this.longitude,
+  });
 
   UserLocation toUserLocation() {
     return UserLocation(
-      latitude: lat,
-      longitude: long,
+      latitude: latitude,
+      longitude: longitude,
       timestamp: DateTime.now(),
+    );
+  }
+
+  CityLocation copyWith({
+    String? name,
+    double? latitude,
+    double? longitude,
+  }) {
+    return CityLocation(
+      name: name ?? this.name,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 }

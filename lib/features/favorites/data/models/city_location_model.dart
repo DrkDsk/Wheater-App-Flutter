@@ -22,8 +22,8 @@ class CityLocationModel {
   CityLocation toEntity() {
     return CityLocation(
       name: name,
-      lat: latitude,
-      long: longitude,
+      latitude: latitude,
+      longitude: longitude,
     );
   }
 }

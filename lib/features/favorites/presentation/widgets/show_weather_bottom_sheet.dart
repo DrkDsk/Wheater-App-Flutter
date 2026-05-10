@@ -30,8 +30,8 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
   void initState() {
     super.initState();
 
-    final latitude = widget.cityLocation.lat;
-    final longitude = widget.cityLocation.long;
+    final latitude = widget.cityLocation.latitude;
+    final longitude = widget.cityLocation.longitude;
 
     _favoriteCubit = BlocProvider.of<FavoriteCubit>(context);
     _navigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
