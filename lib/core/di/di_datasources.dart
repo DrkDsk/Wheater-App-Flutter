@@ -35,7 +35,7 @@ Future registerDataSources() async {
   );
 
   getIt.registerLazySingleton<LocationDataSourceImpl>(
-    () => LocationDataSourceImpl(boxLocation: locationCacheBox),
+    () => LocationDataSourceImpl(boxLocation: favoriteCityBox),
   );
 
   getIt.registerLazySingleton<WeatherDescriptionLocalDataSourceImpl>(
