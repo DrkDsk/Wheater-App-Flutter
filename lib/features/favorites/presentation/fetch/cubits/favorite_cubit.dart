@@ -88,7 +88,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
 
     final storedCitiesResult = await _repository.index();
 
-    /*storedCitiesResult.fold((left) {}, (result) {
+    storedCitiesResult.fold((left) {}, (result) {
       final citiesStateSet =
           currentCitiesInState.map((element) => element.timestamp).toSet();
       final resultSet = result.map((element) => element.timestamp).toSet();
@@ -108,7 +108,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       final newState = state.copyWith(cities: result);
 
       emit(newState);
-    });*/
+    });
   }
 
   Future<void> getCityIsAvailableToSave({
