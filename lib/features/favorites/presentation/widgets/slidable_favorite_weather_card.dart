@@ -1,6 +1,6 @@
 import 'package:clima_app/core/di/di.dart';
 import 'package:clima_app/core/router/app_router.dart';
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/favorite_city_item_card.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
@@ -18,12 +18,12 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
   });
 
   final int index;
-  final CityLocation cityLocation;
+  final UserLocation cityLocation;
 
   Future<void> deleteFavoriteWeather(BuildContext context) async {
-    final currentCityId = cityLocation.id;
+    final currentCityId = cityLocation.timestamp.toIso8601String();
 
-    if (currentCityId == null || currentCityId.isEmpty) {
+    if (currentCityId.isEmpty) {
       return;
     }
 
@@ -74,12 +74,11 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cityName = cityLocation.cityName;
+    final cityName = "cityLocation.cityName";
 
     return Slidable(
       direction: Axis.horizontal,
-      endActionPane:
-          cityLocation.id != null ? buildActionPane(context: context) : null,
+      endActionPane: buildActionPane(context: context),
       child: GestureDetector(
         onTap: () => onTap(context),
         child: FavoriteCityItemCard(cityName: cityName),

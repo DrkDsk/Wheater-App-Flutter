@@ -30,8 +30,8 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
   void initState() {
     super.initState();
 
-    final latitude = widget.cityLocation.latitude;
-    final longitude = widget.cityLocation.longitude;
+    final latitude = widget.cityLocation.lat;
+    final longitude = widget.cityLocation.long;
 
     _favoriteCubit = BlocProvider.of<FavoriteCubit>(context);
     _navigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
@@ -44,7 +44,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
 
     Future.microtask(() {
       _favoriteCubit.getCityIsAvailableToSave(
-        cityLocation: widget.cityLocation,
+        cityLocation: widget.cityLocation.toUserLocation(),
       );
     });
   }
@@ -66,7 +66,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final cityLocation = widget.cityLocation;
-    final cityName = cityLocation.cityName;
+    final cityName = cityLocation.name;
 
     return FractionallySizedBox(
       heightFactor: 0.90,
