@@ -1,5 +1,5 @@
 import 'package:clima_app/core/shared/ui/widgets/lottie_loading.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
@@ -28,7 +28,7 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<FavoriteCubit, FavoriteState, List<UserLocation>>(
+    return BlocSelector<FavoriteCubit, FavoriteState, List<CityLocation>>(
       selector: (state) => state.cities,
       builder: (context, cities) {
         if (cities.isEmpty) {
