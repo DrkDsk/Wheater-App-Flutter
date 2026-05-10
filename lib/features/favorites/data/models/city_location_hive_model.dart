@@ -14,10 +14,14 @@ class CityLocationHiveModel extends HiveObject {
   @HiveField(2)
   final String? cityName;
 
+  @HiveField(3)
+  final String timestamp;
+
   CityLocationHiveModel({
     required this.latitude,
     required this.longitude,
     required this.cityName,
+    required this.timestamp,
   });
 
   CityLocation toEntity() {
@@ -25,6 +29,7 @@ class CityLocationHiveModel extends HiveObject {
       latitude: latitude,
       longitude: longitude,
       name: cityName,
+      timestamp: timestamp,
     );
   }
 
@@ -33,5 +38,6 @@ class CityLocationHiveModel extends HiveObject {
         latitude: double.parse(location.latitude.toStringAsFixed(3)),
         longitude: double.parse(location.longitude.toStringAsFixed(3)),
         cityName: location.name,
+        timestamp: location.timestamp,
       );
 }
