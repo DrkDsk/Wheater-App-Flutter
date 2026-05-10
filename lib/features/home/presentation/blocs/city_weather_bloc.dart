@@ -19,10 +19,10 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     };
   }
 
-  CityWeatherBloc(
-      {required GetWeatherUseCase getWeatherUseCase,
-      required CityRepository cityRepository})
-      : _getWeatherUseCase = getWeatherUseCase,
+  CityWeatherBloc({
+    required GetWeatherUseCase getWeatherUseCase,
+    required CityRepository cityRepository,
+  })  : _getWeatherUseCase = getWeatherUseCase,
         _cityRepository = cityRepository,
         super(CityWeatherState.initial()) {
     on<FetchWeatherEvent>(_getCurrentWeather);
