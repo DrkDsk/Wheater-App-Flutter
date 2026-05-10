@@ -1,6 +1,6 @@
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
 import 'package:geocoding/geocoding.dart';
 
@@ -15,21 +15,21 @@ class LocationRepositoryImpl implements LocationRepository {
         _geoLocatorDataSource = geoLocatorDataSource;
 
   @override
-  Future<UserLocation> getCurrentLocation() async {
+  Future<CityLocation> getCurrentLocation() async {
     final storedLocationModel = await _locationDataSource.getCachedLocation();
 
-    final position = storedLocationModel?.toEntity();
+    final cityLocation = storedLocationModel?.toEntity();
 
-    if (position == null) {
+    if (cityLocation == null) {
       final currentLocation = await _geoLocatorDataSource.getCurrentLocation();
-      return UserLocation(
+      return CityLocation(
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
-        timestamp: currentLocation.timestamp,
+        /* timestamp: currentLocation.timestamp,*/
       );
     }
 
-    return position;
+    return cityLocation;
   }
 
   @override
@@ -51,7 +51,7 @@ class LocationRepositoryImpl implements LocationRepository {
   }
 
   @override
-  Stream<UserLocation> watchLocation() async* {
+  Stream<CityLocation> watchLocation() async* {
     await for (final location in _geoLocatorDataSource.watchPosition()) {
       await _locationDataSource.cacheLocation(location);
 
