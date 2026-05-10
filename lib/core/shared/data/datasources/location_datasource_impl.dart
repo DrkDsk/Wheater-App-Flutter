@@ -23,7 +23,7 @@ class LocationDataSourceImpl implements LocationLocalDatasource {
     final locationHiveModel = CityLocationHiveModel(
       longitude: location.longitude,
       latitude: location.latitude,
-      cityName: location.name,
+      name: location.name,
       timestamp: location.timestamp,
     );
 
