@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
-  StreamSubscription<UserLocation>? _subscription;
+  StreamSubscription<CityLocation>? _subscription;
 
   @override
   Future<void> stopTracking() async {
