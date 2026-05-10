@@ -1,6 +1,6 @@
 import 'package:clima_app/core/di/di.dart';
 import 'package:clima_app/core/router/app_router.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/favorite_city_item_card.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
@@ -18,10 +18,11 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
   });
 
   final int index;
-  final UserLocation cityLocation;
+  final CityLocation cityLocation;
 
   Future<void> deleteFavoriteWeather(BuildContext context) async {
-    final currentCityId = cityLocation.timestamp.toIso8601String();
+    /*final currentCityId = cityLocation.timestamp.toIso8601String();*/
+    final currentCityId = cityLocation.name ?? "";
 
     if (currentCityId.isEmpty) {
       return;
