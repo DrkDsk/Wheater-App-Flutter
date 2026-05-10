@@ -25,7 +25,7 @@ class LocationRepositoryImpl implements LocationRepository {
       return CityLocation(
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
-        /* timestamp: currentLocation.timestamp,*/
+        timestamp: currentLocation.timestamp.toIso8601String(),
       );
     }
 
