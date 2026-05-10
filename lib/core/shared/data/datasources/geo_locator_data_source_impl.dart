@@ -23,7 +23,7 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
       (position) => CityLocation(
         latitude: position.latitude,
         longitude: position.longitude,
-        /*timestamp: position.timestamp,*/
+        timestamp: position.timestamp.toIso8601String(),
       ),
     );
   }
