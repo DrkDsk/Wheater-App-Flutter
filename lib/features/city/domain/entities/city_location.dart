@@ -1,3 +1,4 @@
+import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:equatable/equatable.dart';
 
 class CityLocation with EquatableMixin {
@@ -37,6 +38,10 @@ class CityLocation with EquatableMixin {
       state: state ?? this.state,
       cityName: cityName ?? this.cityName,
     );
+  }
+
+  Coordinate toCoordinate() {
+    return Coordinate(latitude: latitude, longitude: longitude);
   }
 
   @override
