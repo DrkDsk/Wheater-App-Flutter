@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:clima_app/core/constants/hive_constants.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource.dart';
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
-import 'package:clima_app/features/favorites/data/models/location_cache_hive_model.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 
@@ -12,28 +12,26 @@ class LocationPlatform {
 }
 
 class LocationDataSourceImpl implements LocationLocalDatasource {
-  final Box<LocationCacheHiveModel> _locationCacheBox;
+  final Box<CityLocationHiveModel> _cityLocationCacheBox;
 
-  const LocationDataSourceImpl(
-      {required Box<LocationCacheHiveModel> boxLocation})
-      : _locationCacheBox = boxLocation;
+  const LocationDataSourceImpl({
+    required Box<CityLocationHiveModel> boxLocation,
+  }) : _cityLocationCacheBox = boxLocation;
 
   @override
-  Future<void> cacheLocation(UserLocation location) async {
-    final locationHiveModel = LocationCacheHiveModel(
-      timestamp: location.timestamp.toIso8601String(),
+  Future<void> cacheLocation(CityLocation location) async {
+    final locationHiveModel = CityLocationHiveModel(
       longitude: location.longitude,
       latitude: location.latitude,
+      cityName: location.name,
     );
 
-    await _locationCacheBox.put(locationCacheKey, locationHiveModel);
+    await _cityLocationCacheBox.put(locationCacheKey, locationHiveModel);
   }
 
   @override
-  Future<LocationCacheHiveModel?> getCachedLocation() async {
-    final data = _locationCacheBox.get(locationCacheKey);
-
-    print("data: $data");
+  Future<CityLocationHiveModel?> getCachedLocation() async {
+    final data = _cityLocationCacheBox.get(locationCacheKey);
 
     if (data == null) return null;
 

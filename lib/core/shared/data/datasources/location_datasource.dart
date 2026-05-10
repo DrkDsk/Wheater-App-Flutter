@@ -1,8 +1,8 @@
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
-import 'package:clima_app/features/favorites/data/models/location_cache_hive_model.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 
 abstract class LocationLocalDatasource {
-  Future<void> cacheLocation(UserLocation location);
+  Future<void> cacheLocation(CityLocation location);
 
-  Future<LocationCacheHiveModel?> getCachedLocation();
+  Future<CityLocationHiveModel?> getCachedLocation();
 }
