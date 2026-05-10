@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -13,17 +14,17 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
   }
 
   @override
-  Stream<UserLocation> watchPosition() {
+  Stream<CityLocation> watchPosition() {
     return Geolocator.getPositionStream(
       locationSettings: const LocationSettings(
         accuracy: LocationAccuracy.high,
         distanceFilter: 20,
       ),
     ).map(
-      (position) => UserLocation(
+      (position) => CityLocation(
         latitude: position.latitude,
         longitude: position.longitude,
-        timestamp: position.timestamp,
+        /*timestamp: position.timestamp,*/
       ),
     );
   }

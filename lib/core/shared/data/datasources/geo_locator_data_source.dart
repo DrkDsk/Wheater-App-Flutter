@@ -1,8 +1,8 @@
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:geolocator/geolocator.dart';
 
 abstract class GeoLocatorDataSource {
-  Stream<UserLocation> watchPosition();
+  Stream<CityLocation> watchPosition();
 
   Future<void> stopTracking();
 
