@@ -1,4 +1,4 @@
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:hive/hive.dart';
 
 part 'location_cache_hive_model.g.dart';
@@ -12,48 +12,27 @@ class LocationCacheHiveModel extends HiveObject {
   final double longitude;
 
   @HiveField(2)
-  final String city;
-
-  @HiveField(3)
-  final String state;
-
-  @HiveField(4)
-  final String country;
-
-  @HiveField(5)
-  final String cityName;
+  final String timestamp;
 
   LocationCacheHiveModel({
     required this.latitude,
     required this.longitude,
-    required this.city,
-    required this.state,
-    required this.country,
-    required this.cityName,
+    required this.timestamp,
   });
 
-  CityLocation toEntity() {
-    return CityLocation(
+  UserLocation toEntity() {
+    return UserLocation(
       latitude: latitude,
       longitude: longitude,
-      city: city,
-      country: country,
-      state: state,
-      cityName: cityName,
+      timestamp: DateTime.parse(timestamp),
     );
   }
 
-  factory LocationCacheHiveModel.fromEntity(CityLocation entity) {
+  factory LocationCacheHiveModel.fromEntity(UserLocation entity) {
     return LocationCacheHiveModel(
       latitude: double.parse(entity.latitude.toStringAsFixed(3)),
       longitude: double.parse(entity.longitude.toStringAsFixed(3)),
-      city: entity.city,
-      state: entity.state,
-      country: entity.country,
-      cityName: entity.cityName,
+      timestamp: entity.timestamp.toIso8601String(),
     );
   }
-
-  @override
-  String get key => city;
 }
