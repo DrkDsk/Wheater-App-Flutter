@@ -5,7 +5,6 @@ import 'package:clima_app/features/city/data/repositories/city_repository_impl.d
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/favorites/data/repositories/favorite_repository_impl.dart';
-import 'package:clima_app/features/favorites/data/services/favorite_service.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/home/data/datasources/search_weather_datasource.dart';
 import 'package:clima_app/features/home/data/repositories/location_repository_impl.dart';
@@ -39,8 +38,6 @@ Future registerRepositories() async {
   getIt.registerLazySingleton<FavoriteRepository>(
     () => FavoriteRepositoryImpl(
       favoriteWeatherDataSource: getIt<FavoriteWeatherDataSource>(),
-      favoriteService: getIt<LocationMapper>(),
-      locationDataSource: getIt<LocationDataSourceImpl>(),
     ),
   );
 
@@ -52,7 +49,8 @@ Future registerRepositories() async {
 
   getIt.registerLazySingleton<LocationRepository>(
     () => LocationRepositoryImpl(
-      getIt<LocationDataSourceImpl>(),
+      locationDataSource: getIt<LocationDataSourceImpl>(),
+      favoriteWeatherDataSource: getIt<FavoriteWeatherDataSource>(),
     ),
   );
 }
