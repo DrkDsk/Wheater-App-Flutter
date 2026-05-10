@@ -43,7 +43,7 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
             final city = cities[index];
 
             return CityWeatherView(
-              cityName: "city.cityName",
+              cityName: city.name ?? "",
               latitude: city.latitude,
               longitude: city.longitude,
             );
