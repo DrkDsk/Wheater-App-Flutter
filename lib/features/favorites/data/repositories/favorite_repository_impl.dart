@@ -25,12 +25,10 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     required CityLocation cityLocation,
   }) async {
     try {
-      /*final cityLocationKey = cityLocation.timestamp;*/
-
-      final cityLocationKey = cityLocation.name;
+      final cityLocationKey = cityLocation.timestamp;
 
       final locationModel = await _favoriteWeatherDataSource.findByKey(
-        key: cityLocationKey ?? "",
+        key: cityLocationKey,
       );
 
       final locationCache = await _locationLocalDatasource.getCachedLocation();
@@ -74,12 +72,8 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     required CityLocation cityLocation,
   }) async {
     try {
-      /*final cityLocationModel = await _favoriteWeatherDataSource.findById(
-        id: cityLocation.timestamp.toIso8601String(),
-      );*/
-
       final cityLocationModel = await _favoriteWeatherDataSource.findById(
-        id: cityLocation.name,
+        id: cityLocation.timestamp,
       );
 
       if (cityLocationModel == null) {
@@ -101,19 +95,15 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     required CityLocation cityLocation,
   }) async {
     try {
-      /*final cityLocationKey = cityLocation.timestamp.toIso8601String();*/
-      final cityLocationKey = cityLocation.name;
+      final cityLocationKey = cityLocation.timestamp;
 
       final (cacheLocationCity, storedCity) = await (
         _locationLocalDatasource.getCachedLocation(),
-        _favoriteWeatherDataSource.findByKey(key: cityLocationKey ?? ""),
+        _favoriteWeatherDataSource.findByKey(key: cityLocationKey),
       ).wait;
 
-      /*final exists = cacheLocationCity?.timestamp == cityLocationKey ||
-          storedCity?.timestamp == cityLocationKey;*/
-
-      final exists = cacheLocationCity?.cityName == cityLocationKey ||
-          storedCity?.cityName == cityLocationKey;
+      final exists = cacheLocationCity?.timestamp == cityLocationKey ||
+          storedCity?.timestamp == cityLocationKey;
 
       return Right(!exists);
     } on UnknownException catch (e) {
