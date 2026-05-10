@@ -4,6 +4,7 @@ import 'package:clima_app/core/error/exceptions/network_exception.dart';
 import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
 import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/entities/user_location.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_weather_datasource.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
@@ -22,13 +23,15 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
 
   @override
   Future<Either<Failure, bool>> store({
-    required UserLocation cityLocation,
+    required CityLocation cityLocation,
   }) async {
     try {
-      final cityLocationKey = cityLocation.timestamp;
+      /*final cityLocationKey = cityLocation.timestamp;*/
+
+      final cityLocationKey = cityLocation.name;
 
       final locationModel = await _favoriteWeatherDataSource.findByKey(
-        key: cityLocationKey.toIso8601String(),
+        key: cityLocationKey ?? "",
       );
 
       final locationCache = await _locationLocalDatasource.getCachedLocation();
@@ -53,7 +56,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<Failure, List<UserLocation>>> index() async {
+  Future<Either<Failure, List<CityLocation>>> index() async {
     try {
       final citiesModels = await _favoriteWeatherDataSource.index();
 
@@ -100,8 +103,11 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
         _favoriteWeatherDataSource.findByKey(key: cityLocationKey),
       ).wait;
 
-      final exists = cacheLocationCity?.timestamp == cityLocationKey ||
-          storedCity?.timestamp == cityLocationKey;
+      /*final exists = cacheLocationCity?.timestamp == cityLocationKey ||
+          storedCity?.timestamp == cityLocationKey;*/
+
+      final exists = cacheLocationCity?.cityName == cityLocationKey ||
+          storedCity?.cityName == cityLocationKey;
 
       return Right(!exists);
     } on UnknownException catch (e) {
