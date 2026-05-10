@@ -1,4 +1,4 @@
-import 'package:clima_app/features/city/domain/entities/user_location.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:hive/hive.dart';
 
 part 'city_location_hive_model.g.dart';
@@ -12,26 +12,26 @@ class CityLocationHiveModel extends HiveObject {
   final double longitude;
 
   @HiveField(2)
-  final String timestamp;
+  final String? cityName;
 
   CityLocationHiveModel({
     required this.latitude,
     required this.longitude,
-    required this.timestamp,
+    required this.cityName,
   });
 
-  UserLocation toEntity() {
-    return UserLocation(
+  CityLocation toEntity() {
+    return CityLocation(
       latitude: latitude,
       longitude: longitude,
-      timestamp: DateTime.parse(timestamp),
+      name: cityName,
     );
   }
 
-  factory CityLocationHiveModel.fromEntity(UserLocation location) =>
+  factory CityLocationHiveModel.fromEntity(CityLocation location) =>
       CityLocationHiveModel(
         latitude: double.parse(location.latitude.toStringAsFixed(3)),
         longitude: double.parse(location.longitude.toStringAsFixed(3)),
-        timestamp: location.timestamp.toIso8601String(),
+        cityName: location.name,
       );
 }
