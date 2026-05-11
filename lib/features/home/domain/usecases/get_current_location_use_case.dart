@@ -23,7 +23,7 @@ class GetFavoritesAndCurrentLocationUseCase {
     return favoritesCities.fold((error) {
       return Left(error);
     }, (data) {
-      return Right([...data, locationCached]);
+      return Right([locationCached, ...data]);
     });
   }
 }
