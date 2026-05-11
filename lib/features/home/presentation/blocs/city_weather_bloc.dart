@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:clima_app/core/extensions/weather/city_weather_data_extension.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
+import 'package:clima_app/features/city/domain/use_cases/store_location_use_case.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
+import 'package:clima_app/features/home/domain/usecases/observe_location_changes_use_case.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +16,9 @@ import 'package:stream_transform/stream_transform.dart';
 class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
+  final ObserveLocationChangesUseCase _locationWatchUseCase;
+  final StoreLocationUseCase _storeLocationUseCase;
+  StreamSubscription? _subscription;
 
   EventTransformer<Event> debounceRestartable<Event>(Duration duration) {
     return (events, mapper) {
@@ -22,14 +29,56 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   CityWeatherBloc({
     required GetWeatherUseCase getWeatherUseCase,
     required CityRepository cityRepository,
+    required ObserveLocationChangesUseCase locationWatchUseCase,
+    required StoreLocationUseCase storeLocationUseCase,
   })  : _getWeatherUseCase = getWeatherUseCase,
         _cityRepository = cityRepository,
+        _locationWatchUseCase = locationWatchUseCase,
+        _storeLocationUseCase = storeLocationUseCase,
         super(CityWeatherState.initial()) {
     on<FetchWeatherEvent>(_getCurrentWeather);
+    on<StartListeningLocation>(_onStart);
+    on<LocationUpdated>(_onUpdated);
     on<CitySearchEvent>(
       _searchWeatherEvent,
       transformer: debounceRestartable(const Duration(milliseconds: 500)),
     );
+  }
+
+  Future<void> _onStart(
+    StartListeningLocation event,
+    Emitter<CityWeatherState> emit,
+  ) async {
+    _subscription?.cancel();
+
+    _subscription = _locationWatchUseCase().listen(
+      (location) {
+        add(LocationUpdated(location));
+      },
+    );
+  }
+
+  void _onUpdated(
+    LocationUpdated event,
+    Emitter<CityWeatherState> emit,
+  ) async {
+    final request = await _storeLocationUseCase(event.location);
+
+    request.fold((error) {
+      emit(
+        state.copyWith(
+          errorMessage: error.message,
+          status: CityWeatherStatus.failure,
+        ),
+      );
+    }, (data) {
+      add(
+        FetchWeatherEvent(
+          latitude: event.location.latitude,
+          longitude: event.location.longitude,
+        ),
+      );
+    });
   }
 
   Future<void> _getCurrentWeather(
@@ -92,5 +141,11 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     });
 
     emit(newState);
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
   }
 }
