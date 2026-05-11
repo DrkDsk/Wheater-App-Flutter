@@ -66,7 +66,6 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
   @override
   Widget build(BuildContext context) {
     final cityLocation = widget.cityLocation;
-    final cityName = cityLocation.name ?? "";
 
     return FractionallySizedBox(
       heightFactor: 0.90,
@@ -92,8 +91,8 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
                     );
                   },
                 ),
-                Expanded(
-                  child: WeatherContent(cityName: cityName),
+                const Expanded(
+                  child: WeatherContent(),
                 ),
                 const SizedBox(height: 10)
               ],
