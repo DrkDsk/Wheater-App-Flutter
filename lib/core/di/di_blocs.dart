@@ -1,6 +1,7 @@
 import 'package:clima_app/core/helpers/network_helper.dart';
 import 'package:clima_app/core/shared/ui/cubits/network_cubit.dart';
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
+import 'package:clima_app/features/city/domain/use_cases/store_location_use_case.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
@@ -27,7 +28,6 @@ Future registerBlocs() async {
     () => FavoriteCubit(
       repository: getIt<FavoriteRepository>(),
       favoritesUseCase: getIt<GetFavoritesAndCurrentLocationUseCase>(),
-      locationWatchUseCase: getIt<ObserveLocationChangesUseCase>(),
     ),
   );
 
@@ -35,6 +35,8 @@ Future registerBlocs() async {
     () => CityWeatherBloc(
       getWeatherUseCase: getIt<GetWeatherUseCase>(),
       cityRepository: getIt<CityRepository>(),
+      locationWatchUseCase: getIt<ObserveLocationChangesUseCase>(),
+      storeLocationUseCase: getIt<StoreLocationUseCase>(),
     ),
   );
 
