@@ -15,10 +15,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class WeatherContent extends StatelessWidget {
   const WeatherContent({
     super.key,
-    required this.cityName,
   });
-
-  final String cityName;
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +43,7 @@ class WeatherContent extends StatelessWidget {
         final daily = forecast.daily;
         final hourly = forecast.hourly;
         final summary = daily.isNotEmpty ? daily.first.summary : null;
+        final cityName = data.cityName;
 
         return SingleChildScrollView(
           child: Column(
