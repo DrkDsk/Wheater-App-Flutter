@@ -5,34 +5,17 @@ import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
 import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
-import 'package:clima_app/features/home/domain/usecases/observe_location_changes_use_case.dart';
 
 class FavoriteCubit extends Cubit<FavoriteState> {
   final FavoriteRepository _repository;
   final GetFavoritesAndCurrentLocationUseCase _favoritesCitiesUseCase;
-  final ObserveLocationChangesUseCase _locationWatchUseCase;
-  StreamSubscription? _subscription;
 
   FavoriteCubit({
     required FavoriteRepository repository,
     required GetFavoritesAndCurrentLocationUseCase favoritesUseCase,
-    required ObserveLocationChangesUseCase locationWatchUseCase,
   })  : _repository = repository,
         _favoritesCitiesUseCase = favoritesUseCase,
-        _locationWatchUseCase = locationWatchUseCase,
-        super(const FavoriteState()) {
-    initLocationWatch();
-  }
-
-  void initLocationWatch() {
-    _subscription?.cancel();
-
-    _subscription = _locationWatchUseCase().listen(
-      (location) {
-        print("$location");
-      },
-    );
-  }
+        super(const FavoriteState());
 
   Future<void> getFavoriteCities() async {
     emit(state.copyWith(status: FavoriteStatus.loading));
