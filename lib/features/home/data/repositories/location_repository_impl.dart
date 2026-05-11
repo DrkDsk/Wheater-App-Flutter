@@ -67,4 +67,11 @@ class LocationRepositoryImpl implements LocationRepository {
       yield location;
     }
   }
+
+  @override
+  Future<CityLocation> store(CityLocation location) async {
+    final _ = await _locationDataSource.cacheLocation(location);
+
+    return location;
+  }
 }
