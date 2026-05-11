@@ -38,7 +38,11 @@ class IACubit extends Cubit<IAState> {
           "bien para no tener problemas de visibilidad."
     ];
 
-    emit(state.copyWith(
-        status: IAClientStatus.initial, recommendations: recommendations));
+    emit(
+      state.copyWith(
+        status: IAClientStatus.initial,
+        recommendations: recommendations,
+      ),
+    );
   }
 }
