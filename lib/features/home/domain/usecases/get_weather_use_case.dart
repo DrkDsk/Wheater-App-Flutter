@@ -8,6 +8,7 @@ import 'package:dartz/dartz.dart';
 
 class GetWeatherUseCase {
   final SearchWeatherRepository _searchWeatherRepository;
+  final LocationRepository _locationRepository;
 
   final WeatherMapper mapper;
 
@@ -15,7 +16,8 @@ class GetWeatherUseCase {
     required SearchWeatherRepository searchWeatherRepository,
     required LocationRepository locationRepository,
     required this.mapper,
-  }) : _searchWeatherRepository = searchWeatherRepository;
+  })  : _searchWeatherRepository = searchWeatherRepository,
+        _locationRepository = locationRepository;
 
   Future<Either<Failure, CityWeatherData>> call({
     required Coordinate coordinate,
@@ -28,18 +30,22 @@ class GetWeatherUseCase {
     return forecastEither.fold(
       Left.new,
       (forecastData) async {
-        final limitedForecast = forecastData.copyWith(
-          hourly: forecastData.hourly.take(12).toList(),
-          daily: forecastData.daily.take(12).toList(),
-        );
-
         final weatherCondition = forecastData.current.weather.first.toEntity();
 
         final translatedWeather = await mapper.map(weatherCondition);
 
+        final locationInfo = await _locationRepository.getLocationInformation(
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+        );
+
+        final cityInfo =
+            "${locationInfo?.name} ${locationInfo?.administrativeArea}";
+
         return Right(
           CityWeatherData(
-            forecast: limitedForecast,
+            cityName: cityInfo,
+            forecast: forecastData,
             translatedWeather: translatedWeather,
           ),
         );
