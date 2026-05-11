@@ -10,12 +10,10 @@ class CityWeatherView extends StatefulWidget {
     super.key,
     this.latitude,
     this.longitude,
-    required this.cityName,
   });
 
   final double? latitude;
   final double? longitude;
-  final String cityName;
 
   @override
   State<CityWeatherView> createState() => _CityWeatherViewState();
@@ -41,12 +39,12 @@ class _CityWeatherViewState extends State<CityWeatherView> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return const Stack(
       children: [
-        const WeatherBackgroundView(),
+        WeatherBackgroundView(),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: WeatherContent(cityName: widget.cityName),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          child: WeatherContent(),
         ),
       ],
     );
