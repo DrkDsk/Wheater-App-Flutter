@@ -2,7 +2,9 @@ import 'package:clima_app/core/shared/ui/widgets/lottie_loading.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
+import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
+import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
 import 'package:clima_app/features/home/presentation/widgets/city_weather_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,28 +30,32 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<FavoriteCubit, FavoriteState, List<CityLocation>>(
-      selector: (state) => state.cities,
-      builder: (context, cities) {
-        if (cities.isEmpty) {
-          return const LottieLoading();
-        }
+    return BlocListener<CityWeatherBloc, CityWeatherState>(
+      listenWhen: (previous, current) =>
+          (previous != current) && current.status == CityWeatherStatus.success,
+      listener: (context, state) {},
+      child: BlocSelector<FavoriteCubit, FavoriteState, List<CityLocation>>(
+        selector: (state) => state.cities,
+        builder: (context, cities) {
+          if (cities.isEmpty) {
+            return const LottieLoading();
+          }
 
-        return PageView.builder(
-          controller: widget.pageController,
-          itemCount: cities.length,
-          onPageChanged: homePageNavigationCubit.updatePageIndex,
-          itemBuilder: (context, index) {
-            final city = cities[index];
+          return PageView.builder(
+            controller: widget.pageController,
+            itemCount: cities.length,
+            onPageChanged: homePageNavigationCubit.updatePageIndex,
+            itemBuilder: (context, index) {
+              final city = cities[index];
 
-            return CityWeatherView(
-              cityName: city.name ?? "",
-              latitude: city.latitude,
-              longitude: city.longitude,
-            );
-          },
-        );
-      },
+              return CityWeatherView(
+                latitude: city.latitude,
+                longitude: city.longitude,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
