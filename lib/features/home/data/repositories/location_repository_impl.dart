@@ -62,6 +62,7 @@ class LocationRepositoryImpl implements LocationRepository {
   @override
   Stream<CityLocation> watchLocation() async* {
     await for (final location in _geoLocatorDataSource.watchPosition()) {
+      print("location:$location");
       await _locationDataSource.cacheLocation(location);
 
       yield location;

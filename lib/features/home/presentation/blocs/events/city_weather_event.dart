@@ -1,5 +1,3 @@
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
-
 abstract class CityWeatherEvent {
   const CityWeatherEvent();
 }
@@ -19,10 +17,4 @@ class CitySearchEvent extends CityWeatherEvent {
 
 class StartListeningLocation extends CityWeatherEvent {
   const StartListeningLocation();
-}
-
-class LocationUpdated extends CityWeatherEvent {
-  final CityLocation location;
-
-  LocationUpdated(this.location);
 }

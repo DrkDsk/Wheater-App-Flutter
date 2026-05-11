@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:clima_app/core/extensions/weather/city_weather_data_extension.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
-import 'package:clima_app/features/city/domain/use_cases/store_location_use_case.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/features/home/domain/usecases/observe_location_changes_use_case.dart';
@@ -17,7 +16,6 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
   final ObserveLocationChangesUseCase _locationWatchUseCase;
-  final StoreLocationUseCase _storeLocationUseCase;
   StreamSubscription? _subscription;
 
   EventTransformer<Event> debounceRestartable<Event>(Duration duration) {
@@ -30,15 +28,12 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     required GetWeatherUseCase getWeatherUseCase,
     required CityRepository cityRepository,
     required ObserveLocationChangesUseCase locationWatchUseCase,
-    required StoreLocationUseCase storeLocationUseCase,
   })  : _getWeatherUseCase = getWeatherUseCase,
         _cityRepository = cityRepository,
         _locationWatchUseCase = locationWatchUseCase,
-        _storeLocationUseCase = storeLocationUseCase,
         super(CityWeatherState.initial()) {
     on<FetchWeatherEvent>(_getCurrentWeather);
     on<StartListeningLocation>(_onStart);
-    on<LocationUpdated>(_onUpdated);
     on<CitySearchEvent>(
       _searchWeatherEvent,
       transformer: debounceRestartable(const Duration(milliseconds: 500)),
@@ -53,32 +48,12 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     _subscription = _locationWatchUseCase().listen(
       (location) {
-        add(LocationUpdated(location));
+        add(FetchWeatherEvent(
+          latitude: location.latitude,
+          longitude: location.longitude,
+        ));
       },
     );
-  }
-
-  void _onUpdated(
-    LocationUpdated event,
-    Emitter<CityWeatherState> emit,
-  ) async {
-    final request = await _storeLocationUseCase(event.location);
-
-    request.fold((error) {
-      emit(
-        state.copyWith(
-          errorMessage: error.message,
-          status: CityWeatherStatus.failure,
-        ),
-      );
-    }, (data) {
-      add(
-        FetchWeatherEvent(
-          latitude: event.location.latitude,
-          longitude: event.location.longitude,
-        ),
-      );
-    });
   }
 
   Future<void> _getCurrentWeather(
