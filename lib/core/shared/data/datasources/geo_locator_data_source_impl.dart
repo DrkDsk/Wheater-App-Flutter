@@ -11,8 +11,10 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
   static const _locationChannel = MethodChannel("com.app/location");
 
   @override
-  Future<Map<String, dynamic>> getCurrentLocation() async {
-    return await _locationChannel.invokeMethod("getCurrentLocation");
+  Future<dynamic> getCurrentLocation() async {
+    final result = await _locationChannel.invokeMethod("getCurrentLocation");
+
+    return result;
   }
 
   @override

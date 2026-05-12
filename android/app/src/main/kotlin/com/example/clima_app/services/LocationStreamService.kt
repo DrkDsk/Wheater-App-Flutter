@@ -32,8 +32,11 @@ class LocationStreamService(context: Context) : EventChannel.StreamHandler {
 
         val locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY,
-            5000
-        ).build()
+            1000L
+        )
+            .setMinUpdateDistanceMeters(500f)
+            .setWaitForAccurateLocation(true)
+            .build()
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(result: LocationResult) {

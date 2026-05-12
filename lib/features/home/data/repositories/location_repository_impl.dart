@@ -25,7 +25,6 @@ class LocationRepositoryImpl implements LocationRepository {
 
       final latitude = (locationMap["latitude"] as num).toDouble();
       final longitude = (locationMap["longitude"] as num).toDouble();
-      final timestamp = locationMap["timestamp"] as String;
 
       final locationInfo = await getLocationInformation(
         latitude: latitude,
@@ -38,7 +37,7 @@ class LocationRepositoryImpl implements LocationRepository {
       return CityLocation(
         latitude: latitude,
         longitude: longitude,
-        timestamp: timestamp,
+        timestamp: DateTime.now().toIso8601String(),
         name: cityInfo,
       );
     }

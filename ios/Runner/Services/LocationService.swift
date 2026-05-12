@@ -17,8 +17,7 @@ class LocationService:
         super.init()
 
         manager.delegate = self
-        manager.desiredAccuracy =
-            kCLLocationAccuracyBest
+        manager.desiredAccuracy = kCLLocationAccuracyBest
     }
     
     func locationManager(

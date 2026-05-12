@@ -1,5 +1,5 @@
 abstract class GeoLocatorDataSource {
-  Future<Map<String, dynamic>> getCurrentLocation();
+  Future<dynamic> getCurrentLocation();
 
   Stream<Map<String, dynamic>> watchPosition();
 }
