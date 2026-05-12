@@ -2,9 +2,14 @@ import 'dart:async';
 
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
+  static const _eventChannel = EventChannel(
+    'com.app/location_stream',
+  );
+
   StreamSubscription<CityLocation>? _subscription;
 
   @override
@@ -41,5 +46,12 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
     }
 
     return await Geolocator.getCurrentPosition();
+  }
+
+  @override
+  Stream<Map<String, dynamic>> getLocationStream() {
+    return _eventChannel.receiveBroadcastStream().map((event) {
+      return Map<String, dynamic>.from(event);
+    });
   }
 }

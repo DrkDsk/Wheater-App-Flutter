@@ -7,4 +7,6 @@ abstract class GeoLocatorDataSource {
   Future<void> stopTracking();
 
   Future<Position> getCurrentLocation();
+
+  Stream<Map<String, dynamic>> getLocationStream();
 }
