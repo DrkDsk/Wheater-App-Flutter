@@ -6,9 +6,12 @@ class LocationService:
 
     private let manager =
         CLLocationManager()
-
-    private var onLocationUpdate:
-        ((CLLocation) -> Void)?
+    
+    private var onSuccess:
+    ((CLLocation) -> Void)?
+    
+    private var onError:
+    (() -> Void)?
 
     override init() {
         super.init()
@@ -17,13 +20,36 @@ class LocationService:
         manager.desiredAccuracy =
             kCLLocationAccuracyBest
     }
+    
+    func locationManager(
+        _ manager: CLLocationManager,
+        didFailWithError error: Error
+    ) {
+        onError?()
+    }
+    
+    func getCurrentLocation(
+            onSuccess:
+            @escaping (CLLocation) -> Void,
+
+            onError:
+            @escaping () -> Void
+        ) {
+
+            self.onSuccess = onSuccess
+            self.onError = onError
+
+            manager.requestWhenInUseAuthorization()
+
+            manager.requestLocation()
+        }
 
     func startUpdatingLocation(
         onUpdate:
         @escaping (CLLocation) -> Void
     ) {
 
-        self.onLocationUpdate = onUpdate
+        self.onSuccess = onUpdate
 
         manager.requestWhenInUseAuthorization()
 
@@ -45,6 +71,6 @@ class LocationService:
             return
         }
 
-        onLocationUpdate?(location)
+        onSuccess?(location)
     }
 }
