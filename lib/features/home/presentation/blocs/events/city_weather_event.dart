@@ -14,3 +14,7 @@ class CitySearchEvent extends CityWeatherEvent {
 
   const CitySearchEvent({required this.query});
 }
+
+class StartListeningLocation extends CityWeatherEvent {
+  const StartListeningLocation();
+}

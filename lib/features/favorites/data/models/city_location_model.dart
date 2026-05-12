@@ -16,12 +16,14 @@ class CityLocationModel {
   factory CityLocationModel.fromMap(Map<String, dynamic> map) {
     final String city = map['name'] as String;
     final String state = map['state'] as String;
+    final double latitude = map['lat'] as double;
+    final double longitude = map['lon'] as double;
     final String cityName = "$city, $state";
 
     return CityLocationModel(
       name: cityName,
-      latitude: 0,
-      longitude: 0,
+      latitude: latitude,
+      longitude: longitude,
       timestamp: DateTime.now(),
     );
   }

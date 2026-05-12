@@ -13,20 +13,21 @@ class FavoritesCitiesScrollIndicator extends StatelessWidget {
     return BlocBuilder<FavoriteCubit, FavoriteState>(
       builder: (context, state) {
         return ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: state.cities.length,
-            itemBuilder: (context, index) {
-              final isActive = currentPage == index;
-              return AnimatedContainer(
-                  width: 10,
-                  height: 10,
-                  margin: const EdgeInsets.symmetric(horizontal: 4),
-                  duration: const Duration(milliseconds: 100),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: isActive ? Colors.white : Colors.grey,
-                  ));
-            });
+          scrollDirection: Axis.horizontal,
+          itemCount: state.cities.length,
+          itemBuilder: (context, index) {
+            final isActive = currentPage == index;
+            return AnimatedContainer(
+                width: 10,
+                height: 10,
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                duration: const Duration(milliseconds: 100),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: isActive ? Colors.white : Colors.grey,
+                ));
+          },
+        );
       },
     );
   }

@@ -21,7 +21,15 @@ class SearchWeatherRepositoryImpl implements SearchWeatherRepository {
         lat: lat,
         lon: lon,
       );
-      return Right(model.toEntity());
+
+      final forecastData = model.toEntity();
+
+      final limitedForecast = forecastData.copyWith(
+        hourly: forecastData.hourly.take(12).toList(),
+        daily: forecastData.daily.take(12).toList(),
+      );
+
+      return Right(limitedForecast);
     } on UnknownException catch (e) {
       return Left(UnexpectedFailure(e.message));
     } on NetworkException catch (e) {

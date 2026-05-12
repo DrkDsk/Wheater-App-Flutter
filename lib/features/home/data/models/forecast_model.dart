@@ -53,13 +53,14 @@ class ForecastModel with EquatableMixin {
 
   Forecast toEntity() {
     return Forecast(
-        latitude: latitude,
-        longitude: longitude,
-        timeZone: timeZone,
-        timezoneOffset: timezoneOffset,
-        current: current.toEntity(),
-        hourly: hourly?.map((element) => element.toEntity()).toList() ?? [],
-        daily: daily?.map((element) => element.toEntity()).toList() ?? []);
+      latitude: latitude,
+      longitude: longitude,
+      timeZone: timeZone,
+      timezoneOffset: timezoneOffset,
+      current: current.toEntity(),
+      hourly: hourly?.map((element) => element.toEntity()).toList() ?? [],
+      daily: daily?.map((element) => element.toEntity()).toList() ?? [],
+    );
   }
 
   @override

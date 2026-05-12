@@ -21,19 +21,23 @@ class LocationRepositoryImpl implements LocationRepository {
     final cityLocation = storedLocationModel?.toEntity();
 
     if (cityLocation == null) {
-      final currentLocation = await _geoLocatorDataSource.getCurrentLocation();
+      final locationMap = await _geoLocatorDataSource.getCurrentLocation();
+
+      final latitude = (locationMap["latitude"] as num).toDouble();
+      final longitude = (locationMap["longitude"] as num).toDouble();
+
       final locationInfo = await getLocationInformation(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
+        latitude: latitude,
+        longitude: longitude,
       );
 
       final cityInfo =
           "${locationInfo?.name} ${locationInfo?.administrativeArea}";
 
       return CityLocation(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
-        timestamp: currentLocation.timestamp.toIso8601String(),
+        latitude: latitude,
+        longitude: longitude,
+        timestamp: DateTime.now().toIso8601String(),
         name: cityInfo,
       );
     }
@@ -55,16 +59,20 @@ class LocationRepositoryImpl implements LocationRepository {
   }
 
   @override
-  Future<void> stopTracking() {
-    return _geoLocatorDataSource.stopTracking();
+  Stream<CityLocation> watchLocation() {
+    return _geoLocatorDataSource.watchPosition().map((json) {
+      return CityLocation(
+        latitude: json['latitude'],
+        longitude: json['longitude'],
+        timestamp: DateTime.now().toIso8601String(),
+      );
+    });
   }
 
   @override
-  Stream<CityLocation> watchLocation() async* {
-    await for (final location in _geoLocatorDataSource.watchPosition()) {
-      await _locationDataSource.cacheLocation(location);
+  Future<CityLocation> store(CityLocation location) async {
+    final _ = await _locationDataSource.cacheLocation(location);
 
-      yield location;
-    }
+    return location;
   }
 }

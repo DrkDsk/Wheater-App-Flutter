@@ -7,12 +7,6 @@ class SearchCityLocationResponseModel {
 
   const SearchCityLocationResponseModel({required this.data});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'data': data,
-    };
-  }
-
   factory SearchCityLocationResponseModel.fromJson(List<dynamic> jsonList) {
     try {
       return SearchCityLocationResponseModel(

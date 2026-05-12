@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
+		3832AA1E2FB39AAE0000C588 /* LocationChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3832AA1A2FB39AAE0000C588 /* LocationChannel.swift */; };
+		3832AA1F2FB39AAE0000C588 /* LocationStreamHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3832AA1B2FB39AAE0000C588 /* LocationStreamHandler.swift */; };
+		387E985E2FB2F0640002DE91 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 387E985C2FB2F0640002DE91 /* LocationService.swift */; };
+		38E858CB2FB3C1EA00842726 /* LocationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E858CA2FB3C1E600842726 /* LocationHandler.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		518B0A64B3C4AA3A9EF14D7F /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F5F6C456B7379690E1156B4 /* Pods_RunnerTests.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
@@ -49,6 +53,10 @@
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3832AA1A2FB39AAE0000C588 /* LocationChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationChannel.swift; sourceTree = "<group>"; };
+		3832AA1B2FB39AAE0000C588 /* LocationStreamHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationStreamHandler.swift; sourceTree = "<group>"; };
+		387E985C2FB2F0640002DE91 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		38E858CA2FB3C1E600842726 /* LocationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHandler.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		40000B0FB59979457A401051 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4600774ED3A38F8F9616491C /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -110,6 +118,32 @@
 			path = RunnerTests;
 			sourceTree = "<group>";
 		};
+		3832AA1C2FB39AAE0000C588 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				38E858CA2FB3C1E600842726 /* LocationHandler.swift */,
+				3832AA1A2FB39AAE0000C588 /* LocationChannel.swift */,
+				3832AA1B2FB39AAE0000C588 /* LocationStreamHandler.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
+		3832AA1D2FB39AAE0000C588 /* Channels */ = {
+			isa = PBXGroup;
+			children = (
+				3832AA1C2FB39AAE0000C588 /* Location */,
+			);
+			path = Channels;
+			sourceTree = "<group>";
+		};
+		387E985D2FB2F0640002DE91 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				387E985C2FB2F0640002DE91 /* LocationService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		4B73195BF7BDFC8B1E85F6E8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -155,6 +189,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				3832AA1D2FB39AAE0000C588 /* Channels */,
+				387E985D2FB2F0640002DE91 /* Services */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
 				97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */,
@@ -400,6 +436,10 @@
 			files = (
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
+				387E985E2FB2F0640002DE91 /* LocationService.swift in Sources */,
+				38E858CB2FB3C1EA00842726 /* LocationHandler.swift in Sources */,
+				3832AA1E2FB39AAE0000C588 /* LocationChannel.swift in Sources */,
+				3832AA1F2FB39AAE0000C588 /* LocationStreamHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

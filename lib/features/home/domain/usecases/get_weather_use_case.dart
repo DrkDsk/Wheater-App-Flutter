@@ -19,16 +19,9 @@ class GetWeatherUseCase {
   })  : _searchWeatherRepository = searchWeatherRepository,
         _locationRepository = locationRepository;
 
-  Future<Either<Failure, CityWeatherData>> call(
-      {Coordinate? coordinate}) async {
-    if (coordinate == null) {
-      final currentLocation = await _locationRepository.getCurrentLocation();
-      coordinate = Coordinate(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
-      );
-    }
-
+  Future<Either<Failure, CityWeatherData>> call({
+    required Coordinate coordinate,
+  }) async {
     final forecastEither = await _searchWeatherRepository.getWeatherByLocation(
       lat: coordinate.latitude,
       lon: coordinate.longitude,
@@ -37,18 +30,22 @@ class GetWeatherUseCase {
     return forecastEither.fold(
       Left.new,
       (forecastData) async {
-        final limitedForecast = forecastData.copyWith(
-          hourly: forecastData.hourly.take(12).toList(),
-          daily: forecastData.daily.take(12).toList(),
-        );
-
         final weatherCondition = forecastData.current.weather.first.toEntity();
 
         final translatedWeather = await mapper.map(weatherCondition);
 
+        final locationInfo = await _locationRepository.getLocationInformation(
+          latitude: coordinate.latitude,
+          longitude: coordinate.longitude,
+        );
+
+        final cityInfo =
+            "${locationInfo?.name} ${locationInfo?.administrativeArea}";
+
         return Right(
           CityWeatherData(
-            forecast: limitedForecast,
+            cityName: cityInfo,
+            forecast: forecastData,
             translatedWeather: translatedWeather,
           ),
         );
