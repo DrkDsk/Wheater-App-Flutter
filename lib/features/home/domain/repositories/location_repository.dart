@@ -6,8 +6,6 @@ abstract class LocationRepository {
 
   Stream<CityLocation> watchLocation();
 
-  Future<void> stopTracking();
-
   Future<CityLocation> getCurrentLocation();
 
   Future<Placemark?> getLocationInformation({

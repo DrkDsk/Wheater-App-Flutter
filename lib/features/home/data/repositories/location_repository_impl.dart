@@ -33,7 +33,7 @@ class LocationRepositoryImpl implements LocationRepository {
       return CityLocation(
         latitude: currentLocation.latitude,
         longitude: currentLocation.longitude,
-        timestamp: currentLocation.timestamp.toIso8601String(),
+        timestamp: currentLocation.timestamp,
         name: cityInfo,
       );
     }
@@ -52,11 +52,6 @@ class LocationRepositoryImpl implements LocationRepository {
     );
 
     return placemarks.isEmpty ? null : placemarks.first;
-  }
-
-  @override
-  Future<void> stopTracking() {
-    return _geoLocatorDataSource.stopTracking();
   }
 
   @override
