@@ -21,19 +21,24 @@ class LocationRepositoryImpl implements LocationRepository {
     final cityLocation = storedLocationModel?.toEntity();
 
     if (cityLocation == null) {
-      final currentLocation = await _geoLocatorDataSource.getCurrentLocation();
+      final locationMap = await _geoLocatorDataSource.getCurrentLocation();
+
+      final latitude = (locationMap["latitude"] as num).toDouble();
+      final longitude = (locationMap["longitude"] as num).toDouble();
+      final timestamp = locationMap["timestamp"] as String;
+
       final locationInfo = await getLocationInformation(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
+        latitude: latitude,
+        longitude: longitude,
       );
 
       final cityInfo =
           "${locationInfo?.name} ${locationInfo?.administrativeArea}";
 
       return CityLocation(
-        latitude: currentLocation.latitude,
-        longitude: currentLocation.longitude,
-        timestamp: currentLocation.timestamp,
+        latitude: latitude,
+        longitude: longitude,
+        timestamp: timestamp,
         name: cityInfo,
       );
     }
