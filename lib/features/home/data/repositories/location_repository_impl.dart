@@ -56,7 +56,7 @@ class LocationRepositoryImpl implements LocationRepository {
 
   @override
   Stream<CityLocation> watchLocation() {
-    return _geoLocatorDataSource.getLocationStream().map((json) {
+    return _geoLocatorDataSource.watchPosition().map((json) {
       return CityLocation(
         latitude: json['latitude'],
         longitude: json['longitude'],

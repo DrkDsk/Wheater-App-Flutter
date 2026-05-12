@@ -23,7 +23,7 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
   }
 
   @override
-  Stream<Map<String, dynamic>> getLocationStream() {
+  Stream<Map<String, dynamic>> watchPosition() {
     return _locationEventChannel.receiveBroadcastStream().map((event) {
       return Map<String, dynamic>.from(event);
     });
