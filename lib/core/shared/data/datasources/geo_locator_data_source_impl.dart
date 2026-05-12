@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 
 class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
-  static const _eventChannel = EventChannel(
+  static const _locationEventChannel = EventChannel(
     'com.app/location_stream',
   );
 
@@ -50,7 +50,7 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
 
   @override
   Stream<Map<String, dynamic>> getLocationStream() {
-    return _eventChannel.receiveBroadcastStream().map((event) {
+    return _locationEventChannel.receiveBroadcastStream().map((event) {
       return Map<String, dynamic>.from(event);
     });
   }
