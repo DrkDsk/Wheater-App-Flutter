@@ -8,12 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class CityWeatherView extends StatefulWidget {
   const CityWeatherView({
     super.key,
-    this.latitude,
-    this.longitude,
+    required this.latitude,
+    required this.longitude,
   });
 
-  final double? latitude;
-  final double? longitude;
+  final double latitude;
+  final double longitude;
 
   @override
   State<CityWeatherView> createState() => _CityWeatherViewState();
@@ -29,12 +29,10 @@ class _CityWeatherViewState extends State<CityWeatherView> {
     final longitude = widget.longitude;
     _cityWeatherBloc = context.read<CityWeatherBloc>();
 
-    if (latitude != null && longitude != null) {
-      _cityWeatherBloc.add(FetchWeatherEvent(
-        latitude: latitude,
-        longitude: longitude,
-      ));
-    }
+    _cityWeatherBloc.add(FetchWeatherEvent(
+      latitude: latitude,
+      longitude: longitude,
+    ));
   }
 
   @override
