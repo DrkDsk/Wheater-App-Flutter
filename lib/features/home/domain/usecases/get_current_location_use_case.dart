@@ -1,4 +1,5 @@
 import 'package:clima_app/core/error/failures/failure.dart';
+import 'package:clima_app/core/extensions/placemark_extension.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
@@ -22,15 +23,25 @@ class GetFavoritesAndCurrentLocationUseCase {
         _favoriteRepository.index()
       ).wait;
 
+      final currentLocationName =
+          await _locationRepository.getLocationInformation(
+        latitude: locationCached.latitude,
+        longitude: locationCached.longitude,
+      );
+
+      final displayName = currentLocationName?.getDisplayName ?? "";
+
       return favoritesCities.fold((error) {
         return Left(error);
       }, (data) {
         final pages = <WeatherListItem>[
           CurrentLocationItem(
-              coordinate: Coordinate(
-            latitude: locationCached.latitude,
-            longitude: locationCached.longitude,
-          )),
+            cityName: displayName,
+            coordinate: Coordinate(
+              latitude: locationCached.latitude,
+              longitude: locationCached.longitude,
+            ),
+          ),
           ...data.map((favorite) {
             return FavoriteWeatherItem(cityLocation: favorite);
           })
