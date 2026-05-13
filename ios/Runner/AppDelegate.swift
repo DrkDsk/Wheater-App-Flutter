@@ -9,7 +9,7 @@ import UIKit
         LocationChannel.register(
             with: engineBridge.applicationRegistrar.messenger()
         )
-    }
+    }   
     
     override func application(_ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
