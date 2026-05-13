@@ -22,16 +22,6 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     required CityLocation cityLocation,
   }) async {
     try {
-      final cityLocationKey = cityLocation.timestamp;
-
-      final locationModel = await _favoriteWeatherDataSource.findByKey(
-        key: cityLocationKey,
-      );
-
-      if (locationModel != null) {
-        return const Right(false);
-      }
-
       final cityModel = CityLocationHiveModel.fromEntity(cityLocation);
       await _favoriteWeatherDataSource.store(city: cityModel);
 
@@ -86,16 +76,12 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
       {required CityLocation cityLocation,
       required CityLocation currentLocation}) async {
     try {
-      final cityLocationKey = cityLocation.timestamp;
-
-      final storedCity =
-          await _favoriteWeatherDataSource.findByKey(key: cityLocationKey);
-
-      final same = isSameLocation(
-          lat1: cityLocation.latitude,
-          lon1: cityLocation.longitude,
-          lat2: currentLocation.latitude,
-          lon2: currentLocation.longitude);
+      final same = _isSameLocation(
+        lat1: cityLocation.latitude,
+        lon1: cityLocation.longitude,
+        lat2: currentLocation.latitude,
+        lon2: currentLocation.longitude,
+      );
 
       return !same;
     } on UnknownException catch (e) {
@@ -105,7 +91,7 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
     }
   }
 
-  bool isSameLocation({
+  bool _isSameLocation({
     required double lat1,
     required double lon1,
     required double lat2,
