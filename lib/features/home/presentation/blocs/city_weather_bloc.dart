@@ -14,7 +14,7 @@ import 'package:stream_transform/stream_transform.dart';
 class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
-  final ObserveLocationChangesUseCase _locationWatchUseCase;
+  final ObserveLocationChangesUseCase _observerLocationWatchUseCase;
   StreamSubscription? _subscription;
 
   EventTransformer<Event> debounceRestartable<Event>(Duration duration) {
@@ -29,25 +29,24 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     required ObserveLocationChangesUseCase locationWatchUseCase,
   })  : _getWeatherUseCase = getWeatherUseCase,
         _cityRepository = cityRepository,
-        _locationWatchUseCase = locationWatchUseCase,
+        _observerLocationWatchUseCase = locationWatchUseCase,
         super(CityWeatherState.initial()) {
     on<FetchWeatherEvent>(_getCurrentWeather);
-    on<StartListeningLocation>(_onStart);
+    on<StartListeningLocation>(_onStartListeningPosition);
     on<CitySearchEvent>(
       _searchWeatherEvent,
       transformer: debounceRestartable(const Duration(milliseconds: 500)),
     );
   }
 
-  Future<void> _onStart(
+  Future<void> _onStartListeningPosition(
     StartListeningLocation event,
     Emitter<CityWeatherState> emit,
   ) async {
     _subscription?.cancel();
 
-    _subscription = _locationWatchUseCase().listen(
+    _subscription = _observerLocationWatchUseCase().listen(
       (location) {
-        print("fetch");
         add(FetchWeatherEvent(
           latitude: location.latitude,
           longitude: location.longitude,
