@@ -1,7 +1,7 @@
 import 'package:clima_app/features/city/domain/use_cases/store_location_use_case.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
-import 'package:clima_app/features/home/domain/repositories/search_weather_repository.dart';
+import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/features/home/domain/usecases/observe_location_changes_use_case.dart';
@@ -32,7 +32,7 @@ Future registerUseCases() async {
 
   getIt.registerLazySingleton<GetWeatherUseCase>(
     () => GetWeatherUseCase(
-      searchWeatherRepository: getIt<SearchWeatherRepository>(),
+      searchWeatherRepository: getIt<WeatherRepository>(),
       mapper: getIt<WeatherMapper>(),
       locationRepository: localRepository,
     ),

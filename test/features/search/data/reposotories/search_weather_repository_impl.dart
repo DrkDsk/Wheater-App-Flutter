@@ -3,7 +3,7 @@ import 'package:clima_app/features/home/data/models/hourly_model.dart';
 import 'package:clima_app/features/home/data/models/rain_model.dart';
 import 'package:clima_app/features/home/data/models/weather_condition_model.dart';
 import 'package:clima_app/features/home/data/models/forecast_model.dart';
-import 'package:clima_app/features/home/data/repositories/search_weather_repository_impl.dart';
+import 'package:clima_app/features/home/data/repositories/weather_repository_impl.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
@@ -12,12 +12,12 @@ import '../../mocks/mocks.mocks.dart';
 
 void main() {
   late MockSearchWeatherDataSource mockSearchWeatherDataSource;
-  late SearchWeatherRepositoryImpl searchRepositoryImpl;
+  late WeatherRepositoryImpl searchRepositoryImpl;
 
   setUp(() {
     mockSearchWeatherDataSource = MockSearchWeatherDataSource();
     searchRepositoryImpl =
-        SearchWeatherRepositoryImpl(datasource: mockSearchWeatherDataSource);
+        WeatherRepositoryImpl(datasource: mockSearchWeatherDataSource);
   });
 
   test('debería retornar Right(model) si el datasource responde correctamente',

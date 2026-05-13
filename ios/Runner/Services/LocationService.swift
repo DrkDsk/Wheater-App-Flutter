@@ -13,7 +13,7 @@ class LocationService:
     ((CLLocation) -> Void)?
     
     private var onError:
-    (() -> Void)?
+    ((String) -> Void)?
 
     override init() {
         super.init()
@@ -26,7 +26,7 @@ class LocationService:
         _ manager: CLLocationManager,
         didFailWithError error: Error
     ) {
-        onError?()
+        onError?(error.localizedDescription)
     }
     
     func getCurrentLocation(
@@ -34,7 +34,7 @@ class LocationService:
             @escaping (CLLocation) -> Void,
 
             onError:
-            @escaping () -> Void
+            @escaping (String) -> Void
         ) {
 
             self.onSuccess = onSuccess

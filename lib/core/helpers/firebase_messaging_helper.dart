@@ -36,7 +36,7 @@ class FirebaseMessagingHelper {
   }
 
   static Future registerFirebaseToken() async {
-    String _ = await FirebaseMessaging.instance.getToken() ?? "";
+    /* String _ = await FirebaseMessaging.instance.getToken() ?? "";*/
   }
 
   static Future checkForInitialMessage() async {

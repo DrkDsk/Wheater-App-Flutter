@@ -1,11 +1,12 @@
 import 'package:clima_app/core/router/app_router.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
-import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
+import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_state.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/header_weather_sheet.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
 import 'package:clima_app/features/home/presentation/screens/home_screen.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_background_view.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_content.dart';
@@ -25,6 +26,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
   late final FavoriteCubit _favoriteCubit;
   late final HomePageNavigationCubit _navigationCubit;
   late final CityWeatherBloc _cityWeatherBloc;
+  late final WeatherHomeBloc _weatherHomeBloc;
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
     _favoriteCubit = BlocProvider.of<FavoriteCubit>(context);
     _navigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
     _cityWeatherBloc = BlocProvider.of<CityWeatherBloc>(context);
+    _weatherHomeBloc = BlocProvider.of<WeatherHomeBloc>(context);
 
     _cityWeatherBloc.add(FetchWeatherEvent(
       latitude: latitude,
@@ -58,7 +61,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
     }
 
     final router = AppRouter.of(context);
-    final newIndex = _favoriteCubit.state.cities.length - 1;
+    final newIndex = _weatherHomeBloc.state.pages.length - 1;
     _navigationCubit.updatePageIndex(newIndex);
     router.goToScreenAndClear(HomeScreen(initialIndex: newIndex));
   }

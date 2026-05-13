@@ -33,11 +33,11 @@ class LocationHandler : NSObject {
                 ]
                 
                 result(data)
-            } onError: {
+            } onError: {error in
                 result(
                     FlutterError(
                         code: "LOCATION_ERROR",
-                        message: "Cannot get location",
+                        message: error,
                         details: nil
                     )
                 )
