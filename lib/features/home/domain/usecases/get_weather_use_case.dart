@@ -40,7 +40,7 @@ class GetWeatherUseCase {
         );
 
         final cityInfo =
-            "${locationInfo?.locality} ${locationInfo?.administrativeArea}";
+            "${locationInfo?.locality}, ${locationInfo?.administrativeArea} ${locationInfo?.isoCountryCode}";
 
         return Right(
           CityWeatherData(
