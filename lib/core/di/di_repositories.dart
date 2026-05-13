@@ -9,10 +9,10 @@ import 'package:clima_app/features/favorites/data/repositories/favorite_reposito
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/home/data/datasources/search_weather_datasource.dart';
 import 'package:clima_app/features/home/data/repositories/location_repository_impl.dart';
-import 'package:clima_app/features/home/data/repositories/search_weather_repository_impl.dart';
+import 'package:clima_app/features/home/data/repositories/weather_repository_impl.dart';
 import 'package:clima_app/features/home/data/repositories/weather_description_repository_impl.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
-import 'package:clima_app/features/home/domain/repositories/search_weather_repository.dart';
+import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/weather_description_repository.dart';
 import 'package:clima_app/features/ia/data/datasources/ia_datasource.dart';
 import 'package:clima_app/features/ia/data/repositories/ia_repository_impl.dart';
@@ -30,8 +30,8 @@ Future registerRepositories() async {
     () => CityRepositoryImpl(dataSource: getIt<CityDataSource>()),
   );
 
-  getIt.registerLazySingleton<SearchWeatherRepository>(
-    () => SearchWeatherRepositoryImpl(
+  getIt.registerLazySingleton<WeatherRepository>(
+    () => WeatherRepositoryImpl(
       datasource: getIt<SearchWeatherDataSource>(),
     ),
   );

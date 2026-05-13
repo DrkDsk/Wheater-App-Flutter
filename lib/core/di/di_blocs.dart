@@ -5,9 +5,9 @@ import 'package:clima_app/features/favorites/domain/repository/favorite_reposito
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
-import 'package:clima_app/features/home/domain/usecases/observe_location_changes_use_case.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
 import 'package:clima_app/features/ia/domain/repositories/ia_repository.dart';
 import 'package:clima_app/features/ia/ui/blocs/ia_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -15,7 +15,8 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 
 Future registerBlocs() async {
-  final observeLocationUseCase = getIt<ObserveLocationChangesUseCase>();
+  final getFavoritesLocationUseCase =
+      getIt<GetFavoritesAndCurrentLocationUseCase>();
 
   getIt.registerFactory<NetworkCubit>(
     () => NetworkCubit(networkService: getIt<NetworkHelper>()),
@@ -28,7 +29,6 @@ Future registerBlocs() async {
   getIt.registerFactory<FavoriteCubit>(
     () => FavoriteCubit(
       repository: getIt<FavoriteRepository>(),
-      favoritesUseCase: getIt<GetFavoritesAndCurrentLocationUseCase>(),
     ),
   );
 
@@ -36,11 +36,16 @@ Future registerBlocs() async {
     () => CityWeatherBloc(
       getWeatherUseCase: getIt<GetWeatherUseCase>(),
       cityRepository: getIt<CityRepository>(),
-      locationWatchUseCase: observeLocationUseCase,
     ),
   );
 
   getIt.registerFactory<HomePageNavigationCubit>(
     () => HomePageNavigationCubit(),
+  );
+
+  getIt.registerFactory<WeatherHomeBloc>(
+    () => WeatherHomeBloc(
+      getFavoritesLocationUseCase: getFavoritesLocationUseCase,
+    ),
   );
 }
