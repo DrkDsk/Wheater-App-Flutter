@@ -47,6 +47,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     _subscription = _locationWatchUseCase().listen(
       (location) {
+        print("fetch");
         add(FetchWeatherEvent(
           latitude: location.latitude,
           longitude: location.longitude,

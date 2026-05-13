@@ -3,8 +3,10 @@ import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
-import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
+import 'package:clima_app/features/home/presentation/blocs/store_city_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/store_city_event.dart';
 import 'package:clima_app/features/home/presentation/widgets/city_weather_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -20,42 +22,42 @@ class FavoritesPageBuilder extends StatefulWidget {
 
 class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
   late final HomePageNavigationCubit homePageNavigationCubit;
+  late final StoreCityBloc _storeCityBloc;
+  late final CityWeatherBloc _cityWeatherBloc;
 
-  @override
   @override
   void initState() {
     super.initState();
     homePageNavigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
+    _storeCityBloc = BlocProvider.of<StoreCityBloc>(context);
+    _cityWeatherBloc = BlocProvider.of<CityWeatherBloc>(context);
+    _cityWeatherBloc.add(const StartListeningLocation());
+    _storeCityBloc.add(const ListeningPositionEvent());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CityWeatherBloc, CityWeatherState>(
-      listenWhen: (previous, current) =>
-          (previous != current) && current.status == CityWeatherStatus.success,
-      listener: (context, state) {},
-      child: BlocSelector<FavoriteCubit, FavoriteState, List<CityLocation>>(
-        selector: (state) => state.cities,
-        builder: (context, cities) {
-          if (cities.isEmpty) {
-            return const LottieLoading();
-          }
+    return BlocSelector<FavoriteCubit, FavoriteState, List<CityLocation>>(
+      selector: (state) => state.cities,
+      builder: (context, cities) {
+        if (cities.isEmpty) {
+          return const LottieLoading();
+        }
 
-          return PageView.builder(
-            controller: widget.pageController,
-            itemCount: cities.length,
-            onPageChanged: homePageNavigationCubit.updatePageIndex,
-            itemBuilder: (context, index) {
-              final city = cities[index];
+        return PageView.builder(
+          controller: widget.pageController,
+          itemCount: cities.length,
+          onPageChanged: homePageNavigationCubit.updatePageIndex,
+          itemBuilder: (context, index) {
+            final city = cities[index];
 
-              return CityWeatherView(
-                latitude: city.latitude,
-                longitude: city.longitude,
-              );
-            },
-          );
-        },
-      ),
+            return CityWeatherView(
+              latitude: city.latitude,
+              longitude: city.longitude,
+            );
+          },
+        );
+      },
     );
   }
 }
