@@ -3,22 +3,19 @@ import 'dart:async';
 import 'package:clima_app/core/error/exceptions/network_exception.dart';
 import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
 import 'package:clima_app/core/error/failures/failure.dart';
-import 'package:clima_app/core/shared/data/datasources/location_datasource.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/data/datasources/favorite_datasource.dart';
 import 'package:clima_app/features/favorites/data/models/city_location_hive_model.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'dart:math';
 
 class FavoriteRepositoryImpl implements FavoriteRepository {
   final FavoriteDataSource _favoriteWeatherDataSource;
-  final LocationLocalDatasource _locationLocalDatasource;
 
   const FavoriteRepositoryImpl({
     required FavoriteDataSource favoriteWeatherDataSource,
-    required LocationLocalDatasource locationLocalDataSource,
-  })  : _favoriteWeatherDataSource = favoriteWeatherDataSource,
-        _locationLocalDatasource = locationLocalDataSource;
+  }) : _favoriteWeatherDataSource = favoriteWeatherDataSource;
 
   @override
   Future<Either<Failure, bool>> store({
@@ -31,18 +28,12 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
         key: cityLocationKey,
       );
 
-      final locationCache = await _locationLocalDatasource.getCachedLocation();
-
       if (locationModel != null) {
         return const Right(false);
       }
 
       final cityModel = CityLocationHiveModel.fromEntity(cityLocation);
       await _favoriteWeatherDataSource.store(city: cityModel);
-
-      if (locationCache != null && cityModel.key == locationCache.key) {
-        return const Right(false);
-      }
 
       return const Right(true);
     } on UnknownException catch (e) {
@@ -91,25 +82,50 @@ class FavoriteRepositoryImpl implements FavoriteRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> isAvailableToStore({
-    required CityLocation cityLocation,
-  }) async {
+  Future<bool> isAvailableToStore(
+      {required CityLocation cityLocation,
+      required CityLocation currentLocation}) async {
     try {
       final cityLocationKey = cityLocation.timestamp;
 
-      final (cacheLocationCity, storedCity) = await (
-        _locationLocalDatasource.getCachedLocation(),
-        _favoriteWeatherDataSource.findByKey(key: cityLocationKey),
-      ).wait;
+      final storedCity =
+          await _favoriteWeatherDataSource.findByKey(key: cityLocationKey);
 
-      final exists = cacheLocationCity?.timestamp == cityLocationKey ||
-          storedCity?.timestamp == cityLocationKey;
+      final same = isSameLocation(
+          lat1: cityLocation.latitude,
+          lon1: cityLocation.longitude,
+          lat2: currentLocation.latitude,
+          lon2: currentLocation.longitude);
 
-      return Right(!exists);
+      return !same;
     } on UnknownException catch (e) {
-      return Left(UnexpectedFailure(e.message));
+      throw UnknownException(message: e.message);
     } on NetworkException catch (e) {
-      return Left(UnexpectedFailure(e.message));
+      throw UnknownException(message: e.message);
     }
+  }
+
+  bool isSameLocation({
+    required double lat1,
+    required double lon1,
+    required double lat2,
+    required double lon2,
+    double precisionKm = 1.0,
+  }) {
+    const earthRadiusKm = 6371;
+
+    double degToRad(double deg) => deg * pi / 180;
+
+    final dLat = degToRad(lat2 - lat1);
+    final dLon = degToRad(lon2 - lon1);
+
+    final a = pow(sin(dLat / 2), 2) +
+        cos(degToRad(lat1)) * cos(degToRad(lat2)) * pow(sin(dLon / 2), 2);
+
+    final c = 2 * atan2(sqrt(a), sqrt(1 - a));
+
+    final distance = earthRadiusKm * c;
+
+    return distance <= precisionKm;
   }
 }
