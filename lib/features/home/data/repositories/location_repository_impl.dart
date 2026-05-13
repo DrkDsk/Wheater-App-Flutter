@@ -36,19 +36,10 @@ class LocationRepositoryImpl implements LocationRepository {
       final latitude = (locationMap["latitude"] as num).toDouble();
       final longitude = (locationMap["longitude"] as num).toDouble();
 
-      final locationInfo = await getLocationInformation(
-        latitude: latitude,
-        longitude: longitude,
-      );
-
-      final cityInfo =
-          "${locationInfo?.name} ${locationInfo?.administrativeArea}";
-
       return CityLocation(
         latitude: latitude,
         longitude: longitude,
         timestamp: DateTime.now().toIso8601String(),
-        name: cityInfo,
       );
     }
 
@@ -83,16 +74,10 @@ class LocationRepositoryImpl implements LocationRepository {
       final latitude = (json["latitude"] as num).toDouble();
       final longitude = (json["longitude"] as num).toDouble();
 
-      final locationInfo = await getLocationInformation(
+      final cityLocation = CityLocation(
         latitude: latitude,
         longitude: longitude,
-      );
-
-      final cityLocation = CityLocation(
-        latitude: json['latitude'],
-        longitude: json['longitude'],
         timestamp: DateTime.now().toIso8601String(),
-        name: "${locationInfo?.name} ${locationInfo?.administrativeArea}",
       );
 
       yield cityLocation;
