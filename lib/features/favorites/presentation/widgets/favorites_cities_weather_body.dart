@@ -17,7 +17,7 @@ class FavoritesCitiesWeatherBody extends StatelessWidget {
       builder: (context, state) {
         switch (state.status) {
           case CityWeatherStatus.failure:
-            return Text(state.errorMessage, style: theme.textTheme.bodyMedium);
+            return Text(state.message, style: theme.textTheme.bodyMedium);
           case CityWeatherStatus.loading:
             return const Center(child: CircularProgressIndicator());
           case CityWeatherStatus.success:

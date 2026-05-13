@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:clima_app/core/extensions/weather/city_weather_data_extension.dart';
-import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/city/domain/repositories/city_repository.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
@@ -57,9 +56,9 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   }
 
   Future<void> _getCurrentWeather(
-      FetchWeatherEvent event, Emitter<CityWeatherState> emit) async {
-    List<CityLocation>? previousFetchResults = state.cities;
-
+    FetchWeatherEvent event,
+    Emitter<CityWeatherState> emit,
+  ) async {
     emit(state.copyWith(status: CityWeatherStatus.loading));
 
     final latitude = event.latitude;
@@ -72,13 +71,12 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     final newState = cityWeatherDataResult.fold((error) {
       return state.copyWith(
         status: CityWeatherStatus.failure,
-        errorMessage: error.toString(),
+        message: error.toString(),
       );
     }, (result) {
       final backgroundWeather = result.getBackgroundWeather();
       return state.copyWith(
         status: CityWeatherStatus.success,
-        cities: previousFetchResults,
         cityWeatherData: result,
         backgroundWeather: backgroundWeather,
       );
@@ -101,7 +99,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     final newState = cityResult.fold((left) {
       return state.copyWith(
         status: CityWeatherStatus.failure,
-        errorMessage: left.message,
+        message: left.message,
         cities: [],
       );
     }, (right) {

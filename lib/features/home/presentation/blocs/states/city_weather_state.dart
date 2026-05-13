@@ -1,6 +1,7 @@
 import 'package:clima_app/core/shared/domain/background_weather.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/home/domain/entities/city_weather_data.dart';
+import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:equatable/equatable.dart';
 
 enum CityWeatherStatus {
@@ -10,43 +11,43 @@ enum CityWeatherStatus {
   success;
 }
 
-class CityWeatherState with EquatableMixin {
+final class CityWeatherState with EquatableMixin {
   final CityWeatherData? cityWeatherData;
   final CityWeatherStatus status;
   final List<CityLocation> cities;
-  final String errorMessage;
   final BackgroundWeather backgroundWeather;
+  final String message;
 
   const CityWeatherState({
     this.cityWeatherData,
     required this.cities,
     required this.status,
-    required this.errorMessage,
+    required this.message,
     required this.backgroundWeather,
   });
-
-  CityWeatherState copyWith({
-    CityWeatherData? cityWeatherData,
-    CityWeatherStatus? status,
-    List<CityLocation>? cities,
-    String? errorMessage,
-    BackgroundWeather? backgroundWeather,
-  }) {
-    return CityWeatherState(
-      cityWeatherData: cityWeatherData ?? this.cityWeatherData,
-      backgroundWeather: backgroundWeather ?? this.backgroundWeather,
-      status: status ?? this.status,
-      cities: cities ?? this.cities,
-      errorMessage: errorMessage ?? this.errorMessage,
-    );
-  }
 
   factory CityWeatherState.initial() {
     return CityWeatherState(
       cities: [],
       status: CityWeatherStatus.initial,
-      errorMessage: '',
+      message: '',
       backgroundWeather: BackgroundWeather.initial(),
+    );
+  }
+
+  CityWeatherState copyWith({
+    CityWeatherData? cityWeatherData,
+    CityWeatherStatus? status,
+    List<CityLocation>? cities,
+    BackgroundWeather? backgroundWeather,
+    String? message,
+  }) {
+    return CityWeatherState(
+      cityWeatherData: cityWeatherData ?? this.cityWeatherData,
+      status: status ?? this.status,
+      cities: cities ?? this.cities,
+      backgroundWeather: backgroundWeather ?? this.backgroundWeather,
+      message: message ?? this.message,
     );
   }
 
@@ -55,7 +56,7 @@ class CityWeatherState with EquatableMixin {
         cityWeatherData,
         status,
         cities,
-        errorMessage,
+        message,
         backgroundWeather,
       ];
 }
