@@ -12,9 +12,9 @@ class StoreLocationUseCase {
 
   Future<Either<Failure, CityLocation>> call(CityLocation location) async {
     try {
-      final request = await _locationRepository.store(location);
+      await _locationRepository.store(location);
 
-      return Right(request);
+      return Right(location);
     } catch (e) {
       return Left(UnexpectedFailure(
         "Ocurrió un error al guardar la ubicación",
