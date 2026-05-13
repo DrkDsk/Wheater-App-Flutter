@@ -3,16 +3,15 @@ import 'package:clima_app/core/error/exceptions/unknown_exception.dart';
 import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/features/home/data/datasources/search_weather_datasource.dart';
 import 'package:clima_app/features/home/domain/entities/forecast.dart';
-import 'package:clima_app/features/home/domain/repositories/search_weather_repository.dart';
-import 'package:dartz/dartz.dart';
+import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 
-class SearchWeatherRepositoryImpl implements SearchWeatherRepository {
+class WeatherRepositoryImpl implements WeatherRepository {
   final SearchWeatherDataSource datasource;
 
-  SearchWeatherRepositoryImpl({required this.datasource});
+  WeatherRepositoryImpl({required this.datasource});
 
   @override
-  Future<Either<Failure, Forecast>> getWeatherByLocation({
+  Future<Forecast> getWeatherByLocation({
     required double lat,
     required double lon,
   }) async {
@@ -29,11 +28,11 @@ class SearchWeatherRepositoryImpl implements SearchWeatherRepository {
         daily: forecastData.daily.take(12).toList(),
       );
 
-      return Right(limitedForecast);
+      return limitedForecast;
     } on UnknownException catch (e) {
-      return Left(UnexpectedFailure(e.message));
+      throw UnexpectedFailure(e.message);
     } on NetworkException catch (e) {
-      return Left(UnexpectedFailure(e.message));
+      throw UnexpectedFailure(e.message);
     }
   }
 }
