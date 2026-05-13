@@ -2,20 +2,20 @@ import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/core/extensions/placemark_extension.dart';
 import 'package:clima_app/features/home/domain/entities/city_weather_data.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
-import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
+import 'package:clima_app/features/home/domain/repositories/geo_locator_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 import 'package:clima_app/features/home/presentation/dto/weather_mapper.dart';
 import 'package:dartz/dartz.dart';
 
 class GetWeatherUseCase {
   final WeatherRepository _searchWeatherRepository;
-  final LocationRepository _locationRepository;
+  final GeoLocatorRepository _locationRepository;
 
   final WeatherMapper mapper;
 
   GetWeatherUseCase({
     required WeatherRepository searchWeatherRepository,
-    required LocationRepository locationRepository,
+    required GeoLocatorRepository locationRepository,
     required this.mapper,
   })  : _searchWeatherRepository = searchWeatherRepository,
         _locationRepository = locationRepository;
