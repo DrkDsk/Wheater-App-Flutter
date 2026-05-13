@@ -7,8 +7,12 @@ sealed class WeatherListItem {
 
 class CurrentLocationItem extends WeatherListItem {
   final Coordinate coordinate;
+  final String cityName;
 
-  const CurrentLocationItem({required this.coordinate});
+  const CurrentLocationItem({
+    required this.coordinate,
+    required this.cityName,
+  });
 }
 
 class FavoriteWeatherItem extends WeatherListItem {
