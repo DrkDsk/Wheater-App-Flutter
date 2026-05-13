@@ -3,14 +3,15 @@ import 'package:clima_app/features/home/domain/entities/daily.dart';
 import 'package:clima_app/features/home/domain/entities/hourly.dart';
 
 class Forecast {
-  Forecast(
-      {required this.latitude,
-      required this.longitude,
-      required this.timeZone,
-      required this.timezoneOffset,
-      required this.current,
-      this.hourly = const [],
-      this.daily = const []});
+  Forecast({
+    required this.latitude,
+    required this.longitude,
+    required this.timeZone,
+    required this.timezoneOffset,
+    required this.current,
+    this.hourly = const [],
+    this.daily = const [],
+  });
 
   final double latitude;
   final double longitude;
