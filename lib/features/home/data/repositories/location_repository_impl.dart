@@ -1,3 +1,4 @@
+import 'package:clima_app/core/error/exceptions/permission_exception.dart';
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
 import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
@@ -21,6 +22,15 @@ class LocationRepositoryImpl implements LocationRepository {
     final cityLocation = storedLocationModel?.toEntity();
 
     if (cityLocation == null) {
+      final permissions = await _geoLocatorDataSource.requestPermissions();
+
+      if (!permissions) {
+        throw const PermissionException(
+          channel: "ubicación",
+          message: "No se han otorgado los permisos necesarios",
+        );
+      }
+
       final locationMap = await _geoLocatorDataSource.getCurrentLocation();
 
       final latitude = (locationMap["latitude"] as num).toDouble();
@@ -59,14 +69,34 @@ class LocationRepositoryImpl implements LocationRepository {
   }
 
   @override
-  Stream<CityLocation> watchLocation() {
-    return _geoLocatorDataSource.watchPosition().map((json) {
-      return CityLocation(
+  Stream<CityLocation> watchLocation() async* {
+    final permissions = await _geoLocatorDataSource.requestPermissions();
+
+    if (!permissions) {
+      throw const PermissionException(
+        channel: "ubicación",
+        message: "No se han otorgado los permisos necesarios",
+      );
+    }
+
+    await for (final json in _geoLocatorDataSource.watchPosition()) {
+      final latitude = (json["latitude"] as num).toDouble();
+      final longitude = (json["longitude"] as num).toDouble();
+
+      final locationInfo = await getLocationInformation(
+        latitude: latitude,
+        longitude: longitude,
+      );
+
+      final cityLocation = CityLocation(
         latitude: json['latitude'],
         longitude: json['longitude'],
         timestamp: DateTime.now().toIso8601String(),
+        name: "${locationInfo?.name} ${locationInfo?.administrativeArea}",
       );
-    });
+
+      yield cityLocation;
+    }
   }
 
   @override
