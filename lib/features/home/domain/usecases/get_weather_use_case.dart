@@ -1,4 +1,5 @@
 import 'package:clima_app/core/error/failures/failure.dart';
+import 'package:clima_app/core/extensions/placemark_extension.dart';
 import 'package:clima_app/features/home/domain/entities/city_weather_data.dart';
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
@@ -37,8 +38,7 @@ class GetWeatherUseCase {
         longitude: coordinate.longitude,
       );
 
-      final cityInfo =
-          "${locationInfo?.locality}, ${locationInfo?.administrativeArea} ${locationInfo?.isoCountryCode}";
+      final cityInfo = locationInfo?.getDisplayName ?? "";
 
       return Right(
         CityWeatherData(
