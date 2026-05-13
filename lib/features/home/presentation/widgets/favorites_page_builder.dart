@@ -44,8 +44,8 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
 
             return switch (page) {
               CurrentLocationItem() => CityWeatherView(
-                  latitude: page.forecast.latitude,
-                  longitude: page.forecast.longitude,
+                  latitude: page.coordinate.latitude,
+                  longitude: page.coordinate.longitude,
                 ),
               FavoriteWeatherItem() => CityWeatherView(
                   latitude: page.cityLocation.latitude,
