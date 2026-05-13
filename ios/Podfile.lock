@@ -65,9 +65,6 @@ PODS:
     - Flutter
   - geocoding_ios (1.0.5):
     - Flutter
-  - geolocator_apple (1.2.0):
-    - Flutter
-    - FlutterMacOS
   - GoogleAppMeasurement (11.0.0):
     - GoogleAppMeasurement/AdIdSupport (= 11.0.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 8.0)
@@ -139,7 +136,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_timezone (from `.symlinks/plugins/flutter_timezone/ios`)
   - geocoding_ios (from `.symlinks/plugins/geocoding_ios/ios`)
-  - geolocator_apple (from `.symlinks/plugins/geolocator_apple/darwin`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
 
@@ -172,8 +168,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_timezone/ios"
   geocoding_ios:
     :path: ".symlinks/plugins/geocoding_ios/ios"
-  geolocator_apple:
-    :path: ".symlinks/plugins/geolocator_apple/darwin"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
   shared_preferences_foundation:
@@ -193,7 +187,6 @@ SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
   flutter_timezone: 7c838e17ffd4645d261e87037e5bebf6d38fe544
   geocoding_ios: 33776c9ebb98d037b5e025bb0e7537f6dd19646e
-  geolocator_apple: ab36aa0e8b7d7a2d7639b3b4e48308394e8cef5e
   GoogleAppMeasurement: 6e49ffac7d3f2c3ded9cc663f912a13b67bbd0de
   GoogleDataTransport: aae35b7ea0c09004c3797d53c8c41f66f219d6a7
   GoogleUtilities: 00c88b9a86066ef77f0da2fab05f65d7768ed8e1
