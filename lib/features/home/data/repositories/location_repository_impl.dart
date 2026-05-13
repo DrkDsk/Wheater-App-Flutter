@@ -17,33 +17,25 @@ class LocationRepositoryImpl implements LocationRepository {
 
   @override
   Future<CityLocation> getCurrentLocation() async {
-    final storedLocationModel = await _locationDataSource.getCachedLocation();
+    final permissions = await _geoLocatorDataSource.requestPermissions();
 
-    final cityLocation = storedLocationModel?.toEntity();
-
-    if (cityLocation == null) {
-      final permissions = await _geoLocatorDataSource.requestPermissions();
-
-      if (!permissions) {
-        throw const PermissionException(
-          channel: "ubicación",
-          message: "No se han otorgado los permisos necesarios",
-        );
-      }
-
-      final locationMap = await _geoLocatorDataSource.getCurrentLocation();
-
-      final latitude = (locationMap["latitude"] as num).toDouble();
-      final longitude = (locationMap["longitude"] as num).toDouble();
-
-      return CityLocation(
-        latitude: latitude,
-        longitude: longitude,
-        timestamp: DateTime.now().toIso8601String(),
+    if (!permissions) {
+      throw const PermissionException(
+        channel: "ubicación",
+        message: "No se han otorgado los permisos necesarios",
       );
     }
 
-    return cityLocation;
+    final locationMap = await _geoLocatorDataSource.getCurrentLocation();
+
+    final latitude = (locationMap["latitude"] as num).toDouble();
+    final longitude = (locationMap["longitude"] as num).toDouble();
+
+    return CityLocation(
+      latitude: latitude,
+      longitude: longitude,
+      timestamp: DateTime.now().toIso8601String(),
+    );
   }
 
   @override
