@@ -64,14 +64,15 @@ class _FavoritesListViewState extends State<FavoritesListView>
             CurrentLocationItem() => CityLocation(
                 latitude: page.coordinate.latitude,
                 longitude: page.coordinate.longitude,
+                name: page.cityName,
                 timestamp: '',
               ),
-            // TODO: Handle this case.
             FavoriteWeatherItem() => CityLocation(
                 latitude: page.cityLocation.latitude,
                 longitude: page.cityLocation.longitude,
                 timestamp: page.cityLocation.timestamp,
-                name: page.cityLocation.name),
+                name: page.cityLocation.name,
+              ),
           };
 
           return FadeTransition(
@@ -82,8 +83,8 @@ class _FavoritesListViewState extends State<FavoritesListView>
                 end: Offset.zero,
               ).animate(delayedAnimation),
               child: SliderFavoriteWeatherCard(
-                cityLocation: cityLocation,
                 index: index,
+                cityLocation: cityLocation,
               ),
             ),
           );
