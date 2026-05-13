@@ -27,7 +27,6 @@ Future registerUseCases() async {
     () => GetFavoritesAndCurrentLocationUseCase(
       locationRepository: localRepository,
       favoriteRepository: getIt<FavoriteRepository>(),
-      weatherRepository: getIt<WeatherRepository>(),
     ),
   );
 

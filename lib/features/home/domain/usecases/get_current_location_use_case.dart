@@ -1,22 +1,19 @@
 import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
+import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
-import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 import 'package:clima_app/features/home/presentation/weather_list_item.dart';
 import 'package:dartz/dartz.dart';
 
 class GetFavoritesAndCurrentLocationUseCase {
   final LocationRepository _locationRepository;
   final FavoriteRepository _favoriteRepository;
-  final WeatherRepository _weatherRepository;
 
   const GetFavoritesAndCurrentLocationUseCase({
     required LocationRepository locationRepository,
     required FavoriteRepository favoriteRepository,
-    required WeatherRepository weatherRepository,
   })  : _locationRepository = locationRepository,
-        _favoriteRepository = favoriteRepository,
-        _weatherRepository = weatherRepository;
+        _favoriteRepository = favoriteRepository;
 
   Future<Either<Failure, List<WeatherListItem>>> call() async {
     try {
@@ -25,16 +22,15 @@ class GetFavoritesAndCurrentLocationUseCase {
         _favoriteRepository.index()
       ).wait;
 
-      final currentWeather = await _weatherRepository.getWeatherByLocation(
-        lat: locationCached.latitude,
-        lon: locationCached.longitude,
-      );
-
       return favoritesCities.fold((error) {
         return Left(error);
       }, (data) {
         final pages = <WeatherListItem>[
-          CurrentLocationItem(forecast: currentWeather),
+          CurrentLocationItem(
+              coordinate: Coordinate(
+            latitude: locationCached.latitude,
+            longitude: locationCached.longitude,
+          )),
           ...data.map((favorite) {
             return FavoriteWeatherItem(cityLocation: favorite);
           })
