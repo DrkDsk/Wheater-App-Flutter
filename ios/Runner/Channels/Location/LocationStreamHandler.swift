@@ -17,6 +17,10 @@ class LocationStreamHandler: NSObject, FlutterStreamHandler {
     private let locationService = LocationService()
     private var eventSink: FlutterEventSink?
     
+    func OnError(withError error: Error) {
+        print("Error: \(error)")
+    }
+    
     func onCancel(withArguments arguments: Any?) -> FlutterError? {
         locationService.stopUpdating()
         eventSink = nil
