@@ -1,5 +1,4 @@
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
-import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/core/shared/data/datasources/weather_description_local_datasource.dart';
 import 'package:clima_app/features/city/data/datasources/city_datasource.dart';
 import 'package:clima_app/features/city/data/repositories/city_repository_impl.dart';
@@ -8,10 +7,10 @@ import 'package:clima_app/features/favorites/data/datasources/favorite_datasourc
 import 'package:clima_app/features/favorites/data/repositories/favorite_repository_impl.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:clima_app/features/home/data/datasources/search_weather_datasource.dart';
-import 'package:clima_app/features/home/data/repositories/location_repository_impl.dart';
+import 'package:clima_app/features/home/data/repositories/geo_locator_repository_impl.dart';
 import 'package:clima_app/features/home/data/repositories/weather_repository_impl.dart';
 import 'package:clima_app/features/home/data/repositories/weather_description_repository_impl.dart';
-import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
+import 'package:clima_app/features/home/domain/repositories/geo_locator_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/weather_description_repository.dart';
 import 'package:clima_app/features/ia/data/datasources/ia_datasource.dart';
@@ -39,7 +38,6 @@ Future registerRepositories() async {
   getIt.registerLazySingleton<FavoriteRepository>(
     () => FavoriteRepositoryImpl(
       favoriteWeatherDataSource: getIt<FavoriteDataSource>(),
-      locationLocalDataSource: getIt<LocationDataSourceImpl>(),
     ),
   );
 
@@ -49,9 +47,8 @@ Future registerRepositories() async {
     ),
   );
 
-  getIt.registerLazySingleton<LocationRepository>(
-    () => LocationRepositoryImpl(
-      locationDataSource: getIt<LocationDataSourceImpl>(),
+  getIt.registerLazySingleton<GeoLocatorRepository>(
+    () => GeoLocatorRepositoryImpl(
       geoLocatorDataSource: getIt<GeoLocatorDataSource>(),
     ),
   );

@@ -1,19 +1,15 @@
 import 'package:clima_app/core/error/exceptions/permission_exception.dart';
 import 'package:clima_app/core/shared/data/datasources/geo_locator_data_source.dart';
-import 'package:clima_app/core/shared/data/datasources/location_datasource_impl.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
+import 'package:clima_app/features/home/domain/repositories/geo_locator_repository.dart';
 import 'package:geocoding/geocoding.dart';
 
-class LocationRepositoryImpl implements LocationRepository {
-  final LocationDataSourceImpl _locationDataSource;
+class GeoLocatorRepositoryImpl implements GeoLocatorRepository {
   final GeoLocatorDataSource _geoLocatorDataSource;
 
-  LocationRepositoryImpl({
-    required LocationDataSourceImpl locationDataSource,
+  GeoLocatorRepositoryImpl({
     required GeoLocatorDataSource geoLocatorDataSource,
-  })  : _locationDataSource = locationDataSource,
-        _geoLocatorDataSource = geoLocatorDataSource;
+  }) : _geoLocatorDataSource = geoLocatorDataSource;
 
   @override
   Future<CityLocation> getCurrentLocation() async {
@@ -74,12 +70,5 @@ class LocationRepositoryImpl implements LocationRepository {
 
       yield cityLocation;
     }
-  }
-
-  @override
-  Future<CityLocation> store(CityLocation location) async {
-    final _ = await _locationDataSource.cacheLocation(location);
-
-    return location;
   }
 }

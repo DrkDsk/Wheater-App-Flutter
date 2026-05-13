@@ -1,9 +1,7 @@
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:geocoding/geocoding.dart';
 
-abstract class LocationRepository {
-  Future<CityLocation> store(CityLocation location);
-
+abstract class GeoLocatorRepository {
   Stream<CityLocation> watchLocation();
 
   Future<CityLocation> getCurrentLocation();

@@ -1,6 +1,7 @@
+import 'package:clima_app/features/city/domain/use_cases/is_available_to_store_location_use_case.dart';
 import 'package:clima_app/features/city/domain/use_cases/store_location_use_case.dart';
 import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
-import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
+import 'package:clima_app/features/home/domain/repositories/geo_locator_repository.dart';
 import 'package:clima_app/features/home/domain/repositories/weather_repository.dart';
 import 'package:clima_app/features/home/domain/usecases/get_current_location_use_case.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
@@ -11,21 +12,31 @@ import 'package:get_it/get_it.dart';
 final getIt = GetIt.instance;
 
 Future registerUseCases() async {
-  final localRepository = getIt<LocationRepository>();
+  final geoLocatorRepository = getIt<GeoLocatorRepository>();
+  final favoriteRepository = getIt<FavoriteRepository>();
 
   getIt.registerLazySingleton<ObserveLocationChangesUseCase>(
     () => ObserveLocationChangesUseCase(
-      locationRepository: localRepository,
+      locationRepository: geoLocatorRepository,
     ),
   );
 
+  getIt.registerLazySingleton<IsAvailableToStoreLocationUseCase>(
+    () => IsAvailableToStoreLocationUseCase(
+        favoriteRepository: favoriteRepository,
+        geoLocatorRepository: geoLocatorRepository),
+  );
+
   getIt.registerLazySingleton<StoreLocationUseCase>(
-    () => StoreLocationUseCase(locationRepository: localRepository),
+    () => StoreLocationUseCase(
+      favoriteRepository: favoriteRepository,
+      availableToStoreUSeCase: getIt<IsAvailableToStoreLocationUseCase>(),
+    ),
   );
 
   getIt.registerLazySingleton<GetFavoritesAndCurrentLocationUseCase>(
     () => GetFavoritesAndCurrentLocationUseCase(
-      locationRepository: localRepository,
+      geoLocatorRepository: geoLocatorRepository,
       favoriteRepository: getIt<FavoriteRepository>(),
     ),
   );
@@ -34,7 +45,7 @@ Future registerUseCases() async {
     () => GetWeatherUseCase(
       searchWeatherRepository: getIt<WeatherRepository>(),
       mapper: getIt<WeatherMapper>(),
-      locationRepository: localRepository,
+      locationRepository: geoLocatorRepository,
     ),
   );
 }

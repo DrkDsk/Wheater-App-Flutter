@@ -1,20 +1,29 @@
 import 'package:clima_app/core/error/failures/failure.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/home/domain/repositories/location_repository.dart';
+import 'package:clima_app/features/city/domain/use_cases/is_available_to_store_location_use_case.dart';
+import 'package:clima_app/features/favorites/domain/repository/favorite_repository.dart';
 import 'package:dartz/dartz.dart';
 
 class StoreLocationUseCase {
-  final LocationRepository _locationRepository;
+  final FavoriteRepository _favoriteRepository;
+  final IsAvailableToStoreLocationUseCase _isAvailableToStoreLocationUseCase;
 
   const StoreLocationUseCase({
-    required LocationRepository locationRepository,
-  }) : _locationRepository = locationRepository;
+    required FavoriteRepository favoriteRepository,
+    required IsAvailableToStoreLocationUseCase availableToStoreUSeCase,
+  })  : _favoriteRepository = favoriteRepository,
+        _isAvailableToStoreLocationUseCase = availableToStoreUSeCase;
 
-  Future<Either<Failure, CityLocation>> call(CityLocation location) async {
+  Future<Either<Failure, CityLocation>> call(CityLocation cityLocation) async {
     try {
-      await _locationRepository.store(location);
+      final isAvailableToStore =
+          await _isAvailableToStoreLocationUseCase(cityLocation);
 
-      return Right(location);
+      if (isAvailableToStore) {
+        await _favoriteRepository.store(cityLocation: cityLocation);
+      }
+
+      return Right(cityLocation);
     } catch (e) {
       return Left(UnexpectedFailure(
         "Ocurrió un error al guardar la ubicación",

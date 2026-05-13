@@ -9,7 +9,8 @@ abstract interface class FavoriteRepository {
 
   Future<Either<Failure, bool>> delete({required CityLocation cityLocation});
 
-  Future<Either<Failure, bool>> isAvailableToStore({
+  Future<bool> isAvailableToStore({
     required CityLocation cityLocation,
+    required CityLocation currentLocation,
   });
 }
