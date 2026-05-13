@@ -1,6 +1,8 @@
-import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
-import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_fetch_state.dart';
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/slidable_favorite_weather_card.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
+import 'package:clima_app/features/home/presentation/weather_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,10 +21,11 @@ class _FavoritesListViewState extends State<FavoritesListView>
   void initState() {
     super.initState();
     _controller = AnimationController(
-        vsync: this,
-        duration: const Duration(
-          milliseconds: 700,
-        ));
+      vsync: this,
+      duration: const Duration(
+        milliseconds: 700,
+      ),
+    );
 
     _controller.forward();
   }
@@ -35,12 +38,13 @@ class _FavoritesListViewState extends State<FavoritesListView>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FavoriteCubit, FavoriteState>(builder: (context, state) {
-      final cities = state.cities;
-      final citiesLength = cities.length;
+    return BlocBuilder<WeatherHomeBloc, WeatherHomeState>(
+        builder: (context, state) {
+      final pages = state.pages;
+      final pagesLength = pages.length;
 
       return ListView.separated(
-        itemCount: citiesLength,
+        itemCount: pagesLength,
         separatorBuilder: (context, index) {
           return const SizedBox(height: 14);
         },
@@ -48,13 +52,26 @@ class _FavoritesListViewState extends State<FavoritesListView>
           final delayedAnimation = CurvedAnimation(
             parent: _controller,
             curve: Interval(
-              index / citiesLength,
+              index / pagesLength,
               1.0,
               curve: Curves.easeOut,
             ),
           );
 
-          final city = cities[index];
+          final page = pages[index];
+
+          final cityLocation = switch (page) {
+            CurrentLocationItem() => CityLocation(
+                latitude: page.forecast.latitude,
+                longitude: page.forecast.longitude,
+                timestamp: '',
+              ),
+            // TODO: Handle this case.
+            FavoriteWeatherItem() => CityLocation(
+                latitude: page.cityLocation.latitude,
+                longitude: page.cityLocation.longitude,
+                timestamp: page.cityLocation.timestamp),
+          };
 
           return FadeTransition(
             opacity: delayedAnimation,
@@ -64,7 +81,7 @@ class _FavoritesListViewState extends State<FavoritesListView>
                 end: Offset.zero,
               ).animate(delayedAnimation),
               child: SliderFavoriteWeatherCard(
-                cityLocation: city,
+                cityLocation: cityLocation,
                 index: index,
               ),
             ),
