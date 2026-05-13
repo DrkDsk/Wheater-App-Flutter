@@ -23,4 +23,12 @@ class GeoLocatorDataSourceImpl implements GeoLocatorDataSource {
       return Map<String, dynamic>.from(event);
     });
   }
+
+  @override
+  Future<bool> requestPermissions() async {
+    final result =
+        await _locationChannel.invokeMethod<bool>("requestPermission");
+
+    return result ?? false;
+  }
 }
