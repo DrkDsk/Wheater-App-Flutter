@@ -1,0 +1,13 @@
+import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:geocoding/geocoding.dart';
+
+abstract class GeoLocatorRepository {
+  Stream<CityLocation> watchLocation();
+
+  Future<CityLocation> getCurrentLocation();
+
+  Future<Placemark?> getLocationInformation({
+    required double latitude,
+    required double longitude,
+  });
+}
