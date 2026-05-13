@@ -8,6 +8,12 @@ import Flutter
 
 class LocationStreamHandler: NSObject, FlutterStreamHandler {
     
+    private let service: LocationService
+    
+    init(service: LocationService) {
+        self.service = service
+    }
+    
     private let locationService = LocationService()
     private var eventSink: FlutterEventSink?
     

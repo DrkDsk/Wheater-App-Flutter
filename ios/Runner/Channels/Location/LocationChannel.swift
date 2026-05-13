@@ -3,8 +3,11 @@ import UIKit
 
 class LocationChannel {
     
-    private static let locationHandler = LocationHandler()
-    private static let streamHandler = LocationStreamHandler()
+    private static let service = LocationService()
+
+    private static let locationHandler = LocationHandler(service: service)
+    
+    private static let streamHandler = LocationStreamHandler(service: service)
 
     static func register(with messenger: FlutterBinaryMessenger) {
         let eventChannel = FlutterEventChannel(

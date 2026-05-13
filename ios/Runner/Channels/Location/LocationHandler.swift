@@ -8,15 +8,22 @@
 import Flutter
 import CoreLocation
 
-class LocationHandler {
+class LocationHandler : NSObject {
     
-    private let service = LocationService()
+    private let service: LocationService
+    
+    init(service: LocationService) {
+        self.service = service
+    }
     
     func handle(
         call: FlutterMethodCall,
         result: @escaping FlutterResult
     ) {
         switch call.method {
+            
+        case "requestPermission":
+            service.requestPermission(result: result)
             
         case "getCurrentLocation":
             service.getCurrentLocation { location in
@@ -40,5 +47,4 @@ class LocationHandler {
             result(FlutterMethodNotImplemented)
         }
     }
-    
 }

@@ -7,6 +7,8 @@ class LocationService:
     private let manager =
         CLLocationManager()
     
+    private var onRequestPermission: FlutterResult?
+    
     private var onSuccess:
     ((CLLocation) -> Void)?
     
@@ -57,6 +59,27 @@ class LocationService:
 
     func stopUpdating() {
         manager.stopUpdatingLocation()
+    }
+    
+    func requestPermission(result: @escaping FlutterResult) {
+        let status = manager.authorizationStatus
+        
+        switch status {
+        case .authorizedAlways, .authorizedWhenInUse:
+            result(true)
+            return
+        
+        case .denied, .restricted:
+            result(false)
+            return
+            
+        case .notDetermined:
+            onRequestPermission = result
+            manager.requestWhenInUseAuthorization()
+            
+        @unknown default:
+            result(false)
+        }
     }
 
     func locationManager(
