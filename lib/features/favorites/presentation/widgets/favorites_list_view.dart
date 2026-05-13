@@ -70,7 +70,8 @@ class _FavoritesListViewState extends State<FavoritesListView>
             FavoriteWeatherItem() => CityLocation(
                 latitude: page.cityLocation.latitude,
                 longitude: page.cityLocation.longitude,
-                timestamp: page.cityLocation.timestamp),
+                timestamp: page.cityLocation.timestamp,
+                name: page.cityLocation.name),
           };
 
           return FadeTransition(

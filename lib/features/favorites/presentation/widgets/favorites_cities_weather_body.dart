@@ -15,6 +15,7 @@ class FavoritesCitiesWeatherBody extends StatelessWidget {
     final theme = Theme.of(context);
     return BlocBuilder<CityWeatherBloc, CityWeatherState>(
       builder: (context, state) {
+        print("state:$state");
         switch (state.status) {
           case CityWeatherStatus.failure:
             return Text(state.message, style: theme.textTheme.bodyMedium);

@@ -7,10 +7,9 @@ class WeatherHomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
   final GetFavoritesAndCurrentLocationUseCase
       _favoritesAndCurrentLocationUseCase;
 
-  WeatherHomeBloc(
-      {required GetFavoritesAndCurrentLocationUseCase
-          getFavoritesLocationUseCase})
-      : _favoritesAndCurrentLocationUseCase = getFavoritesLocationUseCase,
+  WeatherHomeBloc({
+    required GetFavoritesAndCurrentLocationUseCase getFavoritesLocationUseCase,
+  })  : _favoritesAndCurrentLocationUseCase = getFavoritesLocationUseCase,
         super(const WeatherHomeState()) {
     on<LoadHomeEvent>(_loadHome);
   }
