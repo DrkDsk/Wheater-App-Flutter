@@ -62,8 +62,8 @@ class _FavoritesListViewState extends State<FavoritesListView>
 
           final cityLocation = switch (page) {
             CurrentLocationItem() => CityLocation(
-                latitude: page.forecast.latitude,
-                longitude: page.forecast.longitude,
+                latitude: page.coordinate.latitude,
+                longitude: page.coordinate.longitude,
                 timestamp: '',
               ),
             // TODO: Handle this case.
