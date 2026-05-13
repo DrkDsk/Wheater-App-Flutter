@@ -4,8 +4,9 @@ import 'package:clima_app/core/shared/ui/cubits/network_cubit.dart';
 import 'package:clima_app/core/theme/light_theme.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
-import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/screens/home_screen.dart';
 import 'package:clima_app/features/ia/ui/blocs/ia_cubit.dart';
 import 'package:flutter/material.dart';
@@ -40,11 +41,13 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (_) => getIt<NetworkCubit>()),
         BlocProvider(
-          create: (_) => getIt<FavoriteCubit>()..getFavoriteCities(),
+          create: (_) => getIt<FavoriteCubit>(),
         ),
         BlocProvider(
-          create: (_) =>
-              getIt<CityWeatherBloc>()..add(const StartListeningLocation()),
+          create: (_) => getIt<WeatherHomeBloc>()..add(const LoadHomeEvent()),
+        ),
+        BlocProvider(
+          create: (_) => getIt<CityWeatherBloc>(),
         ),
         BlocProvider(create: (_) => getIt<IACubit>()),
         BlocProvider(create: (_) => getIt<HomePageNavigationCubit>())
