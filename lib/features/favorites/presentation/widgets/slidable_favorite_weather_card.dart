@@ -2,9 +2,12 @@ import 'package:clima_app/core/di/di.dart';
 import 'package:clima_app/core/router/app_router.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
+import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_state.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/favorite_city_item_card.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -76,13 +79,22 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final cityName = cityLocation.name ?? "";
 
-    return Slidable(
-      direction: Axis.horizontal,
-      enabled: cityLocation.isStored,
-      endActionPane: buildActionPane(context: context),
-      child: GestureDetector(
-        onTap: () => onTap(context),
-        child: FavoriteCityItemCard(cityName: cityName),
+    return BlocListener<FavoriteCubit, FavoriteState>(
+      listenWhen: (previous, current) {
+        return previous.status != current.status &&
+            previous.status == FavoriteStatus.loading &&
+            current.status == FavoriteStatus.success;
+      },
+      listener: (context, state) =>
+          BlocProvider.of<WeatherHomeBloc>(context).add(const LoadHomeEvent()),
+      child: Slidable(
+        direction: Axis.horizontal,
+        enabled: cityLocation.isStored,
+        endActionPane: buildActionPane(context: context),
+        child: GestureDetector(
+          onTap: () => onTap(context),
+          child: FavoriteCityItemCard(cityName: cityName),
+        ),
       ),
     );
   }
