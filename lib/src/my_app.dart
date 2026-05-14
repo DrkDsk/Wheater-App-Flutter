@@ -5,7 +5,7 @@ import 'package:clima_app/core/theme/light_theme.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/screens/home_screen.dart';
 import 'package:clima_app/features/ia/ui/blocs/ia_cubit.dart';
@@ -44,10 +44,10 @@ class _MyAppState extends State<MyApp> {
           create: (_) => getIt<FavoriteCubit>(),
         ),
         BlocProvider(
-          create: (_) => getIt<WeatherHomeBloc>()..add(const LoadHomeEvent()),
+          create: (_) => getIt<HomeBloc>()..add(const LoadHomeEvent()),
         ),
         BlocProvider(
-          create: (_) => getIt<CityWeatherBloc>(),
+          create: (_) => getIt<WeatherBloc>(),
         ),
         BlocProvider(create: (_) => getIt<IACubit>()),
         BlocProvider(create: (_) => getIt<HomePageNavigationCubit>())

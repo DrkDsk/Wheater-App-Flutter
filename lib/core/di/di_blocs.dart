@@ -9,7 +9,7 @@ import 'package:clima_app/features/home/domain/usecases/get_current_location_use
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/ia/domain/repositories/ia_repository.dart';
 import 'package:clima_app/features/ia/ui/blocs/ia_cubit.dart';
 import 'package:get_it/get_it.dart';
@@ -36,8 +36,8 @@ Future registerBlocs() async {
     ),
   );
 
-  getIt.registerFactory<CityWeatherBloc>(
-    () => CityWeatherBloc(
+  getIt.registerFactory<WeatherBloc>(
+    () => WeatherBloc(
       getWeatherUseCase: getIt<GetWeatherUseCase>(),
       cityRepository: getIt<CityRepository>(),
     ),
@@ -47,8 +47,8 @@ Future registerBlocs() async {
     () => HomePageNavigationCubit(),
   );
 
-  getIt.registerFactory<WeatherHomeBloc>(
-    () => WeatherHomeBloc(
+  getIt.registerFactory<HomeBloc>(
+    () => HomeBloc(
       getFavoritesLocationUseCase: getFavoritesLocationUseCase,
     ),
   );

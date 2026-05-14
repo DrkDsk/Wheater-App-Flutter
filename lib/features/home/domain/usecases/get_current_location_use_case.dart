@@ -31,22 +31,22 @@ class GetFavoritesAndCurrentLocationUseCase {
 
       final displayName = currentLocationName?.getDisplayName ?? "";
 
-      return favoritesCities.fold((error) {
-        return Left(error);
-      }, (data) {
-        final pages = <WeatherListItem>[
-          CurrentLocationItem(
-            cityName: displayName,
-            coordinate: Coordinate(
-              latitude: locationCached.latitude,
-              longitude: locationCached.longitude,
-            ),
+      final pages = <WeatherListItem>[
+        CurrentLocationItem(
+          cityName: displayName,
+          coordinate: Coordinate(
+            latitude: locationCached.latitude,
+            longitude: locationCached.longitude,
           ),
-          ...data.map((favorite) {
-            return FavoriteWeatherItem(cityLocation: favorite);
-          })
-        ];
+        ),
+      ];
 
+      return favoritesCities.fold((error) {
+        return Right(pages);
+      }, (data) {
+        pages.addAll(data.map((favorite) {
+          return FavoriteWeatherItem(cityLocation: favorite);
+        }));
         return Right(pages);
       });
     } on UnexpectedFailure catch (e) {

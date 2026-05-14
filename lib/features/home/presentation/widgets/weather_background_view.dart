@@ -12,7 +12,7 @@ class WeatherBackgroundView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CityWeatherBloc, CityWeatherState, BackgroundWeather>(
+    return BlocSelector<WeatherBloc, CityWeatherState, BackgroundWeather>(
       selector: (state) => state.backgroundWeather,
       builder: (context, background) {
         return Positioned.fill(

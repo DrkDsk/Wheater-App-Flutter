@@ -10,7 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
+class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
   StreamSubscription? _subscription;
@@ -21,7 +21,7 @@ class CityWeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     };
   }
 
-  CityWeatherBloc({
+  WeatherBloc({
     required GetWeatherUseCase getWeatherUseCase,
     required CityRepository cityRepository,
   })  : _getWeatherUseCase = getWeatherUseCase,

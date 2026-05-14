@@ -22,8 +22,8 @@ class CustomBottomAppBar extends StatelessWidget {
 
     router.goToScreenAndClear(MultiBlocProvider(
       providers: [
-        BlocProvider<CityWeatherBloc>(
-          create: (_) => getIt<CityWeatherBloc>(),
+        BlocProvider<WeatherBloc>(
+          create: (_) => getIt<WeatherBloc>(),
         ),
       ],
       child: const FavoritesScreen(),
@@ -32,7 +32,7 @@ class CustomBottomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CityWeatherBloc, CityWeatherState, Color>(
+    return BlocSelector<WeatherBloc, CityWeatherState, Color>(
       selector: (state) => state.backgroundWeather.color,
       builder: (context, backgroundColor) {
         return BottomAppBar(

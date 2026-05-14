@@ -1,6 +1,6 @@
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/slidable_favorite_weather_card.dart';
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:clima_app/features/home/presentation/weather_list_item.dart';
 import 'package:flutter/material.dart';
@@ -38,8 +38,7 @@ class _FavoritesListViewState extends State<FavoritesListView>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WeatherHomeBloc, WeatherHomeState>(
-        builder: (context, state) {
+    return BlocBuilder<HomeBloc, WeatherHomeState>(builder: (context, state) {
       final pages = state.pages;
       final pagesLength = pages.length;
 
@@ -72,6 +71,7 @@ class _FavoritesListViewState extends State<FavoritesListView>
                 longitude: page.cityLocation.longitude,
                 timestamp: page.cityLocation.timestamp,
                 name: page.cityLocation.name,
+                isStored: true,
               ),
           };
 

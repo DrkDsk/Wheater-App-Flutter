@@ -18,11 +18,11 @@ class SearchCityFormField extends StatefulWidget {
 
 class _SearchCityFormFieldState extends State<SearchCityFormField> {
   Timer? _debounce;
-  late CityWeatherBloc _cityWeatherBloc;
+  late WeatherBloc _cityWeatherBloc;
 
   @override
   void initState() {
-    _cityWeatherBloc = context.read<CityWeatherBloc>();
+    _cityWeatherBloc = context.read<WeatherBloc>();
     super.initState();
   }
 

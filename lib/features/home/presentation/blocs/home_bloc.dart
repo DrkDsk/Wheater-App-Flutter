@@ -3,11 +3,11 @@ import 'package:clima_app/features/home/domain/usecases/get_current_location_use
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 
-class WeatherHomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
+class HomeBloc extends Bloc<WeatherHomeEvent, WeatherHomeState> {
   final GetFavoritesAndCurrentLocationUseCase
       _favoritesAndCurrentLocationUseCase;
 
-  WeatherHomeBloc({
+  HomeBloc({
     required GetFavoritesAndCurrentLocationUseCase getFavoritesLocationUseCase,
   })  : _favoritesAndCurrentLocationUseCase = getFavoritesLocationUseCase,
         super(const WeatherHomeState()) {
