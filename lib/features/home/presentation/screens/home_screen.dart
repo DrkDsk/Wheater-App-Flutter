@@ -57,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
             current.status == WeatherHomeStatus.success;
       },
       listener: (context, state) {
-        final lastIndex = state.pages.length - 1;
-
         if (_pageController.hasClients) {
+          final lastIndex = state.pages.length - 1;
+
           _pageController.animateToPage(
             lastIndex,
             duration: const Duration(milliseconds: 300),
