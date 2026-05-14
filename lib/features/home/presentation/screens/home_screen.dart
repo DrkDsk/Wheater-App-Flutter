@@ -2,7 +2,7 @@ import 'package:clima_app/core/shared/ui/cubits/network_cubit.dart';
 import 'package:clima_app/core/shared/ui/cubits/network_state.dart';
 import 'package:clima_app/core/shared/ui/widgets/network_status_builder.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:clima_app/features/home/presentation/widgets/favorites_page_builder.dart';
@@ -22,13 +22,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late final PageController _pageController;
   late final HomePageNavigationCubit _navigationCubit;
-  late final WeatherHomeBloc _weatherHomeBloc;
+  late final HomeBloc _weatherHomeBloc;
 
   @override
   void initState() {
     super.initState();
     _navigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
-    _weatherHomeBloc = BlocProvider.of<WeatherHomeBloc>(context);
+    _weatherHomeBloc = BlocProvider.of<HomeBloc>(context);
     _pageController = PageController(
       initialPage: widget.initialIndex ?? _navigationCubit.state,
     );
@@ -51,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<WeatherHomeBloc, WeatherHomeState>(
+    return BlocListener<HomeBloc, WeatherHomeState>(
       listenWhen: (previous, current) {
         return previous.status != current.status &&
             current.status == WeatherHomeStatus.success;

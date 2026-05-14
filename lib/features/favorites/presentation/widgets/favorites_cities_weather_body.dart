@@ -13,7 +13,7 @@ class FavoritesCitiesWeatherBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return BlocBuilder<CityWeatherBloc, CityWeatherState>(
+    return BlocBuilder<WeatherBloc, CityWeatherState>(
       builder: (context, state) {
         switch (state.status) {
           case CityWeatherStatus.failure:

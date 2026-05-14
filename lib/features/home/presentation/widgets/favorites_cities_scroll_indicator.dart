@@ -1,4 +1,4 @@
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +10,7 @@ class FavoritesCitiesScrollIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<WeatherHomeBloc, WeatherHomeState>(
+    return BlocBuilder<HomeBloc, WeatherHomeState>(
       builder: (context, state) {
         return ListView.builder(
           scrollDirection: Axis.horizontal,

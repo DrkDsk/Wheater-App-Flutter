@@ -19,7 +19,7 @@ class WeatherContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<CityWeatherBloc, CityWeatherState,
+    return BlocSelector<WeatherBloc, CityWeatherState,
         WeatherStatusContentData>(
       selector: (state) {
         return WeatherStatusContentData(

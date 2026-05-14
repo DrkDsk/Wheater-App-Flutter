@@ -20,14 +20,14 @@ class CityWeatherView extends StatefulWidget {
 }
 
 class _CityWeatherViewState extends State<CityWeatherView> {
-  late CityWeatherBloc _cityWeatherBloc;
+  late WeatherBloc _cityWeatherBloc;
 
   @override
   void initState() {
     super.initState();
     final latitude = widget.latitude;
     final longitude = widget.longitude;
-    _cityWeatherBloc = context.read<CityWeatherBloc>();
+    _cityWeatherBloc = context.read<WeatherBloc>();
 
     _cityWeatherBloc.add(FetchWeatherEvent(
       latitude: latitude,

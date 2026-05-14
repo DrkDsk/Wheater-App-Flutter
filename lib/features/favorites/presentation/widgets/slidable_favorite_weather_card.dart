@@ -6,7 +6,7 @@ import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_
 import 'package:clima_app/features/favorites/presentation/widgets/favorite_city_item_card.dart';
 import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -70,7 +70,7 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
     navigationCubit.updatePageIndex(index);
 
     router.goToScreenAndClear(BlocProvider(
-      create: (context) => getIt<CityWeatherBloc>(),
+      create: (context) => getIt<WeatherBloc>(),
       child: const HomeScreen(),
     ));
   }
@@ -86,7 +86,7 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
             current.status == FavoriteStatus.success;
       },
       listener: (context, state) =>
-          BlocProvider.of<WeatherHomeBloc>(context).add(const LoadHomeEvent()),
+          BlocProvider.of<HomeBloc>(context).add(const LoadHomeEvent()),
       child: Slidable(
         direction: Axis.horizontal,
         enabled: cityLocation.isStored,

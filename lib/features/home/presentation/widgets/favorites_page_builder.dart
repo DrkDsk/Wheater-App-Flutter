@@ -1,6 +1,6 @@
 import 'package:clima_app/core/shared/ui/widgets/lottie_loading.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
-import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:clima_app/features/home/presentation/weather_list_item.dart';
 import 'package:clima_app/features/home/presentation/widgets/city_weather_view.dart';
@@ -27,8 +27,7 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<WeatherHomeBloc, WeatherHomeState,
-        List<WeatherListItem>>(
+    return BlocSelector<HomeBloc, WeatherHomeState, List<WeatherListItem>>(
       selector: (state) => state.pages,
       builder: (context, pages) {
         if (pages.isEmpty) {
