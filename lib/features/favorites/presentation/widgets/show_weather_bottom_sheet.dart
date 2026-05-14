@@ -76,9 +76,8 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
         return previous.status != current.status &&
             current.status == FavoriteStatus.success;
       },
-      listener: (context, state) {
-        BlocProvider.of<WeatherHomeBloc>(context).add(const LoadHomeEvent());
-      },
+      listener: (context, state) =>
+          BlocProvider.of<WeatherHomeBloc>(context).add(const LoadHomeEvent()),
       child: FractionallySizedBox(
         heightFactor: 0.90,
         child: Stack(
