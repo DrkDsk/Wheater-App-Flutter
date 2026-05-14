@@ -7,6 +7,7 @@ import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dar
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/screens/home_screen.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_background_view.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_content.dart';
@@ -70,38 +71,48 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
   Widget build(BuildContext context) {
     final cityLocation = widget.cityLocation;
 
-    return FractionallySizedBox(
-      heightFactor: 0.90,
-      child: Stack(
-        children: [
-          const WeatherBackgroundView(),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            child: Column(
-              children: [
-                BlocConsumer<FavoriteCubit, FavoriteState>(
-                  listenWhen: (prev, current) => prev.status != current.status,
-                  listener: redirectToHome,
-                  builder: (context, state) {
-                    final isAvailableToStore = state.isAvailableToStore;
+    return BlocListener<FavoriteCubit, FavoriteState>(
+      listenWhen: (previous, current) {
+        return previous.status != current.status &&
+            current.status == FavoriteStatus.success;
+      },
+      listener: (context, state) {
+        BlocProvider.of<WeatherHomeBloc>(context).add(const LoadHomeEvent());
+      },
+      child: FractionallySizedBox(
+        heightFactor: 0.90,
+        child: Stack(
+          children: [
+            const WeatherBackgroundView(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              child: Column(
+                children: [
+                  BlocConsumer<FavoriteCubit, FavoriteState>(
+                    listenWhen: (prev, current) =>
+                        prev.status != current.status,
+                    listener: redirectToHome,
+                    builder: (context, state) {
+                      final isAvailableToStore = state.isAvailableToStore;
 
-                    return HeaderWeatherSheet(
-                      isAbleToSave: isAvailableToStore,
-                      onCancel: () => AppRouter.of(context).pop(),
-                      onSave: () => _favoriteCubit.store(
-                        cityLocation: cityLocation,
-                      ),
-                    );
-                  },
-                ),
-                const Expanded(
-                  child: WeatherContent(),
-                ),
-                const SizedBox(height: 10)
-              ],
+                      return HeaderWeatherSheet(
+                        isAbleToSave: isAvailableToStore,
+                        onCancel: () => AppRouter.of(context).pop(),
+                        onSave: () => _favoriteCubit.store(
+                          cityLocation: cityLocation,
+                        ),
+                      );
+                    },
+                  ),
+                  const Expanded(
+                    child: WeatherContent(),
+                  ),
+                  const SizedBox(height: 10)
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
