@@ -72,6 +72,7 @@ class _FavoritesListViewState extends State<FavoritesListView>
                 longitude: page.cityLocation.longitude,
                 timestamp: page.cityLocation.timestamp,
                 name: page.cityLocation.name,
+                isStored: true,
               ),
           };
 

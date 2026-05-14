@@ -78,6 +78,7 @@ class SliderFavoriteWeatherCard extends StatelessWidget {
 
     return Slidable(
       direction: Axis.horizontal,
+      enabled: cityLocation.isStored,
       endActionPane: buildActionPane(context: context),
       child: GestureDetector(
         onTap: () => onTap(context),
