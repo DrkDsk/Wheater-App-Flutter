@@ -1,37 +1,40 @@
 package com.example.clima_app.services
 
-import android.content.Context
-import io.flutter.plugin.common.MethodCall
-import io.flutter.plugin.common.MethodChannel
+import android.Manifest
+import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.pm.PackageManager
+import androidx.core.app.ActivityCompat
+import com.google.android.gms.location.LocationServices
 
-class LocationService(context: Context) : MethodChannel.MethodCallHandler {
+class LocationService(
+    private val activity: Activity,
+) {
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation(callback: (Double?, Double?) -> Unit) {
+        val fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(activity)
 
-    val service = LocationStreamService(context)
-
-    override fun onMethodCall(
-        call: MethodCall,
-        result: MethodChannel.Result
-    ) {
-        when (call.method) {
-            "getCurrentLocation" -> {
-                service.getCurrentLocation(
-                    onSuccess = { location ->
-                        result.success(
-                            mapOf<String, Any>(
-                                "latitude" to location.latitude,
-                                "longitude" to location.longitude
-                            )
-                        )
-                    },
-                    onError = { error ->
-                        result.error(
-                            "LOCATION_ERROR",
-                            error,
-                            null
-                        )
-                    }
-                )
-            }
+        if (
+            ActivityCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            callback(null, null)
+            return
         }
+
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location ->
+                if (location != null) {
+                    callback(location.latitude, location.longitude)
+                } else {
+                    callback(null, null)
+                }
+            }
+            .addOnFailureListener {
+                callback(null, null)
+            }
     }
 }
