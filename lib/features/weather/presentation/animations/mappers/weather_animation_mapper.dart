@@ -2,7 +2,7 @@ import 'package:clima_app/features/home/domain/entities/current.dart';
 import 'package:clima_app/features/home/domain/entities/daily.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/atmosphere_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/effects_config.dart';
-import 'package:clima_app/features/weather/presentation/animations/configs/particle_system_config.dart';
+import 'package:clima_app/features/weather/presentation/animations/configs/particle_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/shader_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/weather_animation_config.dart';
@@ -44,7 +44,7 @@ class WeatherAnimationMapper {
         starsVisible: false,
         moonVisible: false,
       ),
-      particleConfig: ParticleSystemConfig(
+      particleConfig: ParticleConfig(
         particleType: ParticleType.none,
         density: 0,
         speed: 0,
@@ -107,7 +107,7 @@ class WeatherAnimationMapper {
         starsVisible: false,
         moonVisible: false,
       ),
-      particleConfig: ParticleSystemConfig(
+      particleConfig: ParticleConfig(
         particleType: ParticleType.rain,
         density: 0.5 + (rainVolume * 0.13),
         speed: 0.95 + (rainVolume * 0.12) + (windSpeed * 0.025),

@@ -1,6 +1,6 @@
 import 'package:clima_app/features/weather/presentation/animations/configs/atmosphere_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/effects_config.dart';
-import 'package:clima_app/features/weather/presentation/animations/configs/particle_system_config.dart';
+import 'package:clima_app/features/weather/presentation/animations/configs/particle_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/shader_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
 import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
@@ -13,7 +13,7 @@ class WeatherAnimationConfig {
   final SkyGradientConfig skyGradient;
   final ShaderConfig shaderConfig;
   final AtmosphereConfig atmosphereConfig;
-  final ParticleSystemConfig particleConfig;
+  final ParticleConfig particleConfig;
   final EffectsConfig effectsConfig;
 
   const WeatherAnimationConfig({
