@@ -3,7 +3,7 @@ import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_
 import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:clima_app/features/home/presentation/weather_list_item.dart';
-import 'package:clima_app/features/home/presentation/widgets/city_weather_view.dart';
+import 'package:clima_app/features/home/presentation/widgets/weather_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,14 +42,16 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
             final page = pages[index];
 
             return switch (page) {
-              CurrentLocationItem() => CityWeatherView(
-                  latitude: page.coordinate.latitude,
-                  longitude: page.coordinate.longitude,
-                ),
-              FavoriteWeatherItem() => CityWeatherView(
-                  latitude: page.cityLocation.latitude,
-                  longitude: page.cityLocation.longitude,
-                ),
+              CurrentLocationItem() =>
+                  WeatherScreen(
+                    latitude: page.coordinate.latitude,
+                    longitude: page.coordinate.longitude,
+                  ),
+              FavoriteWeatherItem() =>
+                  WeatherScreen(
+                    latitude: page.cityLocation.latitude,
+                    longitude: page.cityLocation.longitude,
+                  ),
             };
           },
         );

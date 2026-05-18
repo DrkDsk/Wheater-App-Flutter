@@ -21,14 +21,15 @@ class Forecast {
   final List<Hourly> hourly;
   final List<Daily> daily;
 
-  Forecast copyWith(
-      {double? latitude,
-      double? longitude,
-      String? timeZone,
-      int? timezoneOffset,
-      Current? current,
-      List<Hourly>? hourly,
-      List<Daily>? daily}) {
+  Forecast copyWith({
+    double? latitude,
+    double? longitude,
+    String? timeZone,
+    int? timezoneOffset,
+    Current? current,
+    List<Hourly>? hourly,
+    List<Daily>? daily,
+  }) {
     return Forecast(
         latitude: latitude ?? this.latitude,
         longitude: longitude ?? this.longitude,

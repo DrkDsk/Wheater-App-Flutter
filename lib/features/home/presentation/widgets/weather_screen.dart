@@ -2,11 +2,12 @@ import 'package:clima_app/features/home/presentation/blocs/events/city_weather_e
 import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_background_view.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_content.dart';
+import 'package:clima_app/features/weather/presentation/animations/mappers/weather_animation_mapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class CityWeatherView extends StatefulWidget {
-  const CityWeatherView({
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({
     super.key,
     required this.latitude,
     required this.longitude,
@@ -16,10 +17,10 @@ class CityWeatherView extends StatefulWidget {
   final double longitude;
 
   @override
-  State<CityWeatherView> createState() => _CityWeatherViewState();
+  State<WeatherScreen> createState() => _WeatherScreenState();
 }
 
-class _CityWeatherViewState extends State<CityWeatherView> {
+class _WeatherScreenState extends State<WeatherScreen> {
   late WeatherBloc _cityWeatherBloc;
 
   @override

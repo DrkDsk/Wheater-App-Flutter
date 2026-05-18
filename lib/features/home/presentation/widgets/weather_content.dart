@@ -1,6 +1,6 @@
 import 'package:clima_app/core/extensions/weather/current_weather_extension.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
-import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
+import 'package:clima_app/features/home/presentation/blocs/states/weather_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/weather_status_content_data.dart';
 import 'package:clima_app/features/home/presentation/widgets/daily_list_weather.dart';
 import 'package:clima_app/features/home/presentation/widgets/detail_weather_grid.dart';
@@ -9,6 +9,8 @@ import 'package:clima_app/features/home/presentation/widgets/hourly_list_weather
 import 'package:clima_app/features/home/presentation/widgets/loading_view.dart';
 import 'package:clima_app/features/home/presentation/widgets/summary_description.dart';
 import 'package:clima_app/features/ia/ui/blocs/widgets/ia_content_view.dart';
+import 'package:clima_app/features/weather/presentation/animations/mappers/weather_animation_mapper.dart';
+import 'package:clima_app/features/weather/presentation/weather_scene.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,8 +21,7 @@ class WeatherContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<WeatherBloc, CityWeatherState,
-        WeatherStatusContentData>(
+    return BlocSelector<WeatherBloc, WeatherState, WeatherStatusContentData>(
       selector: (state) {
         return WeatherStatusContentData(
           status: state.status,
@@ -33,13 +34,21 @@ class WeatherContent extends StatelessWidget {
         final data = state.data;
 
         final status = state.status;
+        final forecast = data?.forecast;
 
-        if (status != CityWeatherStatus.success || data == null) {
+        if (status != WeatherStatus.success ||
+            data == null ||
+            forecast == null) {
           return LoadingView(color: bgColor);
         }
 
-        final forecast = data.forecast;
-        final current = forecast.current;
+        final config = WeatherAnimationMapper.map(
+          current: forecast.current,
+        );
+
+        return WeatherScene(config: config);
+
+        /*final current = forecast.current;
         final daily = forecast.daily;
         final hourly = forecast.hourly;
         final summary = daily.isNotEmpty ? daily.first.summary : null;
@@ -86,7 +95,7 @@ class WeatherContent extends StatelessWidget {
               const SizedBox(height: 10),
             ],
           ),
-        );
+        );*/
       },
     );
   }

@@ -3,7 +3,7 @@ import 'package:clima_app/core/extensions/color_extension.dart';
 import 'package:clima_app/core/router/app_router.dart';
 import 'package:clima_app/features/favorites/presentation/screens/favorites_screen.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
-import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
+import 'package:clima_app/features/home/presentation/blocs/states/weather_state.dart';
 import 'package:clima_app/features/home/presentation/widgets/favorites_cities_scroll_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,7 +32,7 @@ class CustomBottomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<WeatherBloc, CityWeatherState, Color>(
+    return BlocSelector<WeatherBloc, WeatherState, Color>(
       selector: (state) => state.backgroundWeather.color,
       builder: (context, backgroundColor) {
         return BottomAppBar(

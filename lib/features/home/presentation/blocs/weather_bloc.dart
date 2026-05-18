@@ -5,12 +5,12 @@ import 'package:clima_app/features/city/domain/repositories/city_repository.dart
 import 'package:clima_app/features/home/domain/entities/coordinate.dart';
 import 'package:clima_app/features/home/domain/usecases/get_weather_use_case.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
-import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
+import 'package:clima_app/features/home/presentation/blocs/states/weather_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
+class WeatherBloc extends Bloc<CityWeatherEvent, WeatherState> {
   final GetWeatherUseCase _getWeatherUseCase;
   final CityRepository _cityRepository;
   StreamSubscription? _subscription;
@@ -24,9 +24,10 @@ class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
   WeatherBloc({
     required GetWeatherUseCase getWeatherUseCase,
     required CityRepository cityRepository,
-  })  : _getWeatherUseCase = getWeatherUseCase,
+  })
+      : _getWeatherUseCase = getWeatherUseCase,
         _cityRepository = cityRepository,
-        super(CityWeatherState.initial()) {
+        super(WeatherState.initial()) {
     on<FetchWeatherEvent>(_getCurrentWeather);
     on<CitySearchEvent>(
       _searchWeatherEvent,
@@ -34,28 +35,26 @@ class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     );
   }
 
-  Future<void> _getCurrentWeather(
-    FetchWeatherEvent event,
-    Emitter<CityWeatherState> emit,
-  ) async {
-    emit(state.copyWith(status: CityWeatherStatus.loading));
+  Future<void> _getCurrentWeather(FetchWeatherEvent event,
+      Emitter<WeatherState> emit,) async {
+    emit(state.copyWith(status: WeatherStatus.loading));
 
     final latitude = event.latitude;
     final longitude = event.longitude;
     final coordinate = Coordinate(latitude: latitude, longitude: longitude);
 
     final cityWeatherDataResult =
-        await _getWeatherUseCase(coordinate: coordinate);
+    await _getWeatherUseCase(coordinate: coordinate);
 
     final newState = cityWeatherDataResult.fold((error) {
       return state.copyWith(
-        status: CityWeatherStatus.failure,
+        status: WeatherStatus.failure,
         message: error.toString(),
       );
     }, (result) {
       final backgroundWeather = result.getBackgroundWeather();
       return state.copyWith(
-        status: CityWeatherStatus.success,
+        status: WeatherStatus.success,
         cityWeatherData: result,
         backgroundWeather: backgroundWeather,
       );
@@ -64,12 +63,12 @@ class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
     emit(newState);
   }
 
-  Future<void> _searchWeatherEvent(
-      CitySearchEvent event, Emitter<CityWeatherState> emit) async {
+  Future<void> _searchWeatherEvent(CitySearchEvent event,
+      Emitter<WeatherState> emit) async {
     final String query = event.query;
 
     if (query.isEmpty) {
-      emit(state.copyWith(status: CityWeatherStatus.initial, cities: []));
+      emit(state.copyWith(status: WeatherStatus.initial, cities: []));
       return;
     }
 
@@ -77,7 +76,7 @@ class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
 
     final newState = cityResult.fold((left) {
       return state.copyWith(
-        status: CityWeatherStatus.failure,
+        status: WeatherStatus.failure,
         message: left.message,
         cities: [],
       );
@@ -87,7 +86,7 @@ class WeatherBloc extends Bloc<CityWeatherEvent, CityWeatherState> {
       }).toList();
 
       return state.copyWith(
-        status: CityWeatherStatus.success,
+        status: WeatherStatus.success,
         cities: filteredCitySearchResult,
       );
     });
