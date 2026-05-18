@@ -1,7 +1,7 @@
 package com.example.clima_app.services
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Activity
 import android.location.Location
 import android.os.Looper
 import com.google.android.gms.location.LocationCallback
@@ -13,11 +13,12 @@ import com.google.android.gms.location.Priority
 
 import io.flutter.plugin.common.EventChannel
 
-class LocationStreamService(context: Context) : EventChannel.StreamHandler {
+class LocationStreamService(activity: Activity) : EventChannel.StreamHandler {
+
 
     private val fusedLocationClient =
         LocationServices.getFusedLocationProviderClient(
-            context
+            activity
         )
 
     private var eventSink:

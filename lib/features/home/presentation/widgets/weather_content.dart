@@ -1,5 +1,5 @@
 import 'package:clima_app/core/extensions/weather/current_weather_extension.dart';
-import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/weather_status_content_data.dart';
 import 'package:clima_app/features/home/presentation/widgets/daily_list_weather.dart';

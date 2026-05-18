@@ -1,5 +1,5 @@
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
-import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_background_view.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_content.dart';
 import 'package:flutter/material.dart';
