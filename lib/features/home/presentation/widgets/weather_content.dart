@@ -2,14 +2,9 @@ import 'package:clima_app/core/extensions/weather/current_weather_extension.dart
 import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/weather_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/weather_status_content_data.dart';
-import 'package:clima_app/features/home/presentation/widgets/daily_list_weather.dart';
-import 'package:clima_app/features/home/presentation/widgets/detail_weather_grid.dart';
-import 'package:clima_app/features/home/presentation/widgets/header_weather.dart';
-import 'package:clima_app/features/home/presentation/widgets/hourly_list_weather.dart';
 import 'package:clima_app/features/home/presentation/widgets/loading_view.dart';
-import 'package:clima_app/features/home/presentation/widgets/summary_description.dart';
-import 'package:clima_app/features/ia/ui/blocs/widgets/ia_content_view.dart';
 import 'package:clima_app/features/weather/presentation/animations/mappers/weather_animation_mapper.dart';
+import 'package:clima_app/features/weather/presentation/layers/overlay/weather_scene_overlay_data.dart';
 import 'package:clima_app/features/weather/presentation/weather_scene.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,72 +25,40 @@ class WeatherContent extends StatelessWidget {
         );
       },
       builder: (context, state) {
-        final bgColor = state.bgColor;
         final data = state.data;
-
-        final status = state.status;
         final forecast = data?.forecast;
 
-        if (status != WeatherStatus.success ||
+        if (state.status != WeatherStatus.success ||
             data == null ||
             forecast == null) {
-          return LoadingView(color: bgColor);
+          return LoadingView(color: state.bgColor);
         }
 
+        final current = forecast.current;
+        final rainAmount = current.rain?.the1H;
+        final condition = data.translatedWeather.translatedDescription;
         final config = WeatherAnimationMapper.map(
-          current: forecast.current,
+          current: current,
+          daily: forecast.daily.isNotEmpty ? forecast.daily.first : null,
         );
 
-        return WeatherScene(config: config);
-
-        /*final current = forecast.current;
-        final daily = forecast.daily;
-        final hourly = forecast.hourly;
-        final summary = daily.isNotEmpty ? daily.first.summary : null;
-        final cityName = data.cityName;
-
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              HeaderWeather(
-                cityName: cityName,
-                translatedWeather: data.translatedWeather,
-                temp: current.tempCelsiusText,
-              ),
-              const SizedBox(height: 10),
-              IAContentView(cityWeatherData: data),
-              const SizedBox(height: 10),
-              if (summary != null) ...[
-                SummaryDescription(
-                  backgroundColor: bgColor,
-                  summaryDescription: summary,
-                ),
-                const SizedBox(height: 10),
-              ],
-              if (hourly.isNotEmpty) ...[
-                HourlyListWeather(
-                  hourly: hourly,
-                  backgroundColor: bgColor,
-                ),
-              ],
-              const SizedBox(height: 10),
-              if (daily.isNotEmpty) ...[
-                DailyListWeather(
-                  daily: daily,
-                  backgroundColor: bgColor,
-                ),
-              ],
-              const SizedBox(height: 10),
-              DetailWeatherGrid(
-                weather: current,
-                backgroundColor: bgColor,
-              ),
-              const SizedBox(height: 10),
-            ],
+        return WeatherScene(
+          config: config,
+          overlayData: WeatherSceneOverlayData(
+            cityName: data.cityName,
+            temperature: current.tempCelsiusText,
+            condition: condition.isNotEmpty ? condition : 'Rainy night',
+            feelsLike: current.feelsLikeCelsiusText,
+            humidity: '${current.humidity ?? 0}%',
+            wind: current.windDirectionText.isNotEmpty
+                ? current.windDirectionText
+                : current.windSpeedKmText,
+            rain: rainAmount == null
+                ? '--'
+                : '${rainAmount.toStringAsFixed(1)} mm',
+            visibility: current.visibilityTextInKm,
           ),
-        );*/
+        );
       },
     );
   }
