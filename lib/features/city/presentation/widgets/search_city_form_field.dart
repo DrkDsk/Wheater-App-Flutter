@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:clima_app/core/extensions/color_extension.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
-import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

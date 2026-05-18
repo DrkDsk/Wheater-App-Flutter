@@ -4,7 +4,7 @@ import 'package:clima_app/features/city/domain/entities/city_location.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_state.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/favorite_city_item_card.dart';
-import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';

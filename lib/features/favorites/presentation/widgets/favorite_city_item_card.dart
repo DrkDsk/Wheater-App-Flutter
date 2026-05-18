@@ -19,12 +19,10 @@ class FavoriteCityItemCard extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 18),
-        child: SingleChildScrollView(
-          child: Text(
-            cityName,
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+        child: Text(
+          cityName,
+          style: theme.textTheme.bodyLarge?.copyWith(
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),

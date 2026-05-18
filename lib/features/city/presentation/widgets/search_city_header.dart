@@ -1,4 +1,4 @@
-import 'package:clima_app/features/favorites/presentation/widgets/search_city_form_field.dart';
+import 'package:clima_app/features/city/presentation/widgets/search_city_form_field.dart';
 import 'package:flutter/material.dart';
 
 class SearchCityHeader extends StatelessWidget {

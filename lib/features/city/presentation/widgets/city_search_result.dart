@@ -1,10 +1,10 @@
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/favorites/presentation/widgets/city_result_item_card.dart';
+import 'package:clima_app/features/city/presentation/widgets/city_item_card.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/show_weather_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 
-class CitySearchResultsList extends StatelessWidget {
-  const CitySearchResultsList({
+class CitySearchResult extends StatelessWidget {
+  const CitySearchResult({
     super.key,
     required this.cities,
   });

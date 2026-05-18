@@ -2,7 +2,7 @@ import 'package:clima_app/core/di/di.dart';
 import 'package:clima_app/core/extensions/color_extension.dart';
 import 'package:clima_app/core/router/app_router.dart';
 import 'package:clima_app/features/favorites/presentation/screens/favorites_screen.dart';
-import 'package:clima_app/features/home/presentation/blocs/city_weather_bloc.dart';
+import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/city_weather_state.dart';
 import 'package:clima_app/features/home/presentation/widgets/favorites_cities_scroll_indicator.dart';
 import 'package:flutter/material.dart';
