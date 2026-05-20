@@ -4,26 +4,26 @@ import 'package:clima_app/features/weather/presentation/layers/palettes/sky_pale
 
 class OvercastPalette extends SkyPalette {
   @override
-  Color get topSkyA => const Color(0xFF5F6E7A);
+  Color get topSkyA => const Color(0xFF7F8285);
 
   @override
   Color get topSkyB => const Color(0xFF8A97A3);
 
   @override
-  Color get warmA => const Color(0xFFD9D3CB);
+  Color get warmA => const Color(0xFF7F8285);
 
   @override
-  Color get warmB => const Color(0xFFC5BEB6);
+  Color get warmB => const Color(0xFF818081);
 
   @override
-  Color get horizonA => const Color(0xFFC4CBD2);
+  Color get horizonA => const Color(0xFFAAAAAD);
 
   @override
-  Color get horizonB => const Color(0xFFD8DDE3);
+  Color get horizonB => const Color(0xFFAAAAAD);
 
   @override
-  Color get radialA => const Color(0xFFEAE3D7);
+  Color get radialA => const Color(0xFF7F8285);
 
   @override
-  Color get radialB => const Color(0xFFD8CCBA);
+  Color get radialB => const Color(0xFFB1AFAF);
 }
