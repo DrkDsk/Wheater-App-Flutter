@@ -26,7 +26,7 @@ class WeatherAnimationMapper {
     final code = current.weather.firstOrNull?.id ?? 0;
     final description = current.weather.firstOrNull?.description ?? "";
 
-    final sceneType = WeatherSceneTypeResolver.resolveWeatherSceneType(
+    final sceneType = WeatherSceneTypeResolver.resolve(
       code: code,
       description: description,
     );

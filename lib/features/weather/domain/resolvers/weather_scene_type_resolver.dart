@@ -1,7 +1,7 @@
 import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
 
 class WeatherSceneTypeResolver {
-  static WeatherSceneType resolveWeatherSceneType({
+  static WeatherSceneType resolve({
     required int code,
     required String description,
   }) {
