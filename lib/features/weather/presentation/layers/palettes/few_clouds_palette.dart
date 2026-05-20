@@ -4,26 +4,26 @@ import 'package:clima_app/features/weather/presentation/layers/palettes/sky_pale
 
 class FewCloudsPalette extends SkyPalette {
   @override
-  Color get topSkyA => const Color(0xFF6FB7F5);
+  Color get topSkyA => const Color(0xFF67AFFB);
 
   @override
-  Color get topSkyB => const Color(0xFFAED7F7);
+  Color get topSkyB => const Color(0xFF9BC6ED);
 
   @override
-  Color get warmA => const Color(0xFFFFE7B8);
+  Color get warmA => const Color(0xFF71A5BD);
 
   @override
-  Color get warmB => const Color(0xFFFFC978);
+  Color get warmB => const Color(0xFFB8DDF0);
 
   @override
-  Color get horizonA => const Color(0xFFE4EAF0);
+  Color get horizonA => const Color(0xFFABC0D1);
 
   @override
-  Color get horizonB => const Color(0xFFF7FAFD);
+  Color get horizonB => const Color(0xFFB6DDFF);
 
   @override
-  Color get radialA => const Color(0xFFFFF1D8);
+  Color get radialA => const Color(0xFF7FB8DC);
 
   @override
-  Color get radialB => const Color(0xFFFFD28A);
+  Color get radialB => const Color(0xFF95D6F8);
 }

@@ -7,23 +7,23 @@ class CloudyPalette extends SkyPalette {
   Color get topSkyA => const Color(0xFF7F97B2);
 
   @override
-  Color get topSkyB => const Color(0xFFB3C0CF);
+  Color get topSkyB => const Color(0xFFC7CCD1);
 
   @override
-  Color get warmA => const Color(0xFFE7DCC8);
+  Color get warmA => const Color(0xFFB5B9BD);
 
   @override
-  Color get warmB => const Color(0xFFD6C8B3);
+  Color get warmB => const Color(0xFFC7CCD1);
 
   @override
-  Color get horizonA => const Color(0xFFD4D9DF);
+  Color get horizonA => const Color(0xFFC7CCD1);
 
   @override
-  Color get horizonB => const Color(0xFFE7EDF4);
+  Color get horizonB => const Color(0xFFC7CCD1);
 
   @override
   Color get radialA => const Color(0xFFF3E7CF);
 
   @override
-  Color get radialB => const Color(0xFFE4D1A8);
+  Color get radialB => const Color(0xFFD4E1E6);
 }
