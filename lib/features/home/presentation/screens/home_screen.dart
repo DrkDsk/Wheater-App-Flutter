@@ -6,7 +6,6 @@ import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:clima_app/features/home/presentation/widgets/favorites_page_builder.dart';
-import 'package:clima_app/features/home/presentation/widgets/custom_bottom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -67,37 +66,26 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         }
       },
-      child: BlocSelector<HomePageNavigationCubit, int, int>(
-        selector: (state) => state,
-        builder: (context, currentPage) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            bottomNavigationBar: CustomBottomAppBar(
-              currentPage: currentPage,
-            ),
-            body: SafeArea(
-              child: BlocConsumer<NetworkCubit, NetworkState>(
-                listenWhen: (prev, current) => prev.status != current.status,
-                buildWhen: (prev, current) => prev.status != current.status,
-                listener: retryFavorites,
-                builder: (context, state) {
-                  return Column(
-                    children: [
-                      NetworkStatusBuilder(
-                        isConnected: state.status == NetworkStatus.connected,
-                      ),
-                      Expanded(
-                        child: FavoritesPageBuilder(
-                          pageController: _pageController,
-                        ),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          );
-        },
+      child: Scaffold(
+        body: BlocConsumer<NetworkCubit, NetworkState>(
+          listenWhen: (prev, current) => prev.status != current.status,
+          buildWhen: (prev, current) => prev.status != current.status,
+          listener: retryFavorites,
+          builder: (context, state) {
+            return Column(
+              children: [
+                NetworkStatusBuilder(
+                  isConnected: state.status == NetworkStatus.connected,
+                ),
+                Expanded(
+                  child: FavoritesPageBuilder(
+                    pageController: _pageController,
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
       ),
     );
   }
