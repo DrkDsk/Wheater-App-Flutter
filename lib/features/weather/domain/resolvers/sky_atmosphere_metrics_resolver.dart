@@ -9,15 +9,11 @@ class SkyAtmosphereMetricsResolver {
     bool isNight,
   ) {
     final uvFactor = (current.uvi / 11).clamp(0.0, 1.0);
-
     final visibilityFactor = (current.visibility / 10000).clamp(0.0, 1.0);
-
     final cloudFactor = (current.clouds / 100).clamp(0.0, 1.0);
-
+    final windFactor = (current.windSpeed / 20).clamp(0.0, 1.0);
     final humidityFactor = (current.humidity / 100).clamp(0.0, 1.0);
-
     final pressureFactor = ((current.pressure - 980) / 50).clamp(0.0, 1.0);
-
     final rainMm = current.rain?.the1H ?? 0.0;
 
     final rainFactor = pow(
@@ -71,6 +67,10 @@ class SkyAtmosphereMetricsResolver {
       haze: haze,
       storminess: storminess,
       solarElevation: solarElevation,
+      uvFactor: uvFactor,
+      cloudFactor: cloudFactor,
+      windFactor: windFactor,
+      rainFactor: rainFactor,
     );
   }
 }
