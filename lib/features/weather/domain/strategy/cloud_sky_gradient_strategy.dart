@@ -1,4 +1,3 @@
-import 'package:clima_app/features/home/domain/entities/current.dart';
 import 'package:clima_app/features/weather/domain/entities/sky_atmosphere_metrics.dart';
 import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
@@ -10,12 +9,11 @@ class CloudSkyGradientStrategy implements SkyGradientStrategy {
   SkyGradientConfig resolve({
     required SkyPalette palette,
     required SkyAtmosphereMetrics metrics,
-    required Current current,
     required bool isNight,
   }) {
-    final uvFactor = (current.uvi / 11).clamp(0.0, 1.0);
-    final cloudFactor = (current.clouds / 100).clamp(0.0, 1.0);
-    final windFactor = (current.windSpeed / 20).clamp(0.0, 1.0);
+    final uvFactor = metrics.uvFactor;
+    final cloudFactor = metrics.cloudFactor;
+    final windFactor = metrics.windFactor;
 
     final solarElevation = metrics.solarElevation;
     final warmth = metrics.warmth;
