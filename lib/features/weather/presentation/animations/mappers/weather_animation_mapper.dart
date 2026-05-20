@@ -1,15 +1,16 @@
 import 'package:clima_app/features/home/domain/entities/current.dart';
 import 'package:clima_app/features/home/domain/entities/daily.dart';
+import 'package:clima_app/features/weather/domain/resolvers/background_gradient_strategy_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_atmosphere_metrics_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_palette_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/weather_scene_type_resolver.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/atmosphere_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/effects_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/particle_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/shader_config.dart';
-import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/weather_animation_config.dart';
 import 'package:clima_app/features/weather/presentation/enums/particle_type.dart';
 import 'package:clima_app/features/weather/presentation/enums/shader_type.dart';
-import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
-import 'package:flutter/material.dart';
 
 class WeatherAnimationMapper {
   static WeatherAnimationConfig map({
@@ -22,71 +23,64 @@ class WeatherAnimationMapper {
       now: now,
     );
 
-    if (_isRain(current: current, daily: daily) && isNight) {
-      return _rainNight(current: current, daily: daily);
-    }
+    final code = current.weather.firstOrNull?.id ?? 0;
+    final description = current.weather.firstOrNull?.description ?? "";
 
-    return const WeatherAnimationConfig(
-      sceneType: WeatherSceneType.clearDay,
-      isNight: false,
-      skyGradient: SkyGradientConfig(
-        colors: [
-          Colors.lightBlueAccent,
-          Colors.blue,
-        ],
-      ),
-      shaderConfig: ShaderConfig(
+    final sceneType = WeatherSceneTypeResolver.resolveWeatherSceneType(
+      code: code,
+      description: description,
+    );
+
+    final strategy = BackgroundGradientStrategyResolver.resolve(sceneType);
+    final metrics = SkyAtmosphereMetricsResolver.resolve(current, isNight);
+    final palette = SkyPaletteResolver.resolve(sceneType);
+
+    final skyGradient = strategy.resolve(
+      metrics: metrics,
+      isNight: isNight,
+      current: current,
+      palette: palette,
+    );
+
+    return WeatherAnimationConfig(
+      sceneType: sceneType,
+      isNight: isNight,
+      skyGradient: skyGradient,
+      shaderConfig: const ShaderConfig(
         shaderType: ShaderType.clearSky,
       ),
-      atmosphereConfig: AtmosphereConfig(
+      atmosphereConfig: const AtmosphereConfig(
         cloudDensity: 0.1,
         fogIntensity: 0,
         starsVisible: false,
         moonVisible: false,
       ),
-      particleConfig: ParticleConfig(
+      particleConfig: const ParticleConfig(
         particleType: ParticleType.none,
         density: 0,
         speed: 0,
       ),
-      effectsConfig: EffectsConfig(
+      effectsConfig: const EffectsConfig(
         lightningEnabled: false,
         lightningFrequency: 0,
       ),
     );
   }
 
-  static WeatherAnimationConfig _rainNight({
+  /*static WeatherAnimationConfig _rainNight({
     required Current current,
     Daily? daily,
   }) {
-    final cloudAmount = ((current.clouds ?? daily?.clouds ?? 82) / 100)
-        .clamp(0.55, 1.0)
-        .toDouble();
+    final cloudAmount = ((current.clouds) / 100).clamp(0.55, 1.0).toDouble();
     final rainVolume =
         (current.rain?.the1H ?? daily?.rain ?? 1.2).clamp(0.4, 5.0).toDouble();
-    final windSpeed = (current.windSpeed ?? daily?.windSpeed ?? 3.5)
-        .clamp(0.0, 14.0)
-        .toDouble();
+
+    final windSpeed = (current.windSpeed).clamp(0.0, 14.0).toDouble();
 
     return WeatherAnimationConfig(
-      sceneType: WeatherSceneType.rainNight,
+      sceneType: WeatherSceneType.rain,
       isNight: true,
-      skyGradient: const SkyGradientConfig(
-        colors: [
-          Color(0xFF06111F),
-          Color(0xFF0E2238),
-          Color(0xFF142B42),
-          Color(0xFF03070E),
-        ],
-        stops: [0, 0.38, 0.72, 1],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        radialAccentColor: Color(0xFF496B8F),
-        radialAccentAlignment: Alignment(-0.65, -0.92),
-        radialAccentRadius: 1.25,
-        animatedShift: 0.045,
-      ),
+      skyGradient: _resolveSkyBackground(current: current, isNight: true),
       shaderConfig: ShaderConfig(
         shaderType: ShaderType.stormSky,
         distortionIntensity: 0.16 + (windSpeed * 0.012),
@@ -129,45 +123,13 @@ class WeatherAnimationMapper {
         flashDuration: Duration(milliseconds: 150),
       ),
     );
-  }
-
-  static bool _isRain({
-    required Current current,
-    Daily? daily,
-  }) {
-    final currentSaysRain = current.weather.any((condition) {
-      final main = condition.main?.toLowerCase() ?? '';
-      final id = condition.id ?? 0;
-
-      return main.contains('rain') ||
-          main.contains('drizzle') ||
-          id >= 500 && id < 600 ||
-          id >= 300 && id < 400;
-    });
-
-    final dailySaysRain = daily?.weather.any((condition) {
-          final main = condition.main?.toLowerCase() ?? '';
-          final id = condition.id ?? 0;
-
-          return main.contains('rain') ||
-              main.contains('drizzle') ||
-              id >= 500 && id < 600 ||
-              id >= 300 && id < 400;
-        }) ??
-        false;
-
-    return currentSaysRain ||
-        dailySaysRain ||
-        (current.rain?.the1H ?? 0) > 0 ||
-        (daily?.rain ?? 0) > 0;
-  }
+  }*/
 
   static bool _isNight({
     required Current current,
     DateTime? now,
   }) {
-    final sampleEpochSeconds =
-        current.dt ?? ((now ?? DateTime.now()).millisecondsSinceEpoch ~/ 1000);
+    final sampleEpochSeconds = current.dt;
 
     return sampleEpochSeconds >= current.sunset ||
         sampleEpochSeconds <= current.sunrise;
