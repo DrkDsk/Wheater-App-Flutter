@@ -3,6 +3,7 @@ import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_
 import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_state.dart';
 import 'package:clima_app/features/home/presentation/weather_list_item.dart';
+import 'package:clima_app/features/home/presentation/widgets/app_bottom_app_bar.dart';
 import 'package:clima_app/features/home/presentation/widgets/weather_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,26 +35,41 @@ class _FavoritesPageBuilderState extends State<FavoritesPageBuilder> {
           return const LottieLoading();
         }
 
-        return PageView.builder(
-          controller: widget.pageController,
-          itemCount: pages.length,
-          onPageChanged: homePageNavigationCubit.updatePageIndex,
-          itemBuilder: (context, index) {
-            final page = pages[index];
+        return Stack(
+          children: [
+            PageView.builder(
+              controller: widget.pageController,
+              itemCount: pages.length,
+              onPageChanged: homePageNavigationCubit.updatePageIndex,
+              itemBuilder: (context, index) {
+                final page = pages[index];
 
-            return switch (page) {
-              CurrentLocationItem() =>
-                  WeatherScreen(
-                    latitude: page.coordinate.latitude,
-                    longitude: page.coordinate.longitude,
-                  ),
-              FavoriteWeatherItem() =>
-                  WeatherScreen(
-                    latitude: page.cityLocation.latitude,
-                    longitude: page.cityLocation.longitude,
-                  ),
-            };
-          },
+                return switch (page) {
+                  CurrentLocationItem() => WeatherScreen(
+                      latitude: page.coordinate.latitude,
+                      longitude: page.coordinate.longitude,
+                    ),
+                  FavoriteWeatherItem() => WeatherScreen(
+                      latitude: page.cityLocation.latitude,
+                      longitude: page.cityLocation.longitude,
+                    ),
+                };
+              },
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: SafeArea(
+                child: BlocSelector<HomePageNavigationCubit, int, int>(
+                  selector: (state) => state,
+                  builder: (context, currentPage) {
+                    return AppBottomAppBar(currentPage: currentPage);
+                  },
+                ),
+              ),
+            )
+          ],
         );
       },
     );
