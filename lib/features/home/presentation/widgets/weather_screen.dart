@@ -72,7 +72,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             temperature: current.tempCelsiusText,
             condition: condition.isNotEmpty ? condition : 'Rainy night',
             feelsLike: current.feelsLikeCelsiusText,
-            humidity: '${current.humidity ?? 0}%',
+            humidity: '${current.humidity}%',
             wind: current.windDirectionText.isNotEmpty
                 ? current.windDirectionText
                 : current.windSpeedKmText,

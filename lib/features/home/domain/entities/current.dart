@@ -22,18 +22,18 @@ class Current with EquatableMixin {
     required this.rain,
   });
 
-  final int? dt;
+  final int dt;
   final int sunrise;
   final int sunset;
-  final double? temp;
+  final double temp;
   final double feelsLike;
-  final int? pressure;
-  final int? humidity;
-  final double? dewPoint;
-  final double? uvi;
-  final int? clouds;
-  final int? visibility;
-  final double? windSpeed;
+  final int pressure;
+  final int humidity;
+  final double dewPoint;
+  final double uvi;
+  final int clouds;
+  final int visibility;
+  final double windSpeed;
   final int? windDeg;
   final double? windGust;
   final List<WeatherConditionModel> weather;
@@ -96,4 +96,25 @@ class Current with EquatableMixin {
         weather,
         rain,
       ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'dt': dt,
+      'sunrise': sunrise,
+      'sunset': sunset,
+      'temp': temp,
+      'feelsLike': feelsLike,
+      'pressure': pressure,
+      'humidity': humidity,
+      'dewPoint': dewPoint,
+      'uvi': uvi,
+      'clouds': clouds,
+      'visibility': visibility,
+      'windSpeed': windSpeed,
+      'windDeg': windDeg,
+      'windGust': windGust,
+      'weather': weather,
+      'rain': rain,
+    };
+  }
 }

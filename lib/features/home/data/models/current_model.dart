@@ -9,32 +9,32 @@ class CurrentModel with EquatableMixin {
     required this.sunset,
     required this.feelsLike,
     required this.weather,
-    this.visibility,
-    this.dt,
-    this.temp,
-    this.pressure,
-    this.humidity,
-    this.dewPoint,
-    this.uvi,
-    this.clouds,
-    this.windSpeed,
+    required this.visibility,
+    required this.dt,
+    required this.temp,
+    required this.pressure,
+    required this.humidity,
+    required this.dewPoint,
+    required this.uvi,
+    required this.clouds,
+    required this.windSpeed,
     this.windDeg,
     this.windGust,
     this.rain,
   });
 
-  final int? dt;
+  final int dt;
   final int sunrise;
   final int sunset;
-  final double? temp;
+  final double temp;
   final double feelsLike;
-  final int? pressure;
-  final int? humidity;
-  final double? dewPoint;
-  final double? uvi;
-  final int? clouds;
-  final int? visibility;
-  final double? windSpeed;
+  final int pressure;
+  final int humidity;
+  final double dewPoint;
+  final double uvi;
+  final int clouds;
+  final int visibility;
+  final double windSpeed;
   final int? windDeg;
   final double? windGust;
   final List<WeatherConditionModel> weather;
@@ -42,18 +42,18 @@ class CurrentModel with EquatableMixin {
 
   factory CurrentModel.fromJson(Map<String, dynamic> map) {
     return CurrentModel(
-      dt: (map['dt'] as num?)?.toInt(),
+      dt: (map['dt'] as num).toInt(),
       sunrise: (map['sunrise'] as num).toInt(),
       sunset: (map['sunset'] as num).toInt(),
-      temp: (map['temp'] as num?)?.toDouble(),
+      temp: (map['temp'] as num).toDouble(),
       feelsLike: (map['feels_like'] as num).toDouble(),
-      pressure: (map['pressure'] as num?)?.toInt(),
-      humidity: (map['humidity'] as num?)?.toInt(),
-      dewPoint: (map['dew_point'] as num?)?.toDouble(),
-      uvi: (map['uvi'] as num?)?.toDouble(),
-      clouds: (map['clouds'] as num?)?.toInt(),
-      visibility: (map['visibility'] as num?)?.toInt(),
-      windSpeed: (map['wind_speed'] as num?)?.toDouble(),
+      pressure: (map['pressure'] as num).toInt(),
+      humidity: (map['humidity'] as num).toInt(),
+      dewPoint: (map['dew_point'] as num).toDouble(),
+      uvi: (map['uvi'] as num).toDouble(),
+      clouds: (map['clouds'] as num).toInt(),
+      visibility: (map['visibility'] as num).toInt(),
+      windSpeed: (map['wind_speed'] as num).toDouble(),
       windDeg: (map['wind_deg'] as num?)?.toInt(),
       windGust: (map['wind_gust'] as num?)?.toDouble(),
       weather: map["weather"] == null
@@ -85,22 +85,23 @@ class CurrentModel with EquatableMixin {
 
   Current toEntity() {
     return Current(
-        dt: dt,
-        sunrise: sunrise,
-        sunset: sunset,
-        temp: temp,
-        feelsLike: feelsLike,
-        pressure: pressure,
-        humidity: humidity,
-        dewPoint: dewPoint,
-        uvi: uvi,
-        clouds: clouds,
-        visibility: visibility,
-        windSpeed: windSpeed,
-        windDeg: windDeg,
-        windGust: windGust,
-        weather: weather,
-        rain: rain);
+      dt: dt,
+      sunrise: sunrise,
+      sunset: sunset,
+      temp: temp,
+      feelsLike: feelsLike,
+      pressure: pressure,
+      humidity: humidity,
+      dewPoint: dewPoint,
+      uvi: uvi,
+      clouds: clouds,
+      visibility: visibility,
+      windSpeed: windSpeed,
+      windDeg: windDeg,
+      windGust: windGust,
+      weather: weather,
+      rain: rain,
+    );
   }
 
   @override
