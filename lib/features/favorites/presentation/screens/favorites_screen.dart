@@ -1,4 +1,3 @@
-import 'package:clima_app/core/helpers/firebase_messaging_helper.dart';
 import 'package:clima_app/features/favorites/presentation/widgets/container_cities.dart';
 import 'package:clima_app/features/city/presentation/widgets/search_city_header.dart';
 import 'package:flutter/material.dart';
@@ -11,13 +10,6 @@ class FavoritesScreen extends StatefulWidget {
 }
 
 class _FavoritesScreenState extends State<FavoritesScreen> {
-  @override
-  void initState() {
-    super.initState();
-    FirebaseMessagingHelper.registerFirebaseToken();
-    FirebaseMessagingHelper.requestFirebaseMessagingPermissions();
-  }
-
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
