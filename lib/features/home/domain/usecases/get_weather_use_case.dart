@@ -17,8 +17,7 @@ class GetWeatherUseCase {
     required WeatherRepository searchWeatherRepository,
     required GeoLocatorRepository locationRepository,
     required this.mapper,
-  })
-      : _searchWeatherRepository = searchWeatherRepository,
+  })  : _searchWeatherRepository = searchWeatherRepository,
         _locationRepository = locationRepository;
 
   Future<Either<Failure, WeatherData>> call({
@@ -30,7 +29,7 @@ class GetWeatherUseCase {
         lon: coordinate.longitude,
       );
 
-      final weatherCondition = forecast.current.weather.first.toEntity();
+      final weatherCondition = forecast.current.weather.first;
 
       final translatedWeather = await mapper.map(weatherCondition);
 
