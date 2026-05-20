@@ -6,7 +6,7 @@ import 'package:clima_app/features/weather/presentation/layers/palettes/overcast
 import 'package:clima_app/features/weather/presentation/layers/palettes/sky_palette.dart';
 
 class SkyPaletteResolver {
-  static SkyPalette paletteFor(
+  static SkyPalette resolve(
     WeatherSceneType type,
   ) {
     switch (type) {
