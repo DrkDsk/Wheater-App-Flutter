@@ -99,8 +99,8 @@ class CurrentModel with EquatableMixin {
       windSpeed: windSpeed,
       windDeg: windDeg,
       windGust: windGust,
-      weather: weather,
-      rain: rain,
+      weather: weather.map((e) => e.toEntity()).toList(),
+      rain: rain?.toEntity(),
     );
   }
 
