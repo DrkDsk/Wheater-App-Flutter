@@ -4,7 +4,7 @@ import 'package:clima_app/features/weather/presentation/animations/configs/sky_g
 import 'package:clima_app/features/weather/presentation/layers/palettes/sky_palette.dart';
 import 'package:flutter/widgets.dart';
 
-class OvercastSkyGradientStrategy implements SkyGradientStrategy {
+class CloudGradientStrategy implements SkyGradientStrategy {
   @override
   SkyGradientConfig resolve({
     required SkyPalette palette,
@@ -61,9 +61,9 @@ class OvercastSkyGradientStrategy implements SkyGradientStrategy {
     if (isNight) {
       return SkyGradientConfig(
         colors: [
-          const Color(0xFF1B2835),
-          const Color(0xFF212937),
-          const Color(0xFF35405B),
+          const Color(0xFF07111F),
+          const Color(0xFF132238),
+          const Color(0xFF1D2E48),
         ],
         stops: const [0.0, 0.55, 1.0],
         begin: Alignment.topCenter,

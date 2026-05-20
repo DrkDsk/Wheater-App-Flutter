@@ -1,33 +1,39 @@
-import 'package:clima_app/features/weather/domain/strategy/clear_sky_gradient_strategy.dart';
-import 'package:clima_app/features/weather/domain/strategy/cloud_sky_gradient_strategy.dart';
-import 'package:clima_app/features/weather/domain/strategy/few_cloud_sky_gradient_strategy.dart';
-import 'package:clima_app/features/weather/domain/strategy/overcast_sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/blizzard_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/clear_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/cloud_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/drizzle_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/few_clouds_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/heavy_rain_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/overcast_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/rain_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/snow_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/thunderstorm_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
 
 class BackgroundGradientStrategyResolver {
   static SkyGradientStrategy resolve(WeatherSceneType type) {
     switch (type) {
       case WeatherSceneType.clear:
-        return ClearSkyGradientStrategy();
+        return ClearGradientStrategy();
       case WeatherSceneType.fewClouds:
-        return FewCloudsSkyGradientStrategy();
+        return FewCloudsGradientStrategy();
       case WeatherSceneType.cloudy:
-        return CloudSkyGradientStrategy();
+        return CloudGradientStrategy();
       case WeatherSceneType.overcast:
-        return OvercastSkyGradientStrategy();
+        return OvercastGradientStrategy();
       case WeatherSceneType.drizzle:
-        throw UnimplementedError();
+        return DrizzleGradientStrategy();
       case WeatherSceneType.rain:
-        throw UnimplementedError();
+        return RainGradientStrategy();
       case WeatherSceneType.heavyRain:
-        throw UnimplementedError();
+        return HeavyRainGradientStrategy();
       case WeatherSceneType.thunderstorm:
-        throw UnimplementedError();
+        return ThunderStormGradientStrategy();
       case WeatherSceneType.snow:
-        throw UnimplementedError();
+        return SnowGradientStrategy();
       case WeatherSceneType.blizzard:
-        throw UnimplementedError();
+        return BlizzardGradientStrategy();
       case WeatherSceneType.mist:
         throw UnimplementedError();
       case WeatherSceneType.fog:
