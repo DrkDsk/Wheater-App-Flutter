@@ -12,7 +12,7 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await initDependencies();
 
-  FirebaseMessagingHelper.init();
+  /*FirebaseMessagingHelper.init();*/
 
   runApp(const MyApp());
 }
