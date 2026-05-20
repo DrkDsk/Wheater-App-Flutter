@@ -1,5 +1,7 @@
 import 'package:clima_app/features/weather/domain/strategy/clear_sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/cloud_sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/few_cloud_sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/overcast_sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
 
@@ -9,11 +11,11 @@ class BackgroundGradientStrategyResolver {
       case WeatherSceneType.clear:
         return ClearSkyGradientStrategy();
       case WeatherSceneType.fewClouds:
-        return CloudSkyGradientStrategy();
+        return FewCloudsSkyGradientStrategy();
       case WeatherSceneType.cloudy:
         return CloudSkyGradientStrategy();
       case WeatherSceneType.overcast:
-        throw UnimplementedError();
+        return OvercastSkyGradientStrategy();
       case WeatherSceneType.drizzle:
         throw UnimplementedError();
       case WeatherSceneType.rain:
