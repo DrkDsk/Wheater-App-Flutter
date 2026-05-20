@@ -31,7 +31,7 @@ class WeatherScene extends StatelessWidget {
             config: config.skyGradient,
           ),
         ),
-        Positioned.fill(
+        /*Positioned.fill(
           child: DynamicSkyShaderLayer(
             config: config.shaderConfig,
           ),
@@ -63,12 +63,13 @@ class WeatherScene extends StatelessWidget {
               config: config.effectsConfig,
             ),
           ),
-        if (overlayData != null)
+         */
+        /*if (overlayData != null)
           Positioned.fill(
             child: PremiumWeatherOverlay(
               data: overlayData!,
             ),
-          ),
+          ),*/
       ],
     );
   }
