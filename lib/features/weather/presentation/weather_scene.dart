@@ -64,12 +64,12 @@ class WeatherScene extends StatelessWidget {
             ),
           ),
          */
-        /*if (overlayData != null)
+        if (overlayData != null)
           Positioned.fill(
             child: PremiumWeatherOverlay(
               data: overlayData!,
             ),
-          ),*/
+          ),
       ],
     );
   }
