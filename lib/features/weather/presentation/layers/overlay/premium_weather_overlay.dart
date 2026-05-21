@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:clima_app/core/extensions/color_extension.dart';
 import 'package:clima_app/features/weather/presentation/layers/overlay/weather_scene_overlay_data.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class PremiumWeatherOverlay extends StatelessWidget {
   final WeatherSceneOverlayData data;
@@ -15,48 +16,45 @@ class PremiumWeatherOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(22, 18, 22, 22),
+        padding: EdgeInsets.symmetric(horizontal: 2.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 2.h,
           children: [
             Text(
               data.cityName,
-              style: theme.textTheme.titleMedium?.copyWith(
+              style: textTheme.titleSmall?.copyWith(
                 color: Colors.white.customOpacity(0.82),
-                fontFamily: 'Outfit',
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 10),
             Text(
               data.temperature,
-              style: theme.textTheme.displayLarge?.copyWith(
+              style: textTheme.titleMedium?.copyWith(
                 color: Colors.white,
-                fontFamily: 'Outfit',
-                fontSize: 92,
                 height: 0.92,
                 fontWeight: FontWeight.w200,
               ),
             ),
-            const SizedBox(height: 8),
             Text(
               data.condition,
-              style: theme.textTheme.titleLarge?.copyWith(
+              style: theme.textTheme.bodyMedium?.copyWith(
                 color: Colors.white.customOpacity(0.78),
-                fontFamily: 'Outfit',
                 fontWeight: FontWeight.w400,
               ),
             ),
-            const Spacer(),
             _GlassPanel(
               children: [
-                _MetricTile(
-                  icon: Icons.thermostat_rounded,
-                  label: 'Sensacion',
-                  value: data.feelsLike,
+                Expanded(
+                  child: _MetricTile(
+                    icon: Icons.thermostat_rounded,
+                    label: 'Sensacion',
+                    value: data.feelsLike,
+                  ),
                 ),
                 _MetricTile(
                   icon: Icons.water_drop_rounded,
@@ -116,13 +114,12 @@ class _GlassPanel extends StatelessWidget {
                 final tileWidth = (constraints.maxWidth - 12) / 2;
 
                 return Wrap(
-                  spacing: 12,
-                  runSpacing: 12,
+                  spacing: 2.w,
+                  runSpacing: 2.h,
                   children: [
                     for (final child in children)
                       SizedBox(
                         width: tileWidth,
-                        height: 82,
                         child: child,
                       ),
                   ],
@@ -150,6 +147,7 @@ class _MetricTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
 
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -167,7 +165,7 @@ class _MetricTile extends StatelessWidget {
           children: [
             Icon(
               icon,
-              size: 19,
+              size: 19.sp,
               color: Colors.white.customOpacity(0.68),
             ),
             Column(
@@ -177,21 +175,18 @@ class _MetricTile extends StatelessWidget {
                   label.toUpperCase(),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.labelSmall?.copyWith(
+                  style: textTheme.labelMedium?.copyWith(
                     color: Colors.white.customOpacity(0.46),
-                    fontFamily: 'Outfit',
                     letterSpacing: 0,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                const SizedBox(height: 2),
                 Text(
                   value,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: theme.textTheme.titleMedium?.copyWith(
+                  style: textTheme.bodyMedium?.copyWith(
                     color: Colors.white,
-                    fontFamily: 'Outfit',
                     fontWeight: FontWeight.w600,
                   ),
                 ),
