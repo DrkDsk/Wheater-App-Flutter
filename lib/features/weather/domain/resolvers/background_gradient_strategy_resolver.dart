@@ -2,11 +2,16 @@ import 'package:clima_app/features/weather/domain/strategy/blizzard_gradient_str
 import 'package:clima_app/features/weather/domain/strategy/clear_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/cloud_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/drizzle_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/dust_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/few_clouds_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/fog_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/haze_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/heavy_rain_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/mist_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/overcast_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/rain_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/smoke_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/snow_gradient_strategy.dart';
 import 'package:clima_app/features/weather/domain/strategy/thunderstorm_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
@@ -35,15 +40,15 @@ class BackgroundGradientStrategyResolver {
       case WeatherSceneType.blizzard:
         return BlizzardGradientStrategy();
       case WeatherSceneType.mist:
-        throw UnimplementedError();
+        return MistGradientStrategy();
       case WeatherSceneType.fog:
-        throw UnimplementedError();
+        return FogGradientStrategy();
       case WeatherSceneType.haze:
-        throw UnimplementedError();
+        return HazeGradientStrategy();
       case WeatherSceneType.smoke:
-        throw UnimplementedError();
+        return SmokeGradientStrategy();
       case WeatherSceneType.dust:
-        throw UnimplementedError();
+        return DustGradientStrategy();
     }
   }
 }
