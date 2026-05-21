@@ -3,11 +3,16 @@ import 'package:clima_app/features/weather/presentation/layers/palettes/blizzard
 import 'package:clima_app/features/weather/presentation/layers/palettes/clear_sky_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/cloudy_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/drizzle_palette.dart';
+import 'package:clima_app/features/weather/presentation/layers/palettes/dust_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/few_clouds_palette.dart';
+import 'package:clima_app/features/weather/presentation/layers/palettes/fog_palette.dart';
+import 'package:clima_app/features/weather/presentation/layers/palettes/haze_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/heavy_rain_palette.dart';
+import 'package:clima_app/features/weather/presentation/layers/palettes/mist_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/overcast_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/rain_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/sky_palette.dart';
+import 'package:clima_app/features/weather/presentation/layers/palettes/smoke_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/snow_palette.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/thunder_storm_palette.dart';
 
@@ -37,15 +42,15 @@ class SkyPaletteResolver {
       case WeatherSceneType.blizzard:
         return BlizzardPalette();
       case WeatherSceneType.mist:
-        throw UnimplementedError();
+        return MistPalette();
       case WeatherSceneType.fog:
-        throw UnimplementedError();
+        return FogPalette();
       case WeatherSceneType.haze:
-        throw UnimplementedError();
+        return HazePalette();
       case WeatherSceneType.smoke:
-        throw UnimplementedError();
+        return SmokePalette();
       case WeatherSceneType.dust:
-        throw UnimplementedError();
+        return DustPalette();
     }
   }
 }
