@@ -1,10 +1,10 @@
 import 'package:clima_app/features/weather/domain/entities/sky_atmosphere_metrics.dart';
-import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/sky_background/sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/sky_palette.dart';
 import 'package:flutter/widgets.dart';
 
-class OvercastGradientStrategy implements SkyGradientStrategy {
+class DustGradientStrategy implements SkyGradientStrategy {
   @override
   SkyGradientConfig resolve({
     required SkyPalette palette,
@@ -61,9 +61,21 @@ class OvercastGradientStrategy implements SkyGradientStrategy {
     if (isNight) {
       return SkyGradientConfig(
         colors: [
-          const Color(0xFF1B2835),
-          const Color(0xFF212937),
-          const Color(0xFF35405B),
+          Color.lerp(
+            const Color(0xFF0F0905),
+            const Color(0xFF311D0D),
+            storminess,
+          )!,
+          Color.lerp(
+            const Color(0xFF0D1623),
+            const Color(0xFF2E1E12),
+            haze,
+          )!,
+          Color.lerp(
+            const Color(0xFF0B141D),
+            const Color(0xFF2E1E12),
+            warmth,
+          )!,
         ],
         stops: const [0.0, 0.55, 1.0],
         begin: Alignment.topCenter,

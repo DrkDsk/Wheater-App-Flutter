@@ -1,10 +1,10 @@
 import 'package:clima_app/features/weather/domain/entities/sky_atmosphere_metrics.dart';
-import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/sky_background/sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/sky_palette.dart';
 import 'package:flutter/widgets.dart';
 
-class MistGradientStrategy implements SkyGradientStrategy {
+class CloudGradientStrategy implements SkyGradientStrategy {
   @override
   SkyGradientConfig resolve({
     required SkyPalette palette,
@@ -61,9 +61,9 @@ class MistGradientStrategy implements SkyGradientStrategy {
     if (isNight) {
       return SkyGradientConfig(
         colors: [
-          const Color(0xFF24313D),
-          const Color(0xFF7A838B),
-          const Color(0xFF7F92A1),
+          const Color(0xFF07111F),
+          const Color(0xFF132238),
+          const Color(0xFF1D2E48),
         ],
         stops: const [0.0, 0.55, 1.0],
         begin: Alignment.topCenter,

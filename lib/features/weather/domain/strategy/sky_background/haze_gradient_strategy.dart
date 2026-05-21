@@ -1,10 +1,10 @@
 import 'package:clima_app/features/weather/domain/entities/sky_atmosphere_metrics.dart';
-import 'package:clima_app/features/weather/domain/strategy/sky_gradient_strategy.dart';
+import 'package:clima_app/features/weather/domain/strategy/sky_background/sky_gradient_strategy.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/sky_gradient_config.dart';
 import 'package:clima_app/features/weather/presentation/layers/palettes/sky_palette.dart';
 import 'package:flutter/widgets.dart';
 
-class ClearGradientStrategy implements SkyGradientStrategy {
+class HazeGradientStrategy implements SkyGradientStrategy {
   @override
   SkyGradientConfig resolve({
     required SkyPalette palette,
@@ -14,42 +14,38 @@ class ClearGradientStrategy implements SkyGradientStrategy {
     final uvFactor = metrics.uvFactor;
     final cloudFactor = metrics.cloudFactor;
     final windFactor = metrics.windFactor;
-    final rainFactor = metrics.rainFactor;
 
     final solarElevation = metrics.solarElevation;
-    final brightness = metrics.brightness;
     final warmth = metrics.warmth;
+    final haze = metrics.haze;
     final storminess = metrics.storminess;
 
-    final lightIntensity = (uvFactor * 0.65) + (solarElevation * 0.35);
-    final radialOpacity = (lightIntensity * (1.0 - rainFactor)).clamp(0.0, 1.0);
+    final radialOpacity = (1.0 - metrics.storminess) * 0.35;
 
     final topSky = Color.lerp(
       palette.topSkyA,
       palette.topSkyB,
-      brightness,
+      storminess,
     )!;
 
     final warmTint = Color.lerp(
       palette.warmA,
       palette.warmB,
-      warmth,
+      haze,
     )!;
 
     final horizon = Color.lerp(
       palette.horizonA,
       palette.horizonB,
-      brightness,
+      haze,
     )!;
 
-    final radialAccentColor = Color.lerp(
+    final radialAccent = Color.lerp(
       palette.radialA,
       palette.radialB,
-      metrics.warmth,
+      warmth,
     )!
-        .withValues(
-      alpha: (1 - metrics.haze) * 0.95,
-    );
+        .withValues(alpha: radialOpacity);
 
     final sunY = -1.0 + ((1.0 - solarElevation) * 1.4);
     final radialAlignment = Alignment(0, sunY);
@@ -65,9 +61,9 @@ class ClearGradientStrategy implements SkyGradientStrategy {
     if (isNight) {
       return SkyGradientConfig(
         colors: [
-          const Color(0xFF063B89),
-          const Color(0xFF0C3C83),
-          const Color(0xFF042D6B),
+          const Color(0xFF23262C),
+          const Color(0xFF322E2A),
+          const Color(0xFF2A2D31),
         ],
         stops: const [0.0, 0.55, 1.0],
         begin: Alignment.topCenter,
@@ -88,7 +84,7 @@ class ClearGradientStrategy implements SkyGradientStrategy {
       stops: const [0.0, 0.52, 1.0],
       begin: Alignment.topCenter,
       end: Alignment.bottomCenter,
-      radialAccentColor: radialOpacity > 0.08 ? radialAccentColor : null,
+      radialAccentColor: radialAccent,
       radialAccentAlignment: radialAlignment,
       radialAccentRadius: radialRadius,
       transitionDuration: transitionDuration,
