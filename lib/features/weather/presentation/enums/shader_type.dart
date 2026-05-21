@@ -1,6 +1,7 @@
 enum ShaderType {
-  clearSky,
-  stormSky,
-  fog,
   aurora,
+  volumetricFog,
+  heatDistortion,
+  starField,
+  moonGlow,
 }
