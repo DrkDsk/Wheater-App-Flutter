@@ -18,10 +18,11 @@ class WeatherAnimationMapper {
     Daily? daily,
     DateTime? now,
   }) {
-    final isNight = _isNight(
+    const isNight = true;
+    /*final isNight = _isNight(
       current: current,
       now: now,
-    );
+    );*/
 
     final code = current.weather.firstOrNull?.id ?? 0;
     final description = current.weather.firstOrNull?.description ?? "";
@@ -38,7 +39,6 @@ class WeatherAnimationMapper {
     final skyGradient = strategy.resolve(
       metrics: metrics,
       isNight: isNight,
-      current: current,
       palette: palette,
     );
 

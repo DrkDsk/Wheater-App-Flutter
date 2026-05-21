@@ -1,4 +1,6 @@
-class WeatherCondition {
+import 'package:equatable/equatable.dart';
+
+class WeatherCondition with EquatableMixin {
   WeatherCondition({
     required this.id,
     required this.main,
@@ -24,4 +26,10 @@ class WeatherCondition {
       icon: icon ?? this.icon,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        description,
+      ];
 }
