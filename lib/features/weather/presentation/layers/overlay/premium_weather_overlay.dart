@@ -49,12 +49,10 @@ class PremiumWeatherOverlay extends StatelessWidget {
             ),
             _GlassPanel(
               children: [
-                Expanded(
-                  child: _MetricTile(
-                    icon: Icons.thermostat_rounded,
-                    label: 'Sensacion',
-                    value: data.feelsLike,
-                  ),
+                _MetricTile(
+                  icon: Icons.thermostat_rounded,
+                  label: 'Sensacion',
+                  value: data.feelsLike,
                 ),
                 _MetricTile(
                   icon: Icons.water_drop_rounded,
