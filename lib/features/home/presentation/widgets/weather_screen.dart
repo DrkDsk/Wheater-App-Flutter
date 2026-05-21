@@ -4,7 +4,7 @@ import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/weather_state.dart';
 import 'package:clima_app/features/home/presentation/blocs/states/weather_status_content_data.dart';
 import 'package:clima_app/features/home/presentation/widgets/loading_view.dart';
-import 'package:clima_app/features/weather/domain/resolvers/fake_current_weather_model_builder.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_background/fake_current_weather_model_builder.dart';
 import 'package:clima_app/features/weather/presentation/animations/mappers/weather_animation_mapper.dart';
 import 'package:clima_app/features/weather/presentation/enums/weather_scene_type.dart';
 import 'package:clima_app/features/weather/presentation/layers/overlay/weather_scene_overlay_data.dart';
@@ -60,7 +60,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
         }
 
         /* final current = forecast.current;*/
-        const fakeSceneType = WeatherSceneType.drizzle;
+        const fakeSceneType = WeatherSceneType.rain;
         final current = FakeCurrentWeatherBuilder.resolve(fakeSceneType);
 
         final rainAmount = current.rain?.the1H;

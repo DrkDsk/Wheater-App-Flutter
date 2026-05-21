@@ -1,16 +1,15 @@
 import 'package:clima_app/features/home/domain/entities/current.dart';
 import 'package:clima_app/features/home/domain/entities/daily.dart';
-import 'package:clima_app/features/weather/domain/resolvers/background_gradient_strategy_resolver.dart';
-import 'package:clima_app/features/weather/domain/resolvers/sky_atmosphere_metrics_resolver.dart';
-import 'package:clima_app/features/weather/domain/resolvers/sky_palette_resolver.dart';
-import 'package:clima_app/features/weather/domain/resolvers/weather_scene_type_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/shader/shader_config_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_background/background_gradient_strategy_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_background/sky_atmosphere_metrics_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_background/sky_palette_resolver.dart';
+import 'package:clima_app/features/weather/domain/resolvers/sky_background/weather_scene_type_resolver.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/atmosphere_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/effects_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/particle_config.dart';
-import 'package:clima_app/features/weather/presentation/animations/configs/shader_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/weather_animation_config.dart';
 import 'package:clima_app/features/weather/presentation/enums/particle_type.dart';
-import 'package:clima_app/features/weather/presentation/enums/shader_type.dart';
 
 class WeatherAnimationMapper {
   static WeatherAnimationConfig map({
@@ -27,28 +26,28 @@ class WeatherAnimationMapper {
     final code = current.weather.firstOrNull?.id ?? 0;
     final description = current.weather.firstOrNull?.description ?? "";
 
-    final sceneType = WeatherSceneTypeResolver.resolve(
+    final scene = WeatherSceneTypeResolver.resolve(
       code: code,
       description: description,
     );
 
-    final strategy = BackgroundGradientStrategyResolver.resolve(sceneType);
+    final bgSkyStrategy = BackgroundGradientStrategyResolver.resolve(scene);
     final metrics = SkyAtmosphereMetricsResolver.resolve(current, isNight);
-    final palette = SkyPaletteResolver.resolve(sceneType);
+    final backgroundSkyPalette = SkyPaletteResolver.resolve(scene);
 
-    final skyGradient = strategy.resolve(
+    final skyGradient = bgSkyStrategy.resolve(
       metrics: metrics,
       isNight: isNight,
-      palette: palette,
+      palette: backgroundSkyPalette,
     );
 
+    final shaderConfig = ShaderConfigResolver.resolve(metrics, scene);
+
     return WeatherAnimationConfig(
-      sceneType: sceneType,
+      sceneType: scene,
       isNight: isNight,
       skyGradient: skyGradient,
-      shaderConfig: const ShaderConfig(
-        shaderType: ShaderType.clearSky,
-      ),
+      shaderConfig: shaderConfig,
       atmosphereConfig: const AtmosphereConfig(
         cloudDensity: 0.1,
         fogIntensity: 0,

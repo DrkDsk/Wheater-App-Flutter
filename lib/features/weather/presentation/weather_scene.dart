@@ -31,11 +31,12 @@ class WeatherScene extends StatelessWidget {
             config: config.skyGradient,
           ),
         ),
-        /*Positioned.fill(
+        Positioned.fill(
           child: DynamicSkyShaderLayer(
             config: config.shaderConfig,
           ),
         ),
+        /*
         Positioned.fill(
           child: CloudRiveLayer(
             config: config.atmosphereConfig,
