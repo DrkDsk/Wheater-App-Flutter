@@ -72,9 +72,6 @@ class ClearGradientStrategy implements SkyGradientStrategy {
         stops: const [0.0, 0.55, 1.0],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        radialAccentColor: cloudFactor < 0.45
-            ? const Color(0xFFB7C7FF).withValues(alpha: 0.16)
-            : null,
         radialAccentAlignment: const Alignment(0.4, -0.8),
         radialAccentRadius: 0.55,
         transitionDuration: transitionDuration,

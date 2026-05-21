@@ -68,7 +68,6 @@ class CloudGradientStrategy implements SkyGradientStrategy {
         stops: const [0.0, 0.55, 1.0],
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        radialAccentColor: radialAccent,
         radialAccentAlignment: const Alignment(0.4, -0.8),
         radialAccentRadius: 0.55,
         transitionDuration: transitionDuration,
