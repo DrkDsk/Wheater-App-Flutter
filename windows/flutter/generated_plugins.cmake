@@ -6,6 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   firebase_core
   flutter_timezone
+  rive_native
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

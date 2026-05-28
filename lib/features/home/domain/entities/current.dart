@@ -1,5 +1,5 @@
-import 'package:clima_app/features/home/data/models/rain_model.dart';
-import 'package:clima_app/features/home/data/models/weather_condition_model.dart';
+import 'package:clima_app/features/home/domain/entities/rain.dart';
+import 'package:clima_app/features/home/domain/entities/weather_condition.dart';
 import 'package:equatable/equatable.dart';
 
 class Current with EquatableMixin {
@@ -22,22 +22,22 @@ class Current with EquatableMixin {
     required this.rain,
   });
 
-  final int? dt;
+  final int dt;
   final int sunrise;
   final int sunset;
-  final double? temp;
+  final double temp;
   final double feelsLike;
-  final int? pressure;
-  final int? humidity;
-  final double? dewPoint;
-  final double? uvi;
-  final int? clouds;
-  final int? visibility;
-  final double? windSpeed;
+  final int pressure;
+  final int humidity;
+  final double dewPoint;
+  final double uvi;
+  final int clouds;
+  final int visibility;
+  final double windSpeed;
   final int? windDeg;
   final double? windGust;
-  final List<WeatherConditionModel> weather;
-  final RainModel? rain;
+  final List<WeatherCondition> weather;
+  final Rain? rain;
 
   Current copyWith({
     int? dt,
@@ -54,8 +54,8 @@ class Current with EquatableMixin {
     double? windSpeed,
     int? windDeg,
     double? windGust,
-    List<WeatherConditionModel>? weather,
-    RainModel? rain,
+    List<WeatherCondition>? weather,
+    Rain? rain,
   }) {
     return Current(
       dt: dt ?? this.dt,
@@ -96,4 +96,25 @@ class Current with EquatableMixin {
         weather,
         rain,
       ];
+
+  Map<String, dynamic> toMap() {
+    return {
+      'dt': dt,
+      'sunrise': sunrise,
+      'sunset': sunset,
+      'temp': temp,
+      'feelsLike': feelsLike,
+      'pressure': pressure,
+      'humidity': humidity,
+      'dewPoint': dewPoint,
+      'uvi': uvi,
+      'clouds': clouds,
+      'visibility': visibility,
+      'windSpeed': windSpeed,
+      'windDeg': windDeg,
+      'windGust': windGust,
+      'weather': weather,
+      'rain': rain,
+    };
+  }
 }

@@ -12,6 +12,7 @@ import 'package:clima_app/features/ia/ui/blocs/ia_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sizer/sizer.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -52,11 +53,22 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => getIt<IACubit>()),
         BlocProvider(create: (_) => getIt<HomePageNavigationCubit>())
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: lightTheme,
-        title: 'App del clima',
-        home: const HomeScreen(),
+      child: Sizer(
+        builder: (context, orientation, screenType) {
+          final textScaler = screenType == ScreenType.mobile ? 1.0 : 1.25;
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightTheme,
+            title: 'App del clima',
+            home: MediaQuery(
+              data: MediaQuery.of(context).copyWith(
+                textScaler: TextScaler.linear(textScaler),
+              ),
+              child: const HomeScreen(),
+            ),
+          );
+        },
       ),
     );
   }

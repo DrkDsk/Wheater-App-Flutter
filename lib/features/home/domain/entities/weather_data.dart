@@ -3,12 +3,12 @@ import 'package:equatable/equatable.dart';
 
 import 'forecast.dart';
 
-class CityWeatherData with EquatableMixin {
+class WeatherData with EquatableMixin {
   final Forecast forecast;
   final TranslatedWeather translatedWeather;
   final String cityName;
 
-  CityWeatherData({
+  WeatherData({
     required this.forecast,
     required this.translatedWeather,
     required this.cityName,

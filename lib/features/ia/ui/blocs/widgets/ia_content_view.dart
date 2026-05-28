@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:clima_app/core/extensions/color_extension.dart';
 import 'package:clima_app/core/extensions/string_extension.dart';
-import 'package:clima_app/features/home/domain/entities/city_weather_data.dart';
+import 'package:clima_app/features/home/domain/entities/weather_data.dart';
 import 'package:clima_app/features/ia/ui/blocs/ia_cubit.dart';
 import 'package:clima_app/features/ia/ui/blocs/ia_state.dart';
 import 'package:clima_app/features/ia/ui/blocs/widgets/ia_suggestion_button.dart';
@@ -15,7 +15,7 @@ class IAContentView extends StatefulWidget {
     required this.cityWeatherData,
   });
 
-  final CityWeatherData cityWeatherData;
+  final WeatherData cityWeatherData;
 
   @override
   State<IAContentView> createState() => _IAContentViewState();

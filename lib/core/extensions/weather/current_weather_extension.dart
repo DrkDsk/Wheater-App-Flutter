@@ -1,11 +1,11 @@
 import 'package:clima_app/features/home/domain/entities/current.dart';
 
 extension CurrentWeatherExtension on Current {
-  double get tempCelsius => (temp ?? 0) - 273.15;
+  double get tempCelsius => (temp) - 273.15;
 
   double get feelsLikeCelsius => (feelsLike) - 273.15;
 
-  double get windSpeedKm => (windSpeed ?? 0 * 3.6);
+  double get windSpeedKm => (windSpeed * 3.6);
 
   String get tempCelsiusText => '${tempCelsius.toStringAsFixed(1)}°C';
 
@@ -37,5 +37,5 @@ extension CurrentWeatherExtension on Current {
   }
 
   String get visibilityTextInKm =>
-      "${((visibility ?? 0) / 1000).toStringAsFixed(0)} km";
+      "${((visibility) / 1000).toStringAsFixed(0)} km";
 }

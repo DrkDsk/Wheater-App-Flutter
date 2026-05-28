@@ -1,23 +1,23 @@
 import 'package:clima_app/core/shared/domain/background_weather.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
-import 'package:clima_app/features/home/domain/entities/city_weather_data.dart';
+import 'package:clima_app/features/home/domain/entities/weather_data.dart';
 import 'package:equatable/equatable.dart';
 
-enum CityWeatherStatus {
+enum WeatherStatus {
   initial,
   loading,
   failure,
   success;
 }
 
-final class CityWeatherState with EquatableMixin {
-  final CityWeatherData? cityWeatherData;
-  final CityWeatherStatus status;
+final class WeatherState with EquatableMixin {
+  final WeatherData? cityWeatherData;
+  final WeatherStatus status;
   final List<CityLocation> cities;
   final BackgroundWeather backgroundWeather;
   final String message;
 
-  const CityWeatherState({
+  const WeatherState({
     this.cityWeatherData,
     required this.cities,
     required this.status,
@@ -25,23 +25,23 @@ final class CityWeatherState with EquatableMixin {
     required this.backgroundWeather,
   });
 
-  factory CityWeatherState.initial() {
-    return CityWeatherState(
+  factory WeatherState.initial() {
+    return WeatherState(
       cities: [],
-      status: CityWeatherStatus.initial,
+      status: WeatherStatus.initial,
       message: '',
       backgroundWeather: BackgroundWeather.initial(),
     );
   }
 
-  CityWeatherState copyWith({
-    CityWeatherData? cityWeatherData,
-    CityWeatherStatus? status,
+  WeatherState copyWith({
+    WeatherData? cityWeatherData,
+    WeatherStatus? status,
     List<CityLocation>? cities,
     BackgroundWeather? backgroundWeather,
     String? message,
   }) {
-    return CityWeatherState(
+    return WeatherState(
       cityWeatherData: cityWeatherData ?? this.cityWeatherData,
       status: status ?? this.status,
       cities: cities ?? this.cities,
