@@ -59,9 +59,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           return LoadingView(color: state.bgColor);
         }
 
-        /* final current = forecast.current;*/
-        const fakeSceneType = WeatherSceneType.rain;
-        final current = FakeCurrentWeatherBuilder.resolve(fakeSceneType);
+        final current = forecast.current;
 
         final rainAmount = current.rain?.the1H;
         final condition = data.translatedWeather.translatedDescription;
