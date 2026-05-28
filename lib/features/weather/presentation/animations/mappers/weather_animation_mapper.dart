@@ -17,11 +17,10 @@ class WeatherAnimationMapper {
     Daily? daily,
     DateTime? now,
   }) {
-    const isNight = true;
-    /*final isNight = _isNight(
+    final isNight = _isNight(
       current: current,
       now: now,
-    );*/
+    );
 
     final code = current.weather.firstOrNull?.id ?? 0;
     final description = current.weather.firstOrNull?.description ?? "";

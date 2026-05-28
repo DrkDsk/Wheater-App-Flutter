@@ -25,29 +25,34 @@ class PremiumWeatherOverlay extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 2.h,
           children: [
-            Text(
-              data.cityName,
-              style: textTheme.titleSmall?.copyWith(
-                color: Colors.white.customOpacity(0.82),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              data.temperature,
-              style: textTheme.titleMedium?.copyWith(
-                color: Colors.white,
-                height: 0.92,
-                fontWeight: FontWeight.w200,
-              ),
-            ),
-            Text(
-              data.condition,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.white.customOpacity(0.78),
-                fontWeight: FontWeight.w400,
-              ),
+            _GlassPanel(
+              children: [
+                Text(
+                  data.cityName,
+                  style: textTheme.titleSmall?.copyWith(
+                    color: Colors.white.customOpacity(0.82),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  data.temperature,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    height: 0.92,
+                    fontWeight: FontWeight.w200,
+                  ),
+                ),
+                Text(
+                  data.condition,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: Colors.white.customOpacity(0.78),
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ],
             ),
             _GlassPanel(
+              divider: 2,
               children: [
                 _MetricTile(
                   icon: Icons.thermostat_rounded,
@@ -85,9 +90,11 @@ class PremiumWeatherOverlay extends StatelessWidget {
 
 class _GlassPanel extends StatelessWidget {
   final List<Widget> children;
+  final int divider;
 
   const _GlassPanel({
     required this.children,
+    this.divider = 1,
   });
 
   @override
@@ -109,11 +116,12 @@ class _GlassPanel extends StatelessWidget {
             padding: const EdgeInsets.all(14),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final tileWidth = (constraints.maxWidth - 12) / 2;
+                final tileWidth = (constraints.maxWidth - 12) / divider;
 
                 return Wrap(
                   spacing: 2.w,
                   runSpacing: 2.h,
+                  direction: Axis.horizontal,
                   children: [
                     for (final child in children)
                       SizedBox(
