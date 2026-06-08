@@ -1,6 +1,6 @@
 import 'package:clima_app/features/weather/presentation/animations/configs/weather_animation_config.dart';
 import 'package:clima_app/features/weather/presentation/enums/particle_type.dart';
-import 'package:clima_app/features/weather/presentation/layers/atmosphere/cloud_rive_layer.dart';
+import 'package:clima_app/features/weather/presentation/layers/atmosphere/cloud_shader.dart';
 import 'package:clima_app/features/weather/presentation/layers/atmosphere/fog_layer.dart';
 import 'package:clima_app/features/weather/presentation/layers/background/dynamic_sky_shader_layer.dart';
 import 'package:clima_app/features/weather/presentation/layers/background/weather_gradient_background.dart';
@@ -37,7 +37,7 @@ class WeatherScene extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-          child: CloudLayer(
+          child: CloudShader(
             config: config.atmosphereConfig,
           ),
         ),

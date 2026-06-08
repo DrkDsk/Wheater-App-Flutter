@@ -1,39 +1,30 @@
 import 'package:clima_app/features/weather/presentation/animations/configs/atmosphere_config.dart';
 import 'package:flutter/material.dart';
 
-class CloudLayer extends StatefulWidget {
+class CloudShader extends StatefulWidget {
   final AtmosphereConfig config;
 
-  const CloudLayer({
+  const CloudShader({
     super.key,
     required this.config,
   });
 
   @override
-  State<CloudLayer> createState() => _CloudLayerState();
+  State<CloudShader> createState() => _CloudShaderState();
 }
 
-class _CloudLayerState extends State<CloudLayer>
+class _CloudShaderState extends State<CloudShader>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: widget.config.cloudDriftDuration,
-    )..repeat();
   }
 
   @override
-  void didUpdateWidget(covariant CloudLayer oldWidget) {
+  void didUpdateWidget(covariant CloudShader oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.config.cloudDriftDuration !=
-        widget.config.cloudDriftDuration) {
-      _controller.duration = widget.config.cloudDriftDuration;
-      _controller.repeat();
-    }
   }
 
   @override
