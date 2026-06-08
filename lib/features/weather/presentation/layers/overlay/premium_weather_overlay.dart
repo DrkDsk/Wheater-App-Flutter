@@ -1,8 +1,13 @@
 import 'dart:ui';
 
 import 'package:clima_app/core/extensions/color_extension.dart';
+import 'package:clima_app/core/router/app_router.dart';
+import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
+import 'package:clima_app/features/favorites/presentation/widgets/header_weather_sheet.dart';
+import 'package:clima_app/features/favorites/presentation/widgets/weather_data_inherited.dart';
 import 'package:clima_app/features/weather/presentation/layers/overlay/weather_scene_overlay_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 
 class PremiumWeatherOverlay extends StatelessWidget {
@@ -15,6 +20,10 @@ class PremiumWeatherOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final weatherDataToStore = WeatherDataInherited.of(context);
+    final isAvailableToStore = weatherDataToStore?.isAvailableToStore ?? false;
+    final cityLocation = weatherDataToStore?.cityLocation;
+
     final theme = Theme.of(context);
     final textTheme = theme.textTheme;
 
@@ -25,27 +34,42 @@ class PremiumWeatherOverlay extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 2.h,
           children: [
-            Text(
-              data.cityName,
-              style: textTheme.titleSmall?.copyWith(
-                color: Colors.white.customOpacity(0.82),
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              data.temperature,
-              style: textTheme.titleMedium?.copyWith(
-                color: Colors.white,
-                height: 0.92,
-                fontWeight: FontWeight.w200,
-              ),
-            ),
-            Text(
-              data.condition,
-              style: theme.textTheme.bodyMedium?.copyWith(
-                color: Colors.white.customOpacity(0.78),
-                fontWeight: FontWeight.w400,
-              ),
+            if (isAvailableToStore && cityLocation != null) ...[
+              HeaderWeatherSheet(
+                isAbleToSave: isAvailableToStore,
+                onCancel: () => AppRouter.of(context).pop(),
+                onSave: () {
+                  BlocProvider.of<FavoriteCubit>(context).store(
+                    cityLocation: cityLocation,
+                  );
+                },
+              )
+            ],
+            _GlassPanel(
+              children: [
+                Text(
+                  data.cityName,
+                  style: textTheme.titleSmall?.copyWith(
+                    color: Colors.white.customOpacity(0.82),
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Text(
+                  data.temperature,
+                  style: textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    height: 0.92,
+                    fontWeight: FontWeight.w200,
+                  ),
+                ),
+                Text(
+                  data.condition,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: Colors.white.customOpacity(0.78),
+                    fontWeight: FontWeight.w400,
+                  ),
+                )
+              ],
             ),
             _GlassPanel(
               divider: 2,
@@ -101,7 +125,7 @@ class _GlassPanel extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: const Color(0xFF071221).customOpacity(0.15),
+            color: const Color(0xFF071221).customOpacity(0.20),
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
               color: Colors.white.customOpacity(0.13),

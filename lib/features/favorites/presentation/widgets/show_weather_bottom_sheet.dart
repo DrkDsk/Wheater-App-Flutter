@@ -1,8 +1,9 @@
 import 'package:clima_app/core/router/app_router.dart';
 import 'package:clima_app/features/city/domain/entities/city_location.dart';
+import 'package:clima_app/features/favorites/domain/entities/weather_data_to_store.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_cubit.dart';
 import 'package:clima_app/features/favorites/presentation/fetch/cubits/favorite_state.dart';
-import 'package:clima_app/features/favorites/presentation/widgets/header_weather_sheet.dart';
+import 'package:clima_app/features/favorites/presentation/widgets/weather_data_inherited.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_page_navigation_cubit.dart';
 import 'package:clima_app/features/home/presentation/blocs/home_bloc.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_home_event.dart';
@@ -12,7 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShowWeatherBottomSheet extends StatefulWidget {
-  const ShowWeatherBottomSheet({super.key, required this.cityLocation});
+  const ShowWeatherBottomSheet({
+    super.key,
+    required this.cityLocation,
+  });
 
   final CityLocation cityLocation;
 
@@ -31,6 +35,7 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
     _favoriteCubit = BlocProvider.of<FavoriteCubit>(context);
     _navigationCubit = BlocProvider.of<HomePageNavigationCubit>(context);
     _homeBloc = BlocProvider.of<HomeBloc>(context);
+    _favoriteCubit.getCityIsAvailableToSave(cityLocation: widget.cityLocation);
   }
 
   Future<void> redirectToHome(
@@ -60,30 +65,29 @@ class _ShowWeatherBottomSheetState extends State<ShowWeatherBottomSheet> {
           BlocProvider.of<HomeBloc>(context).add(const LoadHomeEvent()),
       child: FractionallySizedBox(
         heightFactor: 0.90,
-        child: Column(
-          children: [
-            BlocConsumer<FavoriteCubit, FavoriteState>(
-              listenWhen: (prev, current) => prev.status != current.status,
-              listener: redirectToHome,
-              builder: (context, state) {
-                final isAvailableToStore = state.isAvailableToStore;
+        child: BlocConsumer<FavoriteCubit, FavoriteState>(
+          listenWhen: (prev, current) => prev.status != current.status,
+          listener: redirectToHome,
+          builder: (context, state) {
+            final isAvailableToStore = state.isAvailableToStore;
 
-                return HeaderWeatherSheet(
-                  isAbleToSave: isAvailableToStore,
-                  onCancel: () => AppRouter.of(context).pop(),
-                  onSave: () => _favoriteCubit.store(
-                    cityLocation: cityLocation,
-                  ),
-                );
-              },
-            ),
-            Expanded(
-              child: WeatherScreen(
-                latitude: cityLocation.latitude,
-                longitude: cityLocation.longitude,
+            return WeatherDataInherited(
+              weatherDataToStore: WeatherDataToStore(
+                cityLocation: cityLocation,
+                isAvailableToStore: isAvailableToStore,
               ),
-            ),
-          ],
+              child: Column(
+                children: [
+                  Expanded(
+                    child: WeatherScreen(
+                      latitude: cityLocation.latitude,
+                      longitude: cityLocation.longitude,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
