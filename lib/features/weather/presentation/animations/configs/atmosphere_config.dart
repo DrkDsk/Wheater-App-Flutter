@@ -7,9 +7,9 @@ class AtmosphereConfig {
   final double cloudOpacity;
   final double cloudSpeed;
   final double cloudScale;
-  final double parallaxStrength;
-  final Duration cloudDriftDuration;
+  final double cloudSoftness;
   final Color fogColor;
+  final double fogDensity;
 
   const AtmosphereConfig({
     required this.cloudDensity,
@@ -18,8 +18,8 @@ class AtmosphereConfig {
     this.cloudCoverage = 1,
     this.cloudSpeed = 1,
     this.cloudScale = 1,
-    this.parallaxStrength = 1,
-    this.cloudDriftDuration = const Duration(seconds: 34),
+    this.cloudSoftness = 1,
+    this.fogDensity = 1,
     this.fogColor = const Color(0xFFEAF3FF),
   });
 }
