@@ -36,12 +36,12 @@ class WeatherScene extends StatelessWidget {
             config: config.shaderConfig,
           ),
         ),
-        /*
         Positioned.fill(
-          child: CloudRiveLayer(
+          child: CloudLayer(
             config: config.atmosphereConfig,
           ),
         ),
+        /*
         Positioned.fill(
           child: FogLayer(
             config: config.atmosphereConfig,

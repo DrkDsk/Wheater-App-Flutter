@@ -8,9 +8,6 @@ class AtmosphereConfig {
   final double parallaxStrength;
   final Duration cloudDriftDuration;
   final Color fogColor;
-  final String? riveCloudAsset;
-  final String? riveArtboard;
-  final String? riveStateMachine;
 
   final bool starsVisible;
   final bool moonVisible;
@@ -25,8 +22,5 @@ class AtmosphereConfig {
     this.parallaxStrength = 1,
     this.cloudDriftDuration = const Duration(seconds: 34),
     this.fogColor = const Color(0xFFEAF3FF),
-    this.riveCloudAsset,
-    this.riveArtboard,
-    this.riveStateMachine,
   });
 }
