@@ -50,8 +50,6 @@ class WeatherAnimationMapper {
       atmosphereConfig: const AtmosphereConfig(
         cloudDensity: 0.1,
         fogIntensity: 0,
-        starsVisible: false,
-        moonVisible: false,
       ),
       particleConfig: const ParticleConfig(
         particleType: ParticleType.none,
