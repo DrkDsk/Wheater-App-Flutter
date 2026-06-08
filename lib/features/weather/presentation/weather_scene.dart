@@ -1,14 +1,9 @@
 import 'package:clima_app/features/weather/presentation/animations/configs/weather_animation_config.dart';
-import 'package:clima_app/features/weather/presentation/enums/particle_type.dart';
-import 'package:clima_app/features/weather/presentation/layers/atmosphere/cloud_shader.dart';
-import 'package:clima_app/features/weather/presentation/layers/atmosphere/fog_layer.dart';
+import 'package:clima_app/features/weather/presentation/layers/atmosphere/atmosphere_layer.dart';
 import 'package:clima_app/features/weather/presentation/layers/background/dynamic_sky_shader_layer.dart';
 import 'package:clima_app/features/weather/presentation/layers/background/weather_gradient_background.dart';
-import 'package:clima_app/features/weather/presentation/layers/effects/lightning_effect_layer.dart';
-import 'package:clima_app/features/weather/presentation/layers/effects/storm_darkening_layer.dart';
 import 'package:clima_app/features/weather/presentation/layers/overlay/premium_weather_overlay.dart';
 import 'package:clima_app/features/weather/presentation/layers/overlay/weather_scene_overlay_data.dart';
-import 'package:clima_app/features/weather/presentation/layers/particles/rain_particle_layer.dart';
 import 'package:flutter/material.dart';
 
 class WeatherScene extends StatelessWidget {
@@ -37,7 +32,7 @@ class WeatherScene extends StatelessWidget {
           ),
         ),
         Positioned.fill(
-          child: CloudShader(
+          child: AtmosphereLayer(
             config: config.atmosphereConfig,
           ),
         ),

@@ -87,6 +87,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  shaders:
+    - shaders/clouds.frag
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/icons/

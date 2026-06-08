@@ -1,11 +1,11 @@
 import 'package:clima_app/features/home/domain/entities/current.dart';
 import 'package:clima_app/features/home/domain/entities/daily.dart';
+import 'package:clima_app/features/weather/domain/resolvers/atmosphere/atmosphere_config_resolver.dart';
 import 'package:clima_app/features/weather/domain/resolvers/shader/shader_config_resolver.dart';
 import 'package:clima_app/features/weather/domain/resolvers/sky_background/background_gradient_strategy_resolver.dart';
 import 'package:clima_app/features/weather/domain/resolvers/sky_background/sky_atmosphere_metrics_resolver.dart';
 import 'package:clima_app/features/weather/domain/resolvers/sky_background/sky_palette_resolver.dart';
 import 'package:clima_app/features/weather/domain/resolvers/sky_background/weather_scene_type_resolver.dart';
-import 'package:clima_app/features/weather/presentation/animations/configs/atmosphere_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/effects_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/particle_config.dart';
 import 'package:clima_app/features/weather/presentation/animations/configs/weather_animation_config.dart';
@@ -41,16 +41,14 @@ class WeatherAnimationMapper {
     );
 
     final shaderConfig = ShaderConfigResolver.resolve(metrics, scene);
+    final atmosphereConfig = AtmosphereConfigResolver.resolve(metrics, scene);
 
     return WeatherAnimationConfig(
       sceneType: scene,
       isNight: isNight,
       skyGradient: skyGradient,
       shaderConfig: shaderConfig,
-      atmosphereConfig: const AtmosphereConfig(
-        cloudDensity: 0.1,
-        fogIntensity: 0,
-      ),
+      atmosphereConfig: atmosphereConfig,
       particleConfig: const ParticleConfig(
         particleType: ParticleType.none,
         density: 0,
