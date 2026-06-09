@@ -1,3 +1,4 @@
+import 'package:clima_app/core/extensions/string_extension.dart';
 import 'package:clima_app/core/extensions/weather/current_weather_extension.dart';
 import 'package:clima_app/features/home/presentation/blocs/events/city_weather_event.dart';
 import 'package:clima_app/features/home/presentation/blocs/weather_bloc.dart';
@@ -62,7 +63,8 @@ class _WeatherScreenState extends State<WeatherScreen> {
         final current = forecast.current;
 
         final rainAmount = current.rain?.the1H;
-        final condition = data.translatedWeather.translatedDescription;
+        final condition =
+            data.translatedWeather.translatedDescription.firstUppercaseAll();
         final config = WeatherAnimationMapper.map(
           current: current,
           daily: forecast.daily.isNotEmpty ? forecast.daily.first : null,

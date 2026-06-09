@@ -45,31 +45,27 @@ class PremiumWeatherOverlay extends StatelessWidget {
                 },
               )
             ],
-            _GlassPanel(
-              children: [
-                Text(
-                  data.cityName,
-                  style: textTheme.titleSmall?.copyWith(
-                    color: Colors.white.customOpacity(0.82),
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                Text(
-                  data.temperature,
-                  style: textTheme.titleMedium?.copyWith(
-                    color: Colors.white,
-                    height: 0.92,
-                    fontWeight: FontWeight.w200,
-                  ),
-                ),
-                Text(
-                  data.condition,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: Colors.white.customOpacity(0.78),
-                    fontWeight: FontWeight.w400,
-                  ),
-                )
-              ],
+            Text(
+              data.cityName,
+              style: textTheme.titleSmall?.copyWith(
+                color: Colors.white.customOpacity(0.82),
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              data.temperature,
+              style: textTheme.titleMedium?.copyWith(
+                color: Colors.white,
+                height: 0.92,
+                fontWeight: FontWeight.w200,
+              ),
+            ),
+            Text(
+              data.condition,
+              style: theme.textTheme.bodyMedium?.copyWith(
+                color: Colors.white.customOpacity(0.78),
+                fontWeight: FontWeight.w400,
+              ),
             ),
             _GlassPanel(
               divider: 2,
@@ -125,7 +121,7 @@ class _GlassPanel extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
         child: DecoratedBox(
           decoration: BoxDecoration(
-            color: const Color(0xFF071221).customOpacity(0.20),
+            color: const Color(0xFF071221).customOpacity(0.15),
             borderRadius: BorderRadius.circular(28),
             border: Border.all(
               color: Colors.white.customOpacity(0.13),
