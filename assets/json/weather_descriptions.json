@@ -1,57 +1,222 @@
 [
-  { "code": "200", "description": "tormenta eléctrica con lluvia ligera" },
-  { "code": "201", "description": "tormenta eléctrica con lluvia" },
-  { "code": "202", "description": "tormenta eléctrica con lluvia intensa" },
-  { "code": "210", "description": "tormenta eléctrica ligera" },
-  { "code": "211", "description": "tormenta eléctrica" },
-  { "code": "212", "description": "tormenta eléctrica intensa" },
-  { "code": "221", "description": "tormenta eléctrica irregular" },
-  { "code": "230", "description": "tormenta eléctrica con llovizna ligera" },
-  { "code": "231", "description": "tormenta eléctrica con llovizna" },
-  { "code": "232", "description": "tormenta eléctrica con llovizna intensa" },
-  { "code": "300", "description": "llovizna de intensidad ligera" },
-  { "code": "301", "description": "llovizna" },
-  { "code": "302", "description": "llovizna de intensidad fuerte" },
-  { "code": "310", "description": "llovizna con lluvia ligera" },
-  { "code": "311", "description": "lluvia con llovizna" },
-  { "code": "312", "description": "lluvia con llovizna intensa" },
-  { "code": "313", "description": "chubascos con llovizna" },
-  { "code": "314", "description": "chubascos intensos con llovizna" },
-  { "code": "321", "description": "chubascos de llovizna" },
-  { "code": "500", "description": "lluvia ligera" },
-  { "code": "501", "description": "lluvia moderada" },
-  { "code": "502", "description": "lluvia de gran intensidad" },
-  { "code": "503", "description": "lluvia muy intensa" },
-  { "code": "504", "description": "lluvia extrema" },
-  { "code": "511", "description": "lluvia congelante" },
-  { "code": "520", "description": "chubascos de lluvia ligera" },
-  { "code": "521", "description": "chubascos" },
-  { "code": "522", "description": "chubascos de lluvia intensa" },
-  { "code": "531", "description": "chubascos irregulares" },
-  { "code": "600", "description": "nieve ligera" },
-  { "code": "601", "description": "nieve" },
-  { "code": "602", "description": "nieve intensa" },
-  { "code": "611", "description": "aguanieve" },
-  { "code": "612", "description": "chubascos ligeros de aguanieve" },
-  { "code": "613", "description": "chubascos de aguanieve" },
-  { "code": "615", "description": "lluvia ligera y nieve" },
-  { "code": "616", "description": "lluvia y nieve" },
-  { "code": "620", "description": "chubascos ligeros de nieve" },
-  { "code": "621", "description": "chubascos de nieve" },
-  { "code": "622", "description": "chubascos intensos de nieve" },
-  { "code": "701", "description": "niebla" },
-  { "code": "711", "description": "humo" },
-  { "code": "721", "description": "calina" },
-  { "code": "731", "description": "remolinos de arena/polvo" },
-  { "code": "741", "description": "neblina" },
-  { "code": "751", "description": "arena" },
-  { "code": "761", "description": "polvo" },
-  { "code": "762", "description": "ceniza volcánica" },
-  { "code": "771", "description": "turbulencias" },
-  { "code": "781", "description": "tornado" },
-  { "code": "800", "description": "cielo despejado" },
-  { "code": "801", "description": "pocas nubes (11-25%)" },
-  { "code": "802", "description": "nubes dispersas (25-50%)" },
-  { "code": "803", "description": "nubes rotas (51-84%)" },
-  { "code": "804", "description": "nubes cubiertas (85-100%)" }
+  {
+    "code": "200",
+    "description": "tormenta eléctrica con lluvia ligera"
+  },
+  {
+    "code": "201",
+    "description": "tormenta eléctrica con lluvia"
+  },
+  {
+    "code": "202",
+    "description": "tormenta eléctrica con lluvia intensa"
+  },
+  {
+    "code": "210",
+    "description": "tormenta eléctrica ligera"
+  },
+  {
+    "code": "211",
+    "description": "tormenta eléctrica"
+  },
+  {
+    "code": "212",
+    "description": "tormenta eléctrica intensa"
+  },
+  {
+    "code": "221",
+    "description": "tormenta eléctrica irregular"
+  },
+  {
+    "code": "230",
+    "description": "tormenta eléctrica con llovizna ligera"
+  },
+  {
+    "code": "231",
+    "description": "tormenta eléctrica con llovizna"
+  },
+  {
+    "code": "232",
+    "description": "tormenta eléctrica con llovizna intensa"
+  },
+  {
+    "code": "300",
+    "description": "llovizna de intensidad ligera"
+  },
+  {
+    "code": "301",
+    "description": "llovizna"
+  },
+  {
+    "code": "302",
+    "description": "llovizna de intensidad fuerte"
+  },
+  {
+    "code": "310",
+    "description": "llovizna con lluvia ligera"
+  },
+  {
+    "code": "311",
+    "description": "lluvia con llovizna"
+  },
+  {
+    "code": "312",
+    "description": "lluvia con llovizna intensa"
+  },
+  {
+    "code": "313",
+    "description": "chubascos con llovizna"
+  },
+  {
+    "code": "314",
+    "description": "chubascos intensos con llovizna"
+  },
+  {
+    "code": "321",
+    "description": "chubascos de llovizna"
+  },
+  {
+    "code": "500",
+    "description": "lluvia ligera"
+  },
+  {
+    "code": "501",
+    "description": "lluvia moderada"
+  },
+  {
+    "code": "502",
+    "description": "lluvia de gran intensidad"
+  },
+  {
+    "code": "503",
+    "description": "lluvia muy intensa"
+  },
+  {
+    "code": "504",
+    "description": "lluvia extrema"
+  },
+  {
+    "code": "511",
+    "description": "lluvia congelante"
+  },
+  {
+    "code": "520",
+    "description": "chubascos de lluvia ligera"
+  },
+  {
+    "code": "521",
+    "description": "chubascos"
+  },
+  {
+    "code": "522",
+    "description": "chubascos de lluvia intensa"
+  },
+  {
+    "code": "531",
+    "description": "chubascos irregulares"
+  },
+  {
+    "code": "600",
+    "description": "nieve ligera"
+  },
+  {
+    "code": "601",
+    "description": "nieve"
+  },
+  {
+    "code": "602",
+    "description": "nieve intensa"
+  },
+  {
+    "code": "611",
+    "description": "aguanieve"
+  },
+  {
+    "code": "612",
+    "description": "chubascos ligeros de aguanieve"
+  },
+  {
+    "code": "613",
+    "description": "chubascos de aguanieve"
+  },
+  {
+    "code": "615",
+    "description": "lluvia ligera y nieve"
+  },
+  {
+    "code": "616",
+    "description": "lluvia y nieve"
+  },
+  {
+    "code": "620",
+    "description": "chubascos ligeros de nieve"
+  },
+  {
+    "code": "621",
+    "description": "chubascos de nieve"
+  },
+  {
+    "code": "622",
+    "description": "chubascos intensos de nieve"
+  },
+  {
+    "code": "701",
+    "description": "niebla"
+  },
+  {
+    "code": "711",
+    "description": "humo"
+  },
+  {
+    "code": "721",
+    "description": "calina"
+  },
+  {
+    "code": "731",
+    "description": "remolinos de arena/polvo"
+  },
+  {
+    "code": "741",
+    "description": "neblina"
+  },
+  {
+    "code": "751",
+    "description": "arena"
+  },
+  {
+    "code": "761",
+    "description": "polvo"
+  },
+  {
+    "code": "762",
+    "description": "ceniza volcánica"
+  },
+  {
+    "code": "771",
+    "description": "turbulencias"
+  },
+  {
+    "code": "781",
+    "description": "tornado"
+  },
+  {
+    "code": "800",
+    "description": "cielo despejado"
+  },
+  {
+    "code": "801",
+    "description": "pocas nubes"
+  },
+  {
+    "code": "802",
+    "description": "nubes dispersas"
+  },
+  {
+    "code": "803",
+    "description": "nubes rotas"
+  },
+  {
+    "code": "804",
+    "description": "nubes cubiertas"
+  }
 ]
