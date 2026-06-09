@@ -8,7 +8,7 @@ class TranslatedWeather {
     required this.code,
     required this.translatedDescription,
     this.icon,
-    this.main
+    this.main,
   });
 
   factory TranslatedWeather.fromJson(Map<String, dynamic> json) {
@@ -16,10 +16,6 @@ class TranslatedWeather {
       code: json['code'],
       translatedDescription: json['description'],
     );
-  }
-
-  String getIconAsset() {
-    return "assets/icons/$icon@2x.png";
   }
 
   TranslatedWeather copyWith({
