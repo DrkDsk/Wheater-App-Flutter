@@ -19,7 +19,7 @@ class IACubit extends Cubit<IAState> {
     weather.feelsLikeCelsiusText;
     "${weather.humidity}%";
     weather.windDirectionText;
-    cityWeatherData.translatedWeather.translatedDescription;
+    cityWeatherData.translatedWeather.description;
 
     emit(state.copyWith(status: IAClientStatus.loading));
 

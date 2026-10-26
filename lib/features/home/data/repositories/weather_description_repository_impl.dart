@@ -14,7 +14,7 @@ class WeatherDescriptionRepositoryImpl implements WeatherDescriptionRepository {
     _cache ??= await dataSource.loadDescriptions();
     return _cache!.firstWhere(
       (desc) => desc.code == code,
-      orElse: () => TranslatedWeather(code: code, translatedDescription: ""),
+      orElse: () => TranslatedWeather(code: code, description: ""),
     );
   }
 }

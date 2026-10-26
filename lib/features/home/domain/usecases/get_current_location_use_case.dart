@@ -41,7 +41,7 @@ class GetFavoritesAndCurrentLocationUseCase {
         ),
       ];
 
-      return favoritesCities.fold((error) {
+      return await favoritesCities.fold((error) {
         return Right(pages);
       }, (data) {
         pages.addAll(data.map((favorite) {

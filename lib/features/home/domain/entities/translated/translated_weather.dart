@@ -1,12 +1,12 @@
 class TranslatedWeather {
   final String code;
-  final String translatedDescription;
+  final String description;
   final String? icon;
   final String? main;
 
   TranslatedWeather({
     required this.code,
-    required this.translatedDescription,
+    required this.description,
     this.icon,
     this.main,
   });
@@ -14,7 +14,7 @@ class TranslatedWeather {
   factory TranslatedWeather.fromJson(Map<String, dynamic> json) {
     return TranslatedWeather(
       code: json['code'],
-      translatedDescription: json['description'],
+      description: json['description'],
     );
   }
 
@@ -26,8 +26,7 @@ class TranslatedWeather {
   }) {
     return TranslatedWeather(
       code: code ?? this.code,
-      translatedDescription:
-          translatedDescription ?? this.translatedDescription,
+      description: translatedDescription ?? description,
       icon: icon ?? this.icon,
       main: main ?? this.main,
     );
